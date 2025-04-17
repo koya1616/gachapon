@@ -7,12 +7,17 @@
     "build": "next build",
     "start": "next start",
     "biome-check": "biome check .",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "lint": "biome lint --write . && biome format --write ."
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "1.0.0-beta.3",
     "next": "15.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "wrangler": "^4.12.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

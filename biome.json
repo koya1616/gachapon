@@ -7,21 +7,21 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [".next"]
+    "ignore": [".next", ".open-next", ".wrangler"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineWidth": 120,
-    "ignore": [".next"]
+    "ignore": [".next", ".open-next", ".wrangler"]
   },
   "organizeImports": {
     "enabled": true
   },
   "linter": {
     "enabled": true,
-    "ignore": [".next"],
+    "ignore": [".next", ".open-next", ".wrangler"],
     "rules": {
       "recommended": true
     }
