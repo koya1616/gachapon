@@ -10,7 +10,13 @@ export default function Header({ cartItemCount, onCartToggle }: HeaderProps) {
     <header className="sticky top-0 z-20 bg-white">
       <div className="flex items-center justify-between h-16 w-[90%] mx-auto mt-4 mb-2">
         <div className="flex items-center">
-          <Image src="/logo.jpg" alt="Logo" width={56} height={56} className="rounded-full" />
+          <Image
+            src="https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/logo.jpg"
+            alt="Logo"
+            width={56}
+            height={56}
+            className="rounded-full"
+          />
           <div className="ml-2 text-xl font-semibold">gasyaponpon</div>
         </div>
         <div className="py-4 flex justify-end items-center">
