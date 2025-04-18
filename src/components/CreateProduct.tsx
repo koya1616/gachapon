@@ -51,6 +51,7 @@ export default function CreateProduct() {
         price: "",
       });
       setFile(null);
+      await fetch("/api/deploy");
     } catch (err) {
       setError(err instanceof Error ? err.message : "アップロードに失敗しました");
     } finally {
@@ -85,6 +86,7 @@ export default function CreateProduct() {
         },
         body: JSON.stringify(formData),
       });
+      alert("商品が作成されました。反映されるまでに数分かかります。");
       window.location.reload();
     } catch (error) {
       console.error("Error creating product:", error);
