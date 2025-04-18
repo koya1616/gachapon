@@ -32,6 +32,7 @@ export default function CreateProduct() {
 
       const fileFormData = new FormData();
       fileFormData.append("file", file);
+      fileFormData.append("code", sessionStorage.getItem("admin-code") || "");
 
       const response = await fetch("/api/upload", {
         method: "POST",

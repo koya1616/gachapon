@@ -7,6 +7,7 @@ const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
 const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
 const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME;
+const ADMIN_CODE = process.env.ADMIN_CODE;
 
 const s3Client = new S3Client({
   region: "auto",
@@ -19,19 +20,22 @@ const s3Client = new S3Client({
 
 export async function POST(request: NextRequest) {
   try {
-    // FormDataからファイルを取得
     const formData = await request.formData();
+    const code = formData.get("code");
+
+    if (code !== ADMIN_CODE) {
+      return NextResponse.json({ error: "認証を行ってください" }, { status: 403 });
+    }
+
     const file = formData.get("file");
 
     if (!file || typeof file === "string") {
       return NextResponse.json({ error: "ファイルが選択されていません" }, { status: 400 });
     }
 
-    // ファイルをバッファに変換
     const fileBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(fileBuffer);
 
-    // アップロード設定
     const upload = new Upload({
       client: s3Client,
       params: {
@@ -42,10 +46,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // アップロード実行
-    const result = await upload.done();
+    await upload.done();
 
-    // 成功時のレスポンス
     return NextResponse.json({
       success: true,
       url: `https://${R2_BUCKET_NAME}.${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${file.name}`,
