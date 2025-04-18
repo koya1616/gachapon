@@ -11,8 +11,8 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
       <div className="relative pt-[100%]">
         <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
       </div>
-      <div className="p-4">
-        <h3 className="text-gray-900 mb-2">{product.name}</h3>
+      <div className="p-3">
+        <h3 className="text-gray-900">{product.name}</h3>
         <p className="font-bold text-blue-700 text-right">¥ {product.price.toLocaleString()}</p>
         <button
           type="button"
