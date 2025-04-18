@@ -1,3 +1,4 @@
+import type { Product } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -7,8 +8,6 @@ async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
   query: string,
   params: unknown[] = [],
 ): Promise<T[]> {
-  console.log(connectionString)
-  console.log("Executing query:", query, "with params:", params);
   const client = new Client({ connectionString });
 
   try {
@@ -21,6 +20,10 @@ async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
   } finally {
     await client.end();
   }
+}
+
+export async function getProducts(): Promise<Product[]> {
+  return executeQuery<Product>("SELECT * FROM products");
 }
 
 export { executeQuery };
