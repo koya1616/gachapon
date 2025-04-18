@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import type { Product } from "../types";
-import Header from "../components/Header";
-import ProductGrid from "../components/ProductGrid";
-import Cart from "../components/Cart";
+import Cart from "@/components/Cart";
+import Header from "@/components/Header";
+import ProductGrid from "@/components/ProductGrid";
+import type { Product } from "@/types";
 
 export default function Home() {
   const [cart, setCart] = useState<Product[]>([]);
