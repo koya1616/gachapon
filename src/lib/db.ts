@@ -26,4 +26,13 @@ export async function getProducts(): Promise<Product[]> {
   return executeQuery<Product>("SELECT * FROM products");
 }
 
+export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<void> {
+  const query = `
+    INSERT INTO products (name, price, image)
+    VALUES ($1, $2, $3)
+  `;
+  const params = [product.name, product.price, product.image];
+  await executeQuery(query, params);
+}
+
 export { executeQuery };
