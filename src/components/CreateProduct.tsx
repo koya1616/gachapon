@@ -10,6 +10,8 @@ export default function CreateProduct() {
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({ name: "", image: "", price: "" });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -52,7 +54,6 @@ export default function CreateProduct() {
         price: "",
       });
       setFile(null);
-      await fetch("/api/deploy");
     } catch (err) {
       setError(err instanceof Error ? err.message : "アップロードに失敗しました");
     } finally {
@@ -60,19 +61,9 @@ export default function CreateProduct() {
     }
   };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    image: "",
-    price: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleCreateProductSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,21 +78,13 @@ export default function CreateProduct() {
         },
         body: JSON.stringify(formData),
       });
+      await fetch("/api/deploy");
       alert("商品が作成されました。反映されるまでに数分かかります。");
       window.location.reload();
     } catch (error) {
-      console.error("Error creating product:", error);
       setError("商品作成に失敗しました");
     } finally {
-      setFormData({
-        name: "",
-        image: "",
-        price: "",
-      });
-
-      setFile(null);
-      setUploadResult(null);
-      setError(null);
+      setSubmitted(false);
     }
   };
 
