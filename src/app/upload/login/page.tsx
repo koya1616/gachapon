@@ -1,5 +1,6 @@
 "use client";
 
+import { ADMIN_CODE } from "@/const/sessionStorage";
 import { useState } from "react";
 
 export default function Login() {
@@ -17,7 +18,7 @@ export default function Login() {
     });
 
     const data = await response.json();
-    sessionStorage.setItem("admin-code", data.success);
+    sessionStorage.setItem(ADMIN_CODE, data.success);
     if (data.success) {
       window.location.href = "/upload";
     }
