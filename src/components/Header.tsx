@@ -1,11 +1,30 @@
 import Image from "next/image";
+import Cart from "@/components/Cart";
+import type { Product } from "@/types";
 
 interface HeaderProps {
-  cartItemCount: number;
   onCartToggle: () => void;
+  isCartOpen: boolean;
+  cart: Product[];
+  totalPrice: number;
+  onCloseCart: () => void;
+  onUpdateQuantity: (productId: number, newQuantity: number) => void;
+  onRemoveItem: (productId: number) => void;
+  onClearCart: () => void;
 }
 
-export default function Header({ cartItemCount, onCartToggle }: HeaderProps) {
+export default function Header({
+  onCartToggle,
+  isCartOpen,
+  cart,
+  totalPrice,
+  onCloseCart,
+  onUpdateQuantity,
+  onRemoveItem,
+  onClearCart,
+}: HeaderProps) {
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <header className="sticky top-0 z-20 bg-white">
       <div className="flex items-center justify-between h-16 w-[90%] mx-auto mt-4 mb-2">
@@ -47,6 +66,16 @@ export default function Header({ cartItemCount, onCartToggle }: HeaderProps) {
           </button>
         </div>
       </div>
+
+      <Cart
+        isOpen={isCartOpen}
+        cart={cart}
+        totalPrice={totalPrice}
+        onClose={onCloseCart}
+        onUpdateQuantity={onUpdateQuantity}
+        onRemoveItem={onRemoveItem}
+        onClearCart={onClearCart}
+      />
     </header>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Cart from "@/components/Cart";
 import Header from "@/components/Header";
 import ProductGrid from "@/components/ProductGrid";
 import type { Product } from "@/types";
@@ -70,23 +69,20 @@ export default function Products({ products }: ProductsProps) {
     sessionStorage.removeItem("cart");
   };
 
-  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
   return (
     <>
-      <Header cartItemCount={cartItemCount} onCartToggle={() => setIsCartOpen(!isCartOpen)} />
+      <Header
+        onCartToggle={() => setIsCartOpen(!isCartOpen)}
+        isCartOpen={isCartOpen}
+        cart={cart}
+        totalPrice={totalPrice}
+        onCloseCart={() => setIsCartOpen(false)}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeFromCart}
+        onClearCart={clearCart}
+      />
 
       <div className="w-[90%] mx-auto">
-        <Cart
-          isOpen={isCartOpen}
-          cart={cart}
-          totalPrice={totalPrice}
-          onClose={() => setIsCartOpen(false)}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeFromCart}
-          onClearCart={clearCart}
-        />
-
         <ProductGrid products={products} onAddToCart={addToCart} />
       </div>
     </>
