@@ -20,7 +20,7 @@ export default function Login() {
     const data = await response.json();
     sessionStorage.setItem(ADMIN_CODE, data.success);
     if (data.success) {
-      window.location.href = "/upload";
+      window.location.href = "/admin/upload";
     }
   };
 
