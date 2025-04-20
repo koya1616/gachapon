@@ -3,8 +3,13 @@
 import Image from "next/image";
 import Cart from "@/components/Cart";
 import { useCart } from "@/context/CartContext";
+import type { Lang } from "@/types";
 
-export default function Header() {
+interface HeaderProps {
+  lang: Lang;
+}
+
+export default function Header({ lang }: HeaderProps) {
   const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
 
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -59,6 +64,7 @@ export default function Header() {
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeFromCart}
         onClearCart={clearCart}
+        lang={lang}
       />
     </header>
   );

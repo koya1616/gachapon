@@ -1,12 +1,15 @@
 import type { Product } from "@/types";
+import { useTranslation as t } from "@/lib/translations";
+import type { Lang } from "@/types";
 
 interface CartItemProps {
   item: Product;
   onUpdateQuantity: (productId: number, newQuantity: number) => void;
   onRemove: (productId: number) => void;
+  lang: Lang;
 }
 
-export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
+export default function CartItem({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) {
   return (
     <div className="flex items-center justify-between border-b pb-4">
       <div className="flex items-center">
@@ -39,7 +42,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
           onClick={() => onRemove(item.id)}
           className="ml-4 text-red-500 hover:text-red-700 cursor-pointer"
         >
-          削除
+          {t(lang).cart.remove}
         </button>
       </div>
     </div>

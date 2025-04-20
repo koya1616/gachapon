@@ -2,8 +2,10 @@
 
 import type { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
+import { useTranslation as t } from "@/lib/translations";
+import type { Lang } from "@/types";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
   const { addToCart } = useCart();
 
   return (
@@ -19,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
           onClick={() => addToCart(product)}
           className="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
         >
-          カートに追加
+          {t(lang).product.addToCart}
         </button>
       </div>
     </div>

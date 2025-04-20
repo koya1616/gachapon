@@ -5,3 +5,5 @@ export type Product = {
   image: string;
   quantity: number;
 };
+
+export type Lang = "en" | "ja";
