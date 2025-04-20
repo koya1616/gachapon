@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import type { Product } from "@/types";
+import { CART } from "@/const/sessionStorage";
 
 interface CartContextType {
   cart: Product[];
@@ -23,7 +24,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const savedCart = sessionStorage.getItem("cart");
+    const savedCart = sessionStorage.getItem(CART);
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(savedCart);
@@ -36,7 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (cart.length > 0) {
-      sessionStorage.setItem("cart", JSON.stringify(cart));
+      sessionStorage.setItem(CART, JSON.stringify(cart));
     }
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -59,7 +60,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const newCart = prevCart.filter((item) => item.id !== productId);
 
       if (newCart.length === 0) {
-        sessionStorage.removeItem("cart");
+        sessionStorage.removeItem(CART);
       }
 
       return newCart;
@@ -74,7 +75,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setCart([]);
-    sessionStorage.removeItem("cart");
+    sessionStorage.removeItem(CART);
   };
 
   const toggleCart = () => setIsCartOpen(!isCartOpen);
