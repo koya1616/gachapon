@@ -1,28 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Cart from "@/components/Cart";
-import type { Product } from "@/types";
+import { useCart } from "@/context/CartContext";
 
-interface HeaderProps {
-  onCartToggle: () => void;
-  isCartOpen: boolean;
-  cart: Product[];
-  totalPrice: number;
-  onCloseCart: () => void;
-  onUpdateQuantity: (productId: number, newQuantity: number) => void;
-  onRemoveItem: (productId: number) => void;
-  onClearCart: () => void;
-}
+export default function Header() {
+  const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
 
-export default function Header({
-  onCartToggle,
-  isCartOpen,
-  cart,
-  totalPrice,
-  onCloseCart,
-  onUpdateQuantity,
-  onRemoveItem,
-  onClearCart,
-}: HeaderProps) {
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -39,7 +23,7 @@ export default function Header({
           <div className="ml-2 text-xl font-semibold">gasyaponpon</div>
         </div>
         <div className="py-4 flex justify-end items-center">
-          <button type="button" className="cursor-pointer" onClick={onCartToggle}>
+          <button type="button" className="cursor-pointer" onClick={toggleCart}>
             <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -71,10 +55,10 @@ export default function Header({
         isOpen={isCartOpen}
         cart={cart}
         totalPrice={totalPrice}
-        onClose={onCloseCart}
-        onUpdateQuantity={onUpdateQuantity}
-        onRemoveItem={onRemoveItem}
-        onClearCart={onClearCart}
+        onClose={closeCart}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeFromCart}
+        onClearCart={clearCart}
       />
     </header>
   );

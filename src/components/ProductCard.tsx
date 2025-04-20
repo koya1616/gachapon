@@ -1,11 +1,11 @@
+"use client";
+
 import type { Product } from "@/types";
+import { useCart } from "@/context/CartContext";
 
-interface ProductCardProps {
-  product: Product;
-  onAddToCart: (product: Product) => void;
-}
+export default function ProductCard({ product }: { product: Product }) {
+  const { addToCart } = useCart();
 
-export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="relative pt-[100%]">
@@ -16,7 +16,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         <p className="font-bold text-blue-700 text-right">¥ {product.price.toLocaleString()}</p>
         <button
           type="button"
-          onClick={() => onAddToCart(product)}
+          onClick={() => addToCart(product)}
           className="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
         >
           カートに追加
