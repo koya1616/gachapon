@@ -24,7 +24,7 @@ export default async function RootLayout({
     <html lang={lang}>
       <body>
         <CartProvider>
-          <Header lang={lang === "en" ? "en" : "ja"} />
+          <Header lang={lang === "en" ? "en" : lang === "zh" ? "zh" : "ja"} />
           {children}
         </CartProvider>
       </body>

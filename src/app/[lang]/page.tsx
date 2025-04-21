@@ -8,5 +8,5 @@ export default async function ProductsPage({
 }) {
   const { lang } = await params;
   const products = await getProducts();
-  return <Products products={products} lang={lang === "en" ? "en" : "ja"} />;
+  return <Products products={products} lang={lang === "en" ? "en" : lang === "zh" ? "zh" : "ja"} />;
 }
