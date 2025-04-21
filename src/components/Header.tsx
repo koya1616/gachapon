@@ -2,27 +2,14 @@
 
 import Image from "next/image";
 import Cart from "@/components/Cart";
+import LanguageDropdown from "@/components/LanguageDropdown";
 import { useCart } from "@/context/CartContext";
 import type { Lang } from "@/types";
-import { LANGS } from "@/const/language";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-interface HeaderProps {
-  lang: Lang;
-}
-
-export default function Header({ lang }: HeaderProps) {
+export default function Header({ lang }: { lang: Lang }) {
   const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
-  const router = useRouter();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleLanguageChange = (newLang: Lang) => {
-    setIsDropdownOpen(false);
-    router.push(`/${newLang}`);
-  };
 
   return (
     <header className="sticky top-0 z-20 bg-white">
@@ -38,44 +25,7 @@ export default function Header({ lang }: HeaderProps) {
           <div className="ml-2 text-xl font-semibold">gasyaponpon</div>
         </div>
         <div className="py-4 flex justify-end items-center gap-4">
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => {
-                setIsDropdownOpen(!isDropdownOpen);
-              }}
-              className="flex items-center justify-between w-20 px-3 py-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
-            >
-              {lang.toUpperCase()}
-              <svg
-                className={`w-4 h-4 ml-1 transition-transform duration-200 ${isDropdownOpen ? "transform rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <title>Dropdown arrow</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {isDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-20 bg-white border border-neutral-200 rounded-md shadow-lg z-10">
-                {LANGS.map((langOption) => (
-                  <button
-                    type="button"
-                    key={langOption}
-                    onClick={() => handleLanguageChange(langOption as Lang)}
-                    className={`w-full text-left px-3 py-2 text-sm cursor-pointer ${
-                      lang === langOption ? "bg-blue-600 text-white" : "text-black hover:bg-gray-100"
-                    }`}
-                  >
-                    {langOption.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <LanguageDropdown lang={lang} />
           <button type="button" className="cursor-pointer" onClick={toggleCart}>
             <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
               <svg
