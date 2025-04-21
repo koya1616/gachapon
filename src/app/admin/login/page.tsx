@@ -1,6 +1,5 @@
 "use client";
 
-import { ADMIN_CODE } from "@/const/sessionStorage";
 import { useActionState } from "react";
 
 async function loginAction(prevState: { success: boolean }, formData: FormData) {
@@ -15,7 +14,6 @@ async function loginAction(prevState: { success: boolean }, formData: FormData) 
   });
 
   const data = await response.json();
-  sessionStorage.setItem(ADMIN_CODE, data.success);
 
   if (data.success) {
     window.location.href = "/admin/upload";

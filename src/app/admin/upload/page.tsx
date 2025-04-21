@@ -1,6 +1,5 @@
 "use client";
 
-import { ADMIN_CODE } from "@/const/sessionStorage";
 import { useState, useCallback, useMemo, memo } from "react";
 
 interface UploadResult {
@@ -43,7 +42,6 @@ const FileUploadForm = memo(({ onUploadSuccess }: FileUploadFormProps) => {
 
         const fileFormData = new FormData();
         fileFormData.append("file", file);
-        fileFormData.append("code", sessionStorage.getItem(ADMIN_CODE) || "");
 
         const response = await fetch("/api/upload", {
           method: "POST",

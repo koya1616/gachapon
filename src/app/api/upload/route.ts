@@ -2,12 +2,13 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { ADMIN_CODE } from "@/const/cookies";
 
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
 const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
 const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME;
-const ADMIN_CODE = process.env.ADMIN_CODE;
 
 const s3Client = new S3Client({
   region: "auto",
@@ -19,14 +20,15 @@ const s3Client = new S3Client({
 });
 
 export async function POST(request: NextRequest) {
+  const cookieStore = await cookies();
+  const adminCode = cookieStore.get(ADMIN_CODE)?.value;
+
+  if (!adminCode) {
+    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const formData = await request.formData();
-    const code = formData.get("code");
-
-    if (code !== ADMIN_CODE) {
-      return NextResponse.json({ error: "認証を行ってください" }, { status: 403 });
-    }
-
     const file = formData.get("file");
 
     if (!file || typeof file === "string") {
