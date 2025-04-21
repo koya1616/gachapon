@@ -1,11 +1,12 @@
 "use client";
 
+import { memo } from "react";
 import type { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 
-export default function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
+const ProductCard = memo(function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
   const { addToCart } = useCart();
 
   return (
@@ -26,4 +27,6 @@ export default function ProductCard({ product, lang }: { product: Product; lang:
       </div>
     </div>
   );
-}
+});
+
+export default ProductCard;

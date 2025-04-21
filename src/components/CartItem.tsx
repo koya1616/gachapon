@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Product } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
@@ -9,7 +10,7 @@ interface CartItemProps {
   lang: Lang;
 }
 
-export default function CartItem({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) {
+const CartItem = memo(function CartItem({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) {
   return (
     <div className="flex items-center justify-between border-b pb-4">
       <div className="flex items-center">
@@ -47,4 +48,6 @@ export default function CartItem({ item, onUpdateQuantity, onRemove, lang }: Car
       </div>
     </div>
   );
-}
+});
+
+export default CartItem;

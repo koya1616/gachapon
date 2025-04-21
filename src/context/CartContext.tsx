@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { Product } from "@/types";
 import { CART } from "@/const/sessionStorage";
 
@@ -44,7 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setTotalPrice(total);
   }, [cart]);
 
-  const addToCart = (product: Product) => {
+  const addToCart = useCallback((product: Product) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
 
@@ -53,9 +53,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prevCart, { ...product, quantity: 1 }];
     });
-  };
+  }, []);
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = useCallback((productId: number) => {
     setCart((prevCart) => {
       const newCart = prevCart.filter((item) => item.id !== productId);
 
@@ -65,22 +65,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       return newCart;
     });
-  };
+  }, []);
 
-  const updateQuantity = (productId: number, newQuantity: number) => {
+  const updateQuantity = useCallback((productId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
 
     setCart((prevCart) => prevCart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item)));
-  };
+  }, []);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCart([]);
     sessionStorage.removeItem(CART);
-  };
+  }, []);
 
-  const toggleCart = () => setIsCartOpen(!isCartOpen);
+  const toggleCart = useCallback(() => setIsCartOpen((prev) => !prev), []);
 
-  const closeCart = () => setIsCartOpen(false);
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
 
   return (
     <CartContext.Provider

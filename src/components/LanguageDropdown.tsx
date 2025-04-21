@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
@@ -14,26 +14,31 @@ export default function LanguageDropdown({ lang }: LanguageDropdownProps) {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleLanguageChange = (newLang: Lang) => {
-    setIsDropdownOpen(false);
-    const pathSegments = pathname.split("/");
+  const handleLanguageChange = useCallback(
+    (newLang: Lang) => {
+      setIsDropdownOpen(false);
+      const pathSegments = pathname.split("/");
 
-    if (pathSegments.length > 1) {
-      pathSegments[1] = newLang;
-    } else {
-      pathSegments.push(newLang);
-    }
+      if (pathSegments.length > 1) {
+        pathSegments[1] = newLang;
+      } else {
+        pathSegments.push(newLang);
+      }
 
-    router.push(pathSegments.join("/"));
-  };
+      router.push(pathSegments.join("/"));
+    },
+    [pathname, router],
+  );
+
+  const toggleDropdown = useCallback(() => {
+    setIsDropdownOpen((prev) => !prev);
+  }, []);
 
   return (
     <div className="relative">
       <button
         type="button"
-        onClick={() => {
-          setIsDropdownOpen(!isDropdownOpen);
-        }}
+        onClick={toggleDropdown}
         className="flex items-center justify-between w-20 px-3 py-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
       >
         {lang.toUpperCase()}
