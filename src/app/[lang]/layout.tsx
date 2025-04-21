@@ -4,6 +4,7 @@ import { CartProvider } from "@/context/CartContext";
 import { redirect } from "next/navigation";
 import "../globals.css";
 import { LANGS } from "@/const/language";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "gachapon",
@@ -27,6 +28,7 @@ export default async function RootLayout({
           <Header lang={lang === "en" ? "en" : lang === "zh" ? "zh" : "ja"} />
           {children}
         </CartProvider>
+        <Footer />
       </body>
     </html>
   );

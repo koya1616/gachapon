@@ -5,7 +5,7 @@ import Cart from "@/components/Cart";
 import { useCart } from "@/context/CartContext";
 import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface HeaderProps {
