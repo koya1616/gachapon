@@ -25,13 +25,13 @@ async function loginAction(prevState: { success: boolean }, formData: FormData) 
 }
 
 export default function Login() {
-  const [state, formAction, isPending] = useActionState(loginAction, { success: false });
+  const [state, formAction, isPending] = useActionState(loginAction, { success: true });
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" action={formAction}>
+          <form className="space-y-4" action={formAction}>
             <div>
               <div className="mt-1">
                 <input
@@ -44,6 +44,12 @@ export default function Login() {
                 />
               </div>
             </div>
+
+            {state.success === false && (
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="text-sm text-red-700">ログインコードが無効です。</div>
+              </div>
+            )}
 
             <div>
               <button

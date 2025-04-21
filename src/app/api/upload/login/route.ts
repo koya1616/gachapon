@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json();
     return NextResponse.json(
-      { success: code === ADMIN_CODE ? ADMIN_CODE : "" },
+      { success: code === ADMIN_CODE ? ADMIN_CODE : false },
       { status: code === ADMIN_CODE ? 200 : 403 },
     );
   } catch (error) {
