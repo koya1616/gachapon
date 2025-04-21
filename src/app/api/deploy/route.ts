@@ -30,7 +30,7 @@ async function listDeployments() {
     headers: { Authorization: `Bearer ${VERCEL_API_TOKEN}` },
   };
   const response = await fetch(
-    `https://api.vercel.com/v6/deployments?projectId=${process.env.VERCEL_PROJECT_ID}`,
+    `https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}`,
     options,
   );
   const data = await response.json();
