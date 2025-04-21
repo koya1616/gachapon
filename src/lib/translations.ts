@@ -27,6 +27,19 @@ const translations = {
       addToCart: "カートに追加",
     },
   },
+  zh: {
+    cart: {
+      title: "购物车",
+      empty: "您的购物车是空的",
+      total: "总计:",
+      clearCart: "清空购物车",
+      checkout: "结账",
+      remove: "删除",
+    },
+    product: {
+      addToCart: "加入购物车",
+    },
+  },
 };
 
 export const useTranslation = (lang: Lang) => {

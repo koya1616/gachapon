@@ -6,4 +6,4 @@ export type Product = {
   quantity: number;
 };
 
-export type Lang = "en" | "ja";
+export type Lang = "en" | "ja" | "zh";
