@@ -5,7 +5,7 @@ import { useActionState } from "react";
 async function loginAction(prevState: { success: boolean }, formData: FormData) {
   const code = formData.get("code") as string;
 
-  const response = await fetch("/api/upload/login", {
+  const response = await fetch("/api/auth/admin/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
