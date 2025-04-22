@@ -42,6 +42,14 @@ const translations = {
         shipped: "Shipped",
       },
     },
+    form: {
+      countrySelect: "Select Country",
+      recipientName: "Recipient Name",
+      postalCode: "Postal Code",
+      address: "Address",
+      clear: "Clear",
+      register: "Register",
+    },
   },
   ja: {
     cart: {
@@ -84,6 +92,14 @@ const translations = {
         shipped: "発送済み",
       },
     },
+    form: {
+      countrySelect: "国を選択",
+      recipientName: "氏名",
+      postalCode: "郵便番号",
+      address: "住所",
+      clear: "クリア",
+      register: "登録",
+    },
   },
   zh: {
     cart: {
@@ -125,6 +141,14 @@ const translations = {
         processing: "处理中",
         shipped: "已发货",
       },
+    },
+    form: {
+      countrySelect: "选择国家",
+      recipientName: "收件人姓名",
+      postalCode: "邮政编码",
+      address: "地址",
+      clear: "清除",
+      register: "注册",
     },
   },
 };

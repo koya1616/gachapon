@@ -1,3 +1,4 @@
+import AddressForm from "@/components/AddressForm";
 import LogoutButton from "@/components/LogoutButton";
 import { useTranslation as t } from "@/lib/translations";
 
@@ -11,10 +12,16 @@ export default async function AccountPage({
 
   const mockUserData: {
     id: number;
+    name: string;
+    postalCode: string;
+    country: string;
     address: string;
     orders: Array<{ id: string; date: string; total: number; statusText: string; status: string }>;
   } = {
     id: 1,
+    name: "John Doe",
+    postalCode: "12345",
+    country: "japan",
     address: "123 Main St, City, Country",
     orders: [
       { id: "ORD-001", date: "2025-04-15", total: 2500, statusText: t(l).order.status.delivered, status: "delivered" },
@@ -34,13 +41,7 @@ export default async function AccountPage({
       <h1 className="text-3xl font-semibold mb-4">{t(l).account.title}</h1>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <p className="text-gray-500 mb-1">{t(l).account.address}</p>
-            <p className="font-medium">{mockUserData.address}</p>
-          </div>
-        </div>
-        <LogoutButton lang={l} />
+        <AddressForm info={mockUserData} lang={l} />
       </div>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
@@ -95,6 +96,10 @@ export default async function AccountPage({
         ) : (
           <p className="text-gray-500">{t(l).account.noOrders}</p>
         )}
+      </div>
+
+      <div className="bg-white shadow rounded-lg p-6 mb-8">
+        <LogoutButton lang={l} />
       </div>
     </div>
   );
