@@ -1,4 +1,8 @@
+import { USER_TOKEN } from "@/const/cookies";
+import { verifyToken } from "@/lib/jwt";
 import { useTranslation as t } from "@/lib/translations";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function SignupPage({
   params,
@@ -7,6 +11,12 @@ export default async function SignupPage({
 }) {
   const { lang } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
+
+  const cookieStore = await cookies();
+  const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
+  if (userToken) {
+    redirect(`/${lang}`);
+  }
   return (
     <div className="flex items-center justify-center min-h-dvh bg-gradient-to-br from-indigo-50 to-blue-100">
       <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">

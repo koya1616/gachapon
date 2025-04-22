@@ -1,3 +1,6 @@
+import { USER_TOKEN } from "@/const/cookies";
+import { verifyToken } from "@/lib/jwt";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -14,5 +17,10 @@ const OAUTH_PARAMS = new URLSearchParams({
 });
 
 export async function GET() {
-  redirect(`https://accounts.google.com/o/oauth2/v2/auth?${OAUTH_PARAMS.toString()}`);
+  const cookieStore = await cookies();
+  const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
+  if (!userToken) {
+    redirect(`https://accounts.google.com/o/oauth2/v2/auth?${OAUTH_PARAMS.toString()}`);
+  }
+  redirect("/ja");
 }
