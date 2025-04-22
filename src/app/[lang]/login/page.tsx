@@ -19,8 +19,8 @@ export default async function LoginPage({
     redirect(`/${lang}`);
   }
   return (
-    <div className="flex items-center justify-center min-h-dvh bg-gradient-to-br from-indigo-50 to-blue-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+    <div className="flex items-center justify-center min-h-100 w-[95%] mx-auto py-10">
+      <div className="w-full max-w-md p-8 bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-gray-100 transition-all hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]">
         <div className="space-y-4">
           {!isShow && (
             <button

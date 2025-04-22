@@ -18,7 +18,7 @@ export default async function SignupPage({
     redirect(`/${lang}`);
   }
   return (
-    <div className="flex items-center justify-center min-h-dvh bg-gradient-to-br from-indigo-50 to-blue-100">
+    <div className="flex items-center justify-center min-h-100 w-[95%] mx-auto">
       <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
         <div className="space-y-4">
           <a href="/api/auth/google">

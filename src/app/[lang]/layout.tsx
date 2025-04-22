@@ -23,10 +23,10 @@ export default async function RootLayout({
 
   return (
     <html lang={lang}>
-      <body>
+      <body className="flex flex-col min-h-screen">
         <CartProvider>
           <Header lang={lang === "en" ? "en" : lang === "zh" ? "zh" : "ja"} />
-          {children}
+          <main className="flex-grow">{children}</main>
         </CartProvider>
         <Footer />
       </body>
