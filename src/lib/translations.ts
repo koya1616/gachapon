@@ -13,6 +13,16 @@ const translations = {
     product: {
       addToCart: "Add to Cart",
     },
+    login: {
+      facebook: "Login with Facebook",
+      google: "Login with Google",
+      twitter: "Login with Twitter",
+      notHaveAccount: "Don't have an account?",
+      signUp: "Sign Up",
+    },
+    signup: {
+      google: "Sign up with Google",
+    },
   },
   ja: {
     cart: {
@@ -26,6 +36,16 @@ const translations = {
     product: {
       addToCart: "カートに追加",
     },
+    login: {
+      facebook: "Facebookでログイン",
+      google: "Googleでログイン",
+      twitter: "Twitterでログイン",
+      notHaveAccount: "アカウントをお持ちでないですか？",
+      signUp: "新規登録",
+    },
+    signup: {
+      google: "Googleで登録",
+    },
   },
   zh: {
     cart: {
@@ -38,6 +58,16 @@ const translations = {
     },
     product: {
       addToCart: "加入购物车",
+    },
+    login: {
+      facebook: "Facebook登录",
+      google: "Google登录",
+      twitter: "Twitter登录",
+      notHaveAccount: "您没有账户吗？",
+      signUp: "注册",
+    },
+    signup: {
+      google: "Google注册",
     },
   },
 };

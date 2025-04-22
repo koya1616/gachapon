@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 export default function Header({ lang }: { lang: Lang }) {
   const path = usePathname();
+  const showCart = !path.includes("/login") && !path.includes("/signup");
   const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -27,7 +28,7 @@ export default function Header({ lang }: { lang: Lang }) {
         </div>
         <div className="py-4 flex justify-end items-center gap-4">
           <LanguageDropdown lang={lang} />
-          {!path.includes("/login") && (
+          {showCart && (
             <button type="button" className="cursor-pointer" onClick={toggleCart}>
               <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
                 <svg
