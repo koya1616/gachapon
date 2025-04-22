@@ -11,7 +11,7 @@ export default function Header({ lang }: { lang: Lang }) {
   const router = useRouter();
   const path = usePathname();
   const showCart = !path.includes("/login") && !path.includes("/signup") && !path.includes("/account");
-  const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clear_cart } = useCart();
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -94,7 +94,7 @@ export default function Header({ lang }: { lang: Lang }) {
         onClose={closeCart}
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeFromCart}
-        onClearCart={clearCart}
+        onClearCart={clear_cart}
         lang={lang}
       />
     </header>

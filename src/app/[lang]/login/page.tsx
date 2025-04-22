@@ -100,9 +100,9 @@ export default async function LoginPage({
 
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
-            {t(l).login.notHaveAccount}
+            {t(l).login.not_have_account}
             <a href="/ja/signup" className="text-blue-600 hover:text-blue-500 font-medium ml-1">
-              {t(l).login.signUp}
+              {t(l).login.sign_up}
             </a>
           </p>
         </div>

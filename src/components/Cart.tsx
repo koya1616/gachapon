@@ -110,7 +110,7 @@ export default function Cart({
                   onClick={onClearCart}
                   className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-colors cursor-pointer"
                 >
-                  {t(lang).cart.clearCart}
+                  {t(lang).cart.clear_cart}
                 </button>
                 <button
                   type="button"

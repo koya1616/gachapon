@@ -1,4 +1,4 @@
-import type { Product, User } from "@/types";
+import type { Address, Product, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -50,6 +50,24 @@ export async function createUser(email: string): Promise<void> {
     VALUES ($1)
   `;
   const params = [email];
+  await executeQuery(query, params);
+}
+
+export async function findAddressByUserId(user_id: number): Promise<Address | null> {
+  const query = `
+    SELECT * FROM addresses WHERE user_id = $1
+  `;
+  const params = [user_id];
+  const addresses = await executeQuery<Address>(query, params);
+  return addresses.length > 0 ? addresses[0] : null;
+}
+
+export async function createAddress(address: Omit<Address, "id">): Promise<void> {
+  const query = `
+    INSERT INTO addresses (user_id, name, country, postal_code, address)
+    VALUES ($1, $2, $3, $4, $5)
+  `;
+  const params = [address.user_id, address.name, address.country, address.postal_code, address.address];
   await executeQuery(query, params);
 }
 

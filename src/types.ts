@@ -12,3 +12,12 @@ export type User = {
   id: number;
   email: string;
 };
+
+export type Address = {
+  id: number;
+  user_id: number;
+  name: string;
+  country: string;
+  postal_code: string;
+  address: string;
+};

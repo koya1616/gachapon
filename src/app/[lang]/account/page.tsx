@@ -13,26 +13,26 @@ export default async function AccountPage({
   const mockUserData: {
     id: number;
     name: string;
-    postalCode: string;
+    postal_code: string;
     country: string;
     address: string;
-    orders: Array<{ id: string; date: string; total: number; statusText: string; status: string }>;
+    orders: Array<{ id: string; date: string; total: number; status_text: string; status: string }>;
   } = {
     id: 1,
     name: "John Doe",
-    postalCode: "12345",
+    postal_code: "12345",
     country: "japan",
     address: "123 Main St, City, Country",
     orders: [
-      { id: "ORD-001", date: "2025-04-15", total: 2500, statusText: t(l).order.status.delivered, status: "delivered" },
+      { id: "ORD-001", date: "2025-04-15", total: 2500, status_text: t(l).order.status.delivered, status: "delivered" },
       {
         id: "ORD-002",
         date: "2025-04-02",
         total: 1800,
-        statusText: t(l).order.status.processing,
+        status_text: t(l).order.status.processing,
         status: "processing",
       },
-      { id: "ORD-003", date: "2025-03-21", total: 3200, statusText: t(l).order.status.shipped, status: "shipped" },
+      { id: "ORD-003", date: "2025-03-21", total: 3200, status_text: t(l).order.status.shipped, status: "shipped" },
     ],
   };
 
@@ -45,14 +45,14 @@ export default async function AccountPage({
       </div>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
-        <h2 className="text-xl font-medium mb-4">{t(l).account.orderHistory}</h2>
+        <h2 className="text-xl font-medium mb-4">{t(l).account.order_history}</h2>
         {mockUserData.orders && mockUserData.orders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
                 <tr>
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.orderId}
+                    {t(l).account.order_id}
                   </th>
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {t(l).account.date}
@@ -85,7 +85,7 @@ export default async function AccountPage({
                               : "bg-blue-100 text-blue-800"
                         }`}
                       >
-                        {order.statusText}
+                        {order.status_text}
                       </span>
                     </td>
                   </tr>
@@ -94,7 +94,7 @@ export default async function AccountPage({
             </table>
           </div>
         ) : (
-          <p className="text-gray-500">{t(l).account.noOrders}</p>
+          <p className="text-gray-500">{t(l).account.no_orders}</p>
         )}
       </div>
 

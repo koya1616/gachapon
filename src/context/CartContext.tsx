@@ -8,10 +8,10 @@ interface CartContextType {
   cart: Product[];
   isCartOpen: boolean;
   totalPrice: number;
-  addToCart: (product: Product) => void;
+  add_to_cart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, newQuantity: number) => void;
-  clearCart: () => void;
+  clear_cart: () => void;
   toggleCart: () => void;
   closeCart: () => void;
 }
@@ -44,7 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setTotalPrice(total);
   }, [cart]);
 
-  const addToCart = useCallback((product: Product) => {
+  const add_to_cart = useCallback((product: Product) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
 
@@ -73,7 +73,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCart((prevCart) => prevCart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item)));
   }, []);
 
-  const clearCart = useCallback(() => {
+  const clear_cart = useCallback(() => {
     setCart([]);
     sessionStorage.removeItem(CART);
   }, []);
@@ -88,10 +88,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cart,
         isCartOpen,
         totalPrice,
-        addToCart,
+        add_to_cart,
         removeFromCart,
         updateQuantity,
-        clearCart,
+        clear_cart,
         toggleCart,
         closeCart,
       }}

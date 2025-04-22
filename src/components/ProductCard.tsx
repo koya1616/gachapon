@@ -7,7 +7,7 @@ import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 
 const ProductCard = memo(function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
-  const { addToCart } = useCart();
+  const { add_to_cart } = useCart();
 
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -19,10 +19,10 @@ const ProductCard = memo(function ProductCard({ product, lang }: { product: Prod
         <p className="font-bold text-blue-700 text-right">¥ {product.price.toLocaleString()}</p>
         <button
           type="button"
-          onClick={() => addToCart(product)}
+          onClick={() => add_to_cart(product)}
           className="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
         >
-          {t(lang).product.addToCart}
+          {t(lang).product.add_to_cart}
         </button>
       </div>
     </div>

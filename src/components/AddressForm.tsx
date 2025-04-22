@@ -7,7 +7,7 @@ import type { Lang } from "@/types";
 interface FormFields {
   name: string;
   country: string;
-  postalCode: string;
+  postal_code: string;
   address: string;
 }
 
@@ -17,7 +17,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
   const [formData, setFormData] = useState({
     name: info.name,
     country: info.country,
-    postalCode: info.postalCode,
+    postal_code: info.postal_code,
     address: info.address,
   });
 
@@ -41,7 +41,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
           <label htmlFor="country" className="block text-gray-700 mb-2">
-            {t(l).form.countrySelect}
+            {t(l).form.country_select}
           </label>
           <select
             id="country"
@@ -103,7 +103,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
 
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 mb-2">
-            {t(l).form.recipientName}
+            {t(l).form.recipient_name}
           </label>
           <input
             id="name"
@@ -116,14 +116,14 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="postalCode" className="block text-gray-700 mb-2">
-            {t(l).form.postalCode}
+          <label htmlFor="postal_code" className="block text-gray-700 mb-2">
+            {t(l).form.postal_code}
           </label>
           <input
-            id="postalCode"
+            id="postal_code"
             type="text"
-            name="postalCode"
-            value={formData.postalCode}
+            name="postal_code"
+            value={formData.postal_code}
             onChange={handleChange}
             className="w-full p-2 border rounded"
           />
@@ -150,7 +150,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
               setFormData({
                 name: "",
                 country: "",
-                postalCode: "",
+                postal_code: "",
                 address: "",
               });
             }}
