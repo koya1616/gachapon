@@ -3,5 +3,5 @@ export default async function TopPage({
 }: {
   params: Promise<{ lang: string }>;
 }) {
-  return <>top</>;
+  return <>WEBサイト</>;
 }
