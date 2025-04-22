@@ -52,5 +52,5 @@ export async function GET(request: NextRequest) {
     secure: process.env.NODE_ENV === "production",
   });
 
-  redirect("/ja");
+  redirect("/ja/account");
 }
