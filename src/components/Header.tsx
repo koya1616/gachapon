@@ -5,11 +5,12 @@ import Cart from "@/components/Cart";
 import LanguageDropdown from "@/components/LanguageDropdown";
 import { useCart } from "@/context/CartContext";
 import type { Lang } from "@/types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header({ lang }: { lang: Lang }) {
+  const router = useRouter();
   const path = usePathname();
-  const showCart = !path.includes("/login") && !path.includes("/signup");
+  const showCart = !path.includes("/login") && !path.includes("/signup") && !path.includes("/account");
   const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clearCart } = useCart();
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -28,6 +29,25 @@ export default function Header({ lang }: { lang: Lang }) {
         </div>
         <div className="py-4 flex justify-end items-center gap-4">
           <LanguageDropdown lang={lang} />
+          <button type="button" className="cursor-pointer" onClick={() => router.push(`/${lang}/account`)}>
+            <div className="h-11 w-11 flex items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                focusable="false"
+                className="icon icon-account w-4 h-4"
+                fill="none"
+                viewBox="0 0 18 19"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+          </button>
           {showCart && (
             <button type="button" className="cursor-pointer" onClick={toggleCart}>
               <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">

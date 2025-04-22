@@ -23,6 +23,25 @@ const translations = {
     signup: {
       google: "Sign up with Google",
     },
+    account: {
+      title: "Account Details",
+      address: "Address",
+      orderHistory: "Order History",
+      orderId: "Order ID",
+      date: "Date",
+      total: "Total",
+      status: "Status",
+      logout: "Logout",
+      noOrders: "No order history available",
+      currency: "$",
+    },
+    order: {
+      status: {
+        delivered: "Delivered",
+        processing: "Processing",
+        shipped: "Shipped",
+      },
+    },
   },
   ja: {
     cart: {
@@ -46,6 +65,25 @@ const translations = {
     signup: {
       google: "Googleで登録",
     },
+    account: {
+      title: "アカウント詳細",
+      address: "住所",
+      orderHistory: "注文履歴",
+      orderId: "注文ID",
+      date: "日付",
+      total: "合計",
+      status: "状態",
+      logout: "ログアウト",
+      noOrders: "注文履歴はありません",
+      currency: "¥",
+    },
+    order: {
+      status: {
+        delivered: "配達済み",
+        processing: "処理中",
+        shipped: "発送済み",
+      },
+    },
   },
   zh: {
     cart: {
@@ -68,6 +106,25 @@ const translations = {
     },
     signup: {
       google: "Google注册",
+    },
+    account: {
+      title: "账户详细信息",
+      address: "地址",
+      orderHistory: "订单历史",
+      orderId: "订单ID",
+      date: "日期",
+      total: "总计",
+      status: "状态",
+      logout: "登出",
+      noOrders: "没有订单历史",
+      currency: "¥",
+    },
+    order: {
+      status: {
+        delivered: "已送达",
+        processing: "处理中",
+        shipped: "已发货",
+      },
     },
   },
 };
