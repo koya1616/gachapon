@@ -1,4 +1,4 @@
-import type { Product } from "@/types";
+import type { Product, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -32,6 +32,24 @@ export async function createProducts(product: Omit<Product, "id" | "quantity">):
     VALUES ($1, $2, $3)
   `;
   const params = [product.name, product.price, product.image];
+  await executeQuery(query, params);
+}
+
+export async function findUserByEmail(email: string): Promise<User | null> {
+  const query = `
+    SELECT * FROM users WHERE email = $1 LIMIT 1
+  `;
+  const params = [email];
+  const users = await executeQuery<User>(query, params);
+  return users.length > 0 ? users[0] : null;
+}
+
+export async function createUser(email: string): Promise<void> {
+  const query = `
+    INSERT INTO users (email)
+    VALUES ($1)
+  `;
+  const params = [email];
   await executeQuery(query, params);
 }
 

@@ -1,5 +1,9 @@
+import { cookies } from "next/headers";
+import { createUser, findUserByEmail } from "@/lib/db";
+import { generateToken } from "@/lib/jwt";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
+import { USER_TOKEN } from "@/const/cookies";
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
@@ -27,8 +31,26 @@ export async function GET(request: NextRequest) {
   });
 
   const userData = await userResponse.json();
-  console.log("aaaaaaaa")
-  console.log(userData.email);
-  console.log(userData.name);
+
+  let user = await findUserByEmail(userData.email);
+
+  if (!user) {
+    await createUser(userData.email);
+    user = await findUserByEmail(userData.email);
+
+    if (!user) redirect("/error");
+  }
+  const token = generateToken({ id: user.id, type: "user" });
+
+  const cookieStore = await cookies();
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 100);
+  cookieStore.set(USER_TOKEN, token, {
+    path: "/",
+    expires: expirationDate,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+
   redirect("/ja");
 }

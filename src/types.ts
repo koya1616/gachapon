@@ -7,3 +7,8 @@ export type Product = {
 };
 
 export type Lang = "en" | "ja" | "zh";
+
+export type User = {
+  id: number;
+  email: string;
+};
