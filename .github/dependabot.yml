@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "koya1616"
+    assignees:
+      - "koya1616"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    allow:
+      - dependency-type: "direct"
+    versioning-strategy: increase
