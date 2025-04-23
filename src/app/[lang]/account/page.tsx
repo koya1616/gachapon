@@ -10,43 +10,29 @@ export default async function AccountPage({
   const { lang } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
-  const mockUserData: {
-    id: number;
-    name: string;
-    postal_code: string;
-    country: string;
-    address: string;
-    orders: Array<{ id: string; date: string; total: number; status_text: string; status: string }>;
-  } = {
-    id: 1,
-    name: "John Doe",
-    postal_code: "12345",
-    country: "japan",
-    address: "123 Main St, City, Country",
-    orders: [
-      { id: "ORD-001", date: "2025-04-15", total: 2500, status_text: t(l).order.status.delivered, status: "delivered" },
-      {
-        id: "ORD-002",
-        date: "2025-04-02",
-        total: 1800,
-        status_text: t(l).order.status.processing,
-        status: "processing",
-      },
-      { id: "ORD-003", date: "2025-03-21", total: 3200, status_text: t(l).order.status.shipped, status: "shipped" },
-    ],
-  };
+  const mockOrderData: Array<{ id: string; date: string; total: number; status_text: string; status: string }> = [
+    { id: "ORD-001", date: "2025-04-15", total: 2500, status_text: t(l).order.status.delivered, status: "delivered" },
+    {
+      id: "ORD-002",
+      date: "2025-04-02",
+      total: 1800,
+      status_text: t(l).order.status.processing,
+      status: "processing",
+    },
+    { id: "ORD-003", date: "2025-03-21", total: 3200, status_text: t(l).order.status.shipped, status: "shipped" },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <h1 className="text-3xl font-semibold mb-4">{t(l).account.title}</h1>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
-        <AddressForm info={mockUserData} lang={l} />
+        <AddressForm lang={l} />
       </div>
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
         <h2 className="text-xl font-medium mb-4">{t(l).account.order_history}</h2>
-        {mockUserData.orders && mockUserData.orders.length > 0 ? (
+        {mockOrderData && mockOrderData.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
@@ -66,7 +52,7 @@ export default async function AccountPage({
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {mockUserData.orders.map((order) => (
+                {mockOrderData.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{order.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.date}</td>

@@ -71,4 +71,14 @@ export async function createAddress(address: Omit<Address, "id">): Promise<void>
   await executeQuery(query, params);
 }
 
+export async function updateAddress(address: Address): Promise<void> {
+  const query = `
+    UPDATE addresses
+    SET name = $1, country = $2, postal_code = $3, address = $4
+    WHERE id = $5
+  `;
+  const params = [address.name, address.country, address.postal_code, address.address, address.id];
+  await executeQuery(query, params);
+}
+
 export { executeQuery };

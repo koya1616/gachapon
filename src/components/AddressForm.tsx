@@ -1,53 +1,85 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
-import type { Lang } from "@/types";
+import type { Address, Lang } from "@/types";
 import ButtonLoading from "./ButtonLoading";
 
-interface FormFields {
-  name: string;
-  country: string;
-  postal_code: string;
-  address: string;
-}
-
-const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
+const AddressForm = ({ lang }: { lang: Lang }) => {
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
-  const [formData, setFormData] = useState({
-    name: info.name,
-    country: info.country,
-    postal_code: info.postal_code,
-    address: info.address,
-  });
+  const initialFormData = useMemo<Address>(
+    () => ({
+      id: 0,
+      user_id: 0,
+      name: "",
+      country: "",
+      postal_code: "",
+      address: "",
+    }),
+    [],
+  );
+
+  const [formData, setFormData] = useState<Address>(initialFormData);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+  const fetchAddress = useCallback(async () => {
+    const response = await fetch("/api/address");
+    const address = await response.json();
+    setFormData({
+      id: address?.id || 0,
+      user_id: address?.user_id || 0,
+      name: address?.name || "",
+      country: address?.country || "",
+      postal_code: address?.postal_code || "",
+      address: address?.address || "",
+    });
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchAddress().finally(() => setIsLoading(false));
+  }, [fetchAddress]);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
-    setFormData((prev: FormFields) => ({
+    setFormData((prev: Address) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      await fetch("/api/address", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-    } catch (error) {
-      alert(t(l).form.fail.address);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsLoading(true);
+      try {
+        await fetch("/api/address", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+      } catch (error) {
+        alert(t(l).form.fail.address);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [formData, l],
+  );
+
+  const handleClear = useCallback(() => {
+    setFormData((prevData) => ({
+      id: prevData.id,
+      user_id: prevData.user_id,
+      name: "",
+      country: "",
+      postal_code: "",
+      address: "",
+    }));
+  }, []);
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -159,14 +191,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
         <div className="flex justify-between">
           <button
             type="button"
-            onClick={() => {
-              setFormData({
-                name: "",
-                country: "",
-                postal_code: "",
-                address: "",
-              });
-            }}
+            onClick={handleClear}
             className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
           >
             {t(l).form.clear}
