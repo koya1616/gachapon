@@ -1,9 +1,9 @@
-const ButtonLoading = () => {
+const ButtonLoading = ({ color }: { color: "red" | "white" }) => {
   return (
     <>
       <span className="absolute inset-0 flex items-center justify-center">
         <svg
-          className="animate-spin h-5 w-5 text-red-700"
+          className={`animate-spin h-5 w-5 text-${color}-700`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

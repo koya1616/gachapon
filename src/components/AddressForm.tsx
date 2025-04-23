@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
+import ButtonLoading from "./ButtonLoading";
 
 interface FormFields {
   name: string;
@@ -20,6 +21,7 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
     postal_code: info.postal_code,
     address: info.address,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
@@ -29,11 +31,22 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("送信データ:", formData);
-    // ここでバックエンドAPIにデータを送信する処理を実装
-    alert("住所が登録されました！");
+    setIsLoading(true);
+    try {
+      await fetch("/api/address", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      alert(t(l).form.fail.address);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -158,8 +171,12 @@ const AddressForm = ({ info, lang }: { info: FormFields; lang: Lang }) => {
           >
             {t(l).form.clear}
           </button>
-          <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer">
-            {t(l).form.register}
+          <button
+            type="submit"
+            className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
+            disabled={isLoading}
+          >
+            {isLoading ? <ButtonLoading color="white" /> : <span>{t(l).form.register}</span>}
           </button>
         </div>
       </form>

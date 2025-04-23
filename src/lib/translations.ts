@@ -49,6 +49,9 @@ const translations = {
       address: "Address",
       clear: "Clear",
       register: "Register",
+      fail: {
+        address: "Failed to save. Please try again.",
+      },
     },
   },
   ja: {
@@ -99,6 +102,9 @@ const translations = {
       address: "住所",
       clear: "クリア",
       register: "登録",
+      fail: {
+        address: "保存に失敗しました。再度お試しください。",
+      },
     },
   },
   zh: {
@@ -149,6 +155,9 @@ const translations = {
       address: "地址",
       clear: "清除",
       register: "注册",
+      fail: {
+        address: "保存失败，请重试。",
+      },
     },
   },
 };

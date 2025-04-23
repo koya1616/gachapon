@@ -28,7 +28,7 @@ export default function LogoutButton({ lang }: { lang: Lang }) {
       onClick={handleLogout}
       disabled={isLoading}
     >
-      {isLoading ? <ButtonLoading /> : <span>{t(l).account.logout}</span>}
+      {isLoading ? <ButtonLoading color="red" /> : <span>{t(l).account.logout}</span>}
     </button>
   );
 }
