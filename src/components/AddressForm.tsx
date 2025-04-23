@@ -26,6 +26,10 @@ const AddressForm = ({ lang }: { lang: Lang }) => {
 
   const fetchAddress = useCallback(async () => {
     const response = await fetch("/api/address");
+    if (response.status === 401) {
+      window.location.href = "/ja/login";
+      return;
+    }
     const address = await response.json();
     setFormData({
       id: address?.id || 0,
@@ -55,13 +59,18 @@ const AddressForm = ({ lang }: { lang: Lang }) => {
       e.preventDefault();
       setIsLoading(true);
       try {
-        await fetch("/api/address", {
+        const response = await fetch("/api/address", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         });
+
+        if (response.status === 401) {
+          window.location.href = "/ja/login";
+          return;
+        }
       } catch (error) {
         alert(t(l).form.fail.address);
       } finally {

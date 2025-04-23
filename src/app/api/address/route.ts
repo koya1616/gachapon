@@ -9,7 +9,7 @@ export async function GET() {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
-    redirect("/ja/login");
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
   const address = await findAddressByUserId(userToken.id);
   return NextResponse.json(address, { status: 200 });
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
 
   if (!userToken) {
-    redirect("/ja/login");
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json();
