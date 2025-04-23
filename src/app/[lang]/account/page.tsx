@@ -20,6 +20,14 @@ export default async function AccountPage({
       status: "processing",
     },
     { id: "ORD-003", date: "2025-03-21", total: 3200, status_text: t(l).order.status.shipped, status: "shipped" },
+    { id: "ORD-004", date: "2025-03-10", total: 1500, status_text: t(l).order.status.cancelled, status: "cancelled" },
+    {
+      id: "ORD-005",
+      date: "2025-02-28",
+      total: 500,
+      status_text: t(l).order.status.payment_failed,
+      status: "payment_failed",
+    },
   ];
 
   return (
@@ -68,7 +76,11 @@ export default async function AccountPage({
                             ? "bg-green-100 text-green-800"
                             : order.status === "processing"
                               ? "bg-yellow-100 text-yellow-800"
-                              : "bg-blue-100 text-blue-800"
+                              : order.status === "shipped"
+                                ? "bg-blue-100 text-blue-800"
+                                : order.status === "payment_failed"
+                                  ? "bg-red-100 text-red-800"
+                                  : "bg-gray-100 text-gray-800"
                         }`}
                       >
                         {order.status_text}

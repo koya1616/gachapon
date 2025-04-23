@@ -40,6 +40,8 @@ const translations = {
         delivered: "Delivered",
         processing: "Processing",
         shipped: "Shipped",
+        cancelled: "Cancelled",
+        payment_failed: "Payment Failed",
       },
     },
     form: {
@@ -93,6 +95,8 @@ const translations = {
         delivered: "配達済み",
         processing: "処理中",
         shipped: "発送済み",
+        cancelled: "キャンセル済み",
+        payment_failed: "決済失敗",
       },
     },
     form: {
@@ -146,6 +150,8 @@ const translations = {
         delivered: "已送达",
         processing: "处理中",
         shipped: "已发货",
+        cancelled: "已取消",
+        payment_failed: "支付失败",
       },
     },
     form: {
