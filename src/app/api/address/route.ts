@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
-  console.log(userToken);
+
   if (!userToken) {
     redirect("/ja/login");
   }
