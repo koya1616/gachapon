@@ -5,6 +5,7 @@ import { PAYPAY_GET_CODE_PAYMENT_DETAILS, PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } f
 const PAYPAY_MERCHANT_ID = process.env.PAYPAY_MERCHANT_ID || "";
 const PAYPAY_API_KEY = process.env.PAYPAY_API_KEY || "";
 const PAYPAY_API_SECRET = process.env.PAYPAY_API_SECRET || "";
+const PAYPAY_REDIRECT_URL = process.env.PAYPAY_REDIRECT_URL || "";
 
 // https://github.dev/paypay/paypayopa-sdk-node
 // https://www.paypay.ne.jp/opa/doc/jp/v1.0/dynamicqrcode#tag/%E6%B1%BA%E6%B8%88/operation/createQRCode
@@ -42,7 +43,7 @@ const paypayQRCodeCreate = async (
       currency: "JPY",
     },
     codeType: "ORDER_QR",
-    redirectUrl: "http://localhost:3000/ja/login",
+    redirectUrl: `${PAYPAY_REDIRECT_URL}?merchantPaymentId=${merchantPaymentId}`,
     redirectType: "WEB_LINK",
   });
   return "BODY" in response ? (response.BODY as PaypayQRCodeCreateResponse) : null;
