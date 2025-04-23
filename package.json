@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "docker compose up -d && next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "docker compose up -d && next start",
     "biome-check": "biome check .",
     "lint": "biome lint --write . && biome format --write ."
   },
