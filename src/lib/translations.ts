@@ -12,6 +12,7 @@ const translations = {
     },
     product: {
       add_to_cart: "Add to Cart",
+      out_of_stock: "Out of Stock",
     },
     login: {
       facebook: "Login with Facebook",
@@ -89,6 +90,7 @@ const translations = {
     },
     product: {
       add_to_cart: "カートに追加",
+      out_of_stock: "在庫切れ",
     },
     login: {
       facebook: "Facebookでログイン",
@@ -166,6 +168,7 @@ const translations = {
     },
     product: {
       add_to_cart: "加入购物车",
+      out_of_stock: "缺货",
     },
     login: {
       facebook: "Facebook登录",

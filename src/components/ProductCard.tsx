@@ -7,7 +7,10 @@ import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 
 const ProductCard = memo(function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
-  const { add_to_cart } = useCart();
+  const { add_to_cart, cart } = useCart();
+
+  const currentInCart = cart.find((item) => item.id === product.id)?.quantity || 0;
+  const isMaxQuantity = currentInCart >= product.stock_quantity;
 
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -20,9 +23,12 @@ const ProductCard = memo(function ProductCard({ product, lang }: { product: Prod
         <button
           type="button"
           onClick={() => add_to_cart(product)}
-          className="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
+          disabled={isMaxQuantity}
+          className={`mt-3 w-full py-2 rounded-md transition-colors duration-300 ${
+            isMaxQuantity ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+          }`}
         >
-          {t(lang).product.add_to_cart}
+          {isMaxQuantity ? t(lang).product.out_of_stock : t(lang).product.add_to_cart}
         </button>
       </div>
     </div>

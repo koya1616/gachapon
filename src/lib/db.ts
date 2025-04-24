@@ -23,7 +23,7 @@ async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
 }
 
 export async function getProducts(): Promise<Product[]> {
-  return executeQuery<Product>("SELECT * FROM products");
+  return executeQuery<Product>("SELECT * FROM products WHERE stock_quantity > 0");
 }
 
 export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<void> {

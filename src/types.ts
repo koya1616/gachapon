@@ -3,7 +3,8 @@ export type Product = {
   name: string;
   price: number;
   image: string;
-  quantity: number;
+  quantity: number; // DBのカラムには存在しない。
+  stock_quantity: number;
 };
 
 export type Lang = "en" | "ja" | "zh";
