@@ -36,6 +36,10 @@ type PaypayGetCodePaymentDetailsResponse = {
   data: {
     status: "CREATED" | "AUTHORIZED" | "REAUTHORIZING" | "COMPLETED" | "REFUNDED" | "FAILED" | "CANCELED" | "EXPIRED";
     requestedAt: number;
+    acceptedAt: number;
+    amount: {
+      amount: number;
+    };
   };
 };
 export const paypayGetCodePaymentDetails = async (

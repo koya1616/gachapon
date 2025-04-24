@@ -1,4 +1,4 @@
-import type { Address, PaypayPayment, Product, User } from "@/types";
+import type { Address, PaypayPayment, Product, Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -83,6 +83,19 @@ export async function updateAddress(address: Address): Promise<void> {
 
 export async function getPaypayPayments(): Promise<PaypayPayment[]> {
   return executeQuery<PaypayPayment>("SELECT * FROM paypay_payments");
+}
+
+export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
+  const query = `
+    SELECT s.*
+    FROM paypay_payments pp
+    INNER JOIN shipments s ON pp.id = s.paypay_payment_id
+    WHERE pp.merchant_payment_id = $1
+    LIMIT 1
+  `;
+  const params = [merchant_payment_id];
+  const results = await executeQuery<Shipment>(query, params);
+  return results.length > 0 ? results[0] : null;
 }
 
 export { executeQuery };
