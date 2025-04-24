@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { getPaypayPayments } from "@/lib/db";
 import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
-import RedirectButton from "@/components/RedirectButton";
+import Link from "next/link";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
@@ -54,11 +54,12 @@ export default async function Payment() {
                       {payment.merchant_payment_id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <RedirectButton
-                        text="詳細"
-                        className="text-indigo-600 hover:text-indigo-900 mr-2"
-                        to={`/admin/payment/paypay/${payment.merchant_payment_id}`}
-                      />
+                      <Link
+                        href={`/admin/payment/paypay/${payment.merchant_payment_id}`}
+                        className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
+                      >
+                        詳細
+                      </Link>
                     </td>
                   </tr>
                 ))
