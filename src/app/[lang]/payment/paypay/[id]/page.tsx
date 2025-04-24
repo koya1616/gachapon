@@ -1,5 +1,5 @@
 import Order from "@/components/Order";
-import { findShipmentByMerchantPaymentIdAndUserId } from "@/lib/db";
+import { findShipmentByMerchantPaymentIdAndUserId, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
 import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { cookies } from "next/headers";
 import { USER_TOKEN } from "@/const/cookies";
@@ -26,12 +26,13 @@ export default async function UserPayPayPage({
   }
 
   const paymentDetails = await paypayGetCodePaymentDetails(id);
+  const paymentProducts = await getPaymentProductsByPaypayPaymentId(shipment.paypay_payment_id);
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">決済詳細 ID: {id}</h1>
+      <h1 className="text-2xl font-bold mb-6">決済 ID: {id}</h1>
 
-      <Order paymentDetails={paymentDetails} shipment={shipment} lang={l} />
+      <Order paymentDetails={paymentDetails} shipment={shipment} paymentProducts={paymentProducts} lang={l} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { Address, Order, PaypayPayment, Product, Shipment, User } from "@/types";
+import type { Address, Order, PaymentProduct, PaypayPayment, Product, Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -167,6 +167,24 @@ export async function updateShipmentStatus(
 
   const params = [Date.now(), id];
   await executeQuery(query, params);
+}
+
+export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: number): Promise<PaymentProduct[]> {
+  const query = `
+    SELECT
+      pp.id AS id,
+      pp.paypay_payment_id AS paypay_payment_id,
+      pp.quantity AS quantity,
+      pp.price AS price,
+      pp.product_id AS product_id,
+      p.name AS name,
+      p.image AS image
+    FROM payment_products pp
+    INNER JOIN products p ON pp.product_id = p.id
+    WHERE pp.paypay_payment_id = $1
+  `;
+  const params = [paypay_payment_id];
+  return executeQuery<PaymentProduct>(query, params);
 }
 
 export { executeQuery };

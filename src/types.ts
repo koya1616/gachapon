@@ -50,3 +50,13 @@ export type Order = {
   cancelled_at: string | null;
   created_at: string;
 };
+
+export type PaymentProduct = {
+  id: number;
+  paypay_payment_id: number | null;
+  quantity: number;
+  price: number;
+  product_id: number;
+  name: string;
+  image: string;
+};

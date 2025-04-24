@@ -61,6 +61,10 @@ const translations = {
         payment_failed_at: "Payment Failed At",
         no_shipment: "No shipment information available",
       },
+      product: {
+        title: "Purchased Products",
+        total: "Total Amount",
+      },
     },
     form: {
       country_select: "Select Country",
@@ -134,6 +138,10 @@ const translations = {
         payment_failed_at: "決済失敗日時",
         no_shipment: "配送情報はありません",
       },
+      product: {
+        title: "購入商品",
+        total: "合計金額",
+      },
     },
     form: {
       country_select: "国を選択",
@@ -206,6 +214,10 @@ const translations = {
         cancelled_at: "取消时间",
         payment_failed_at: " 支付失败时间",
         no_shipment: "没有配送信息",
+      },
+      product: {
+        title: "购买商品",
+        total: "总金额",
       },
     },
     form: {
