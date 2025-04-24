@@ -2,13 +2,14 @@ import type { NextRequest } from "next/server";
 
 /**
  * TODO: 決済処理
- * 1. QRコード作成すると同時に、merchantPaymentIdをDBに保存。DB設計大事で商品と紐づくようにする。
+ * 1. QRコード作成すると同時に、merchantPaymentIdをDBに保存。配送と商品購入レコードの作成
  *   ・merchantPaymentIdの生成ロジック:
- *     - timestamp: new Date().toISOString().replace(/[-:T.Z]/g, '')
+ *     - "PAYPAY_"のprefix
+ *     - user_id
  *     - ランダム文字列: crypto.randomUUID().split('-')[0]
- * 2. callbackのmerchantPaymentIdで情報を取得
- * 3. 処理中であることの画面を表示
- * 4. 管理画面で決済の情報をみえるようにする、変えれるようにする
+ *     - timestamp: new Date().toISOString().replace(/[-:T.Z]/g, '')
+ * 2. callbackのmerchantPaymentIdで情報を取得。配送と商品購入レコードがなければ作成
+ * 3. src/app/[lang]/payment/paypay/[id]/page.tsxにリダイレクト
  */
 export async function GET(request: NextRequest) {
   console.log(request.nextUrl.searchParams);
