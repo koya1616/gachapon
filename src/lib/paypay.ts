@@ -32,7 +32,7 @@ export const paypayQRCodeCreate = async (
   return "BODY" in response ? (response.BODY as PaypayQRCodeCreateResponse) : null;
 };
 
-type PaypayGetCodePaymentDetailsResponse = {
+export type PaypayGetCodePaymentDetailsResponse = {
   data: {
     status: "CREATED" | "AUTHORIZED" | "REAUTHORIZING" | "COMPLETED" | "REFUNDED" | "FAILED" | "CANCELED" | "EXPIRED";
     requestedAt: number;
