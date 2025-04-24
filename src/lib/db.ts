@@ -1,4 +1,4 @@
-import type { Address, Order, PaymentProduct, PaypayPayment, Product, Shipment, User } from "@/types";
+import type { Address, Order, PaymentProduct, Product, Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -23,7 +23,7 @@ async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
 }
 
 export async function getProducts(): Promise<Product[]> {
-  return executeQuery<Product>("SELECT * FROM products WHERE stock_quantity > 0");
+  return executeQuery<Product>("SELECT * FROM products");
 }
 
 export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<void> {

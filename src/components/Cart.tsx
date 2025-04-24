@@ -120,6 +120,10 @@ export default function Cart({
                 <button
                   type="button"
                   className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors cursor-pointer"
+                  // TODO: stock_quantityの数を確認。確認する方法は二段階
+                  // 1. sessionStorageで確認
+                  // 2. DBで確認
+                  // 3. 問題なければstock_quantityを減らす
                 >
                   {t(lang).cart.checkout}
                 </button>
