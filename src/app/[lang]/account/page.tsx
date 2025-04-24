@@ -1,6 +1,13 @@
 import AddressForm from "@/components/AddressForm";
 import LogoutButton from "@/components/LogoutButton";
 import { useTranslation as t } from "@/lib/translations";
+import { cookies } from "next/headers";
+import { USER_TOKEN } from "@/const/cookies";
+import { verifyToken } from "@/lib/jwt";
+import { redirect } from "next/navigation";
+import { getPaypayPaymentsByUserId } from "@/lib/db";
+import type { Order } from "@/types";
+import { formatDate } from "@/lib/date";
 
 export default async function AccountPage({
   params,
@@ -10,25 +17,13 @@ export default async function AccountPage({
   const { lang } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
-  const mockOrderData: Array<{ id: string; date: string; total: number; status_text: string; status: string }> = [
-    { id: "ORD-001", date: "2025-04-15", total: 2500, status_text: t(l).order.status.delivered, status: "delivered" },
-    {
-      id: "ORD-002",
-      date: "2025-04-02",
-      total: 1800,
-      status_text: t(l).order.status.processing,
-      status: "processing",
-    },
-    { id: "ORD-003", date: "2025-03-21", total: 3200, status_text: t(l).order.status.shipped, status: "shipped" },
-    { id: "ORD-004", date: "2025-03-10", total: 1500, status_text: t(l).order.status.cancelled, status: "cancelled" },
-    {
-      id: "ORD-005",
-      date: "2025-02-28",
-      total: 500,
-      status_text: t(l).order.status.payment_failed,
-      status: "payment_failed",
-    },
-  ];
+  const cookieStore = await cookies();
+  const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
+  if (!userToken) {
+    redirect(`/${l}/login`);
+  }
+
+  const orders = await getPaypayPaymentsByUserId(userToken.id);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -40,7 +35,7 @@ export default async function AccountPage({
 
       <div className="bg-white shadow rounded-lg p-6 mb-8">
         <h2 className="text-xl font-medium mb-4">{t(l).account.order_history}</h2>
-        {mockOrderData && mockOrderData.length > 0 ? (
+        {orders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
@@ -52,39 +47,21 @@ export default async function AccountPage({
                     {t(l).account.date}
                   </th>
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.total}
-                  </th>
-                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {t(l).account.status}
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {mockOrderData.map((order) => (
-                  <tr key={order.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">{order.id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.date}</td>
+                {orders.map((order) => (
+                  <tr key={order.paypay_payment_id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
+                      {order.paypay_payment_id}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {t(l).account.currency}
-                      {order.total.toLocaleString()}
+                      {formatDate(order.created_at)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                        ${
-                          order.status === "delivered"
-                            ? "bg-green-100 text-green-800"
-                            : order.status === "processing"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : order.status === "shipped"
-                                ? "bg-blue-100 text-blue-800"
-                                : order.status === "payment_failed"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {order.status_text}
-                      </span>
+                      <OrderStatusBadge order={order} lang={l} />
                     </td>
                   </tr>
                 ))}
@@ -102,3 +79,36 @@ export default async function AccountPage({
     </div>
   );
 }
+
+function getShipmentStatus(shipment: Order) {
+  if (shipment.payment_failed_at) return "payment_failed";
+  if (shipment.delivered_at) return "delivered";
+  if (shipment.shipped_at) return "shipped";
+  return "processing";
+}
+
+type StatusType = "delivered" | "processing" | "shipped" | "payment_failed" | "cancelled";
+const statusStyles: Record<StatusType, string> = {
+  delivered: "bg-green-100 text-green-800",
+  processing: "bg-yellow-100 text-yellow-800",
+  shipped: "bg-blue-100 text-blue-800",
+  payment_failed: "bg-red-100 text-red-800",
+  cancelled: "bg-gray-100 text-gray-800",
+};
+
+const OrderStatusBadge = ({
+  order,
+  lang,
+}: {
+  order: Order;
+  lang: string;
+}) => {
+  const status = getShipmentStatus(order) as StatusType;
+  const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
+
+  return (
+    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusStyles[status]}`}>
+      {t(l).order.status[status]}
+    </span>
+  );
+};
