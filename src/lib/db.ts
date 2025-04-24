@@ -118,4 +118,20 @@ export async function findShipmentByMerchantPaymentId(merchant_payment_id: strin
   return results.length > 0 ? results[0] : null;
 }
 
+export async function findShipmentByMerchantPaymentIdAndUserId(
+  merchant_payment_id: string,
+  user_id: number,
+): Promise<Shipment | null> {
+  const query = `
+    SELECT s.*
+    FROM paypay_payments pp
+    INNER JOIN shipments s ON pp.id = s.paypay_payment_id
+    WHERE pp.merchant_payment_id = $1 AND pp.user_id = $2
+    LIMIT 1
+  `;
+  const params = [merchant_payment_id, user_id];
+  const results = await executeQuery<Shipment>(query, params);
+  return results.length > 0 ? results[0] : null;
+}
+
 export { executeQuery };

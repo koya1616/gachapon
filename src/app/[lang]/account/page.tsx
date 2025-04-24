@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AddressForm from "@/components/AddressForm";
 import LogoutButton from "@/components/LogoutButton";
 import { useTranslation as t } from "@/lib/translations";
@@ -49,6 +50,7 @@ export default async function AccountPage({
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {t(l).account.status}
                   </th>
+                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" />
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -62,6 +64,14 @@ export default async function AccountPage({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <OrderStatusBadge order={order} lang={l} />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <Link
+                        href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
+                        className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
+                      >
+                        詳細
+                      </Link>
                     </td>
                   </tr>
                 ))}
