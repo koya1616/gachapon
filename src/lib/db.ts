@@ -134,4 +134,25 @@ export async function findShipmentByMerchantPaymentIdAndUserId(
   return results.length > 0 ? results[0] : null;
 }
 
+export async function updateShipmentStatus(
+  id: number,
+  status: "shipped" | "delivered" | "payment_failed" | "cancelled",
+): Promise<void> {
+  const statusMap = {
+    shipped: "shipped_at",
+    delivered: "delivered_at",
+    payment_failed: "payment_failed_at",
+    cancelled: "cancelled_at",
+  };
+
+  const query = `
+    UPDATE shipments
+    SET ${statusMap[status]} = $1
+    WHERE id = $2
+  `;
+
+  const params = [Date.now(), id];
+  await executeQuery(query, params);
+}
+
 export { executeQuery };
