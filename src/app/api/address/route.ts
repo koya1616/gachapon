@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
-import { redirect } from "next/navigation";
 import { createAddress, findAddressByUserId, updateAddress } from "@/lib/db";
 
 export async function GET() {

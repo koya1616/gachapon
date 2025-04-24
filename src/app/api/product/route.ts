@@ -4,11 +4,12 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 
+const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
+
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
-  const adminCode = cookieStore.get(ADMIN_CODE)?.value;
-
-  if (!adminCode) {
+  const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
+  if (adminToken !== ENV_ADMIN_CODE) {
     return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
   }
 

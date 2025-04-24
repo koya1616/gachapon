@@ -9,6 +9,7 @@ const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
 const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
 const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
 const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME;
+const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
 const s3Client = new S3Client({
   region: "auto",
@@ -21,9 +22,8 @@ const s3Client = new S3Client({
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
-  const adminCode = cookieStore.get(ADMIN_CODE)?.value;
-
-  if (!adminCode) {
+  const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
+  if (adminToken !== ENV_ADMIN_CODE) {
     return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
   }
 

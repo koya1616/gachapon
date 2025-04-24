@@ -4,12 +4,12 @@ import { ADMIN_CODE } from "@/const/cookies";
 
 const VERCEL_API_TOKEN = process.env.VERCEL_API_TOKEN;
 const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID;
+const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
 export async function GET() {
   const cookieStore = await cookies();
-  const adminCode = cookieStore.get(ADMIN_CODE)?.value;
-
-  if (!adminCode) {
+  const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
+  if (adminToken !== ENV_ADMIN_CODE) {
     return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
   }
 
