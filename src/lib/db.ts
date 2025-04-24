@@ -1,4 +1,4 @@
-import type { Address, Product, User } from "@/types";
+import type { Address, PaypayPayment, Product, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -79,6 +79,10 @@ export async function updateAddress(address: Address): Promise<void> {
   `;
   const params = [address.name, address.country, address.postal_code, address.address, address.id];
   await executeQuery(query, params);
+}
+
+export async function getPaypayPayments(): Promise<PaypayPayment[]> {
+  return executeQuery<PaypayPayment>("SELECT * FROM paypay_payments");
 }
 
 export { executeQuery };

@@ -21,3 +21,9 @@ export type Address = {
   postal_code: string;
   address: string;
 };
+
+export type PaypayPayment = {
+  id: number;
+  user_id: number;
+  merchant_payment_id: string;
+};
