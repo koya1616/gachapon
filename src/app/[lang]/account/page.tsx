@@ -44,7 +44,7 @@ export default async function AccountPage({
                     {t(l).account.order_id}
                   </th>
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.date}
+                    {t(l).account.order_date}
                   </th>
                   <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {t(l).account.status}
@@ -82,6 +82,7 @@ export default async function AccountPage({
 
 function getShipmentStatus(shipment: Order) {
   if (shipment.payment_failed_at) return "payment_failed";
+  if (shipment.cancelled_at) return "cancelled";
   if (shipment.delivered_at) return "delivered";
   if (shipment.shipped_at) return "shipped";
   return "processing";

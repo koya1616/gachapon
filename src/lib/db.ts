@@ -95,6 +95,7 @@ export async function getPaypayPaymentsByUserId(user_id: number): Promise<Order[
       s.shipped_at AS shipped_at,
       s.delivered_at AS delivered_at,
       s.payment_failed_at AS payment_failed_at,
+      s.cancelled_at AS cancelled_at,
       s.created_at AS created_at
     FROM paypay_payments pp
     INNER JOIN shipments s ON pp.id = s.paypay_payment_id

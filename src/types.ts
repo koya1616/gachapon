@@ -35,6 +35,7 @@ export type Shipment = {
   shipped_at: number | null;
   delivered_at: number | null;
   payment_failed_at: number | null;
+  cancelled_at: number | null;
   created_at: number;
 };
 
@@ -43,8 +44,9 @@ export type Order = {
   merchant_payment_id: string;
   paypay_payment_id: number;
   address: string;
-  shipped_at: number | null;
-  delivered_at: number | null;
-  payment_failed_at: number | null;
+  shipped_at: string | null;
+  delivered_at: string | null;
+  payment_failed_at: string | null;
+  cancelled_at: string | null;
   created_at: string;
 };
