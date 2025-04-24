@@ -81,8 +81,22 @@ export async function updateAddress(address: Address): Promise<void> {
   await executeQuery(query, params);
 }
 
-export async function getPaypayPayments(): Promise<PaypayPayment[]> {
-  return executeQuery<PaypayPayment>("SELECT * FROM paypay_payments");
+export async function getPaypayPayments(): Promise<Order[]> {
+  const query = `
+  SELECT
+    pp.id AS paypay_payment_id,
+    pp.user_id AS user_id,
+    pp.merchant_payment_id AS merchant_payment_id,
+    s.address AS address,
+    s.shipped_at AS shipped_at,
+    s.delivered_at AS delivered_at,
+    s.payment_failed_at AS payment_failed_at,
+    s.cancelled_at AS cancelled_at,
+    s.created_at AS created_at
+  FROM paypay_payments pp
+  INNER JOIN shipments s ON pp.id = s.paypay_payment_id
+`;
+  return executeQuery<Order>(query);
 }
 
 export async function getPaypayPaymentsByUserId(user_id: number): Promise<Order[]> {

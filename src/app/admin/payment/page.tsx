@@ -3,6 +3,7 @@ import { getPaypayPayments } from "@/lib/db";
 import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import OrderStatusBadge from "@/components/OrderStatusBadge";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
@@ -13,7 +14,7 @@ export default async function Payment() {
     redirect("/admin/login");
   }
 
-  const payments = await getPaypayPayments();
+  const orders = await getPaypayPayments();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -36,26 +37,35 @@ export default async function Payment() {
                 >
                   決済ID
                 </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  ステータス
+                </th>
                 <th scope="col" />
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {payments.length === 0 ? (
+              {orders.length === 0 ? (
                 <tr>
                   <td colSpan={3} className="px-6 py-4 text-center text-sm text-gray-500">
                     決済履歴がありません
                   </td>
                 </tr>
               ) : (
-                payments.map((payment) => (
-                  <tr key={payment.merchant_payment_id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment.user_id}</td>
+                orders.map((order) => (
+                  <tr key={order.merchant_payment_id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.user_id}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500">
-                      {payment.merchant_payment_id}
+                      {order.merchant_payment_id}
+                    </td>
+                    <td className="px-6 py-4">
+                      <OrderStatusBadge order={order} lang="ja" />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <Link
-                        href={`/admin/payment/paypay/${payment.merchant_payment_id}`}
+                        href={`/admin/payment/paypay/${order.merchant_payment_id}`}
                         className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
                       >
                         詳細
