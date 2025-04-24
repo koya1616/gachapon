@@ -67,11 +67,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const updateQuantity = useCallback((productId: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
+  const updateQuantity = useCallback(
+    (productId: number, newQuantity: number) => {
+      if (newQuantity < 0) return;
+      if (newQuantity === 0) {
+        removeFromCart(productId);
+        return;
+      }
 
-    setCart((prevCart) => prevCart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item)));
-  }, []);
+      setCart((prevCart) =>
+        prevCart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item)),
+      );
+    },
+    [removeFromCart],
+  );
 
   const clear_cart = useCallback(() => {
     setCart([]);
