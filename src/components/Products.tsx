@@ -1,5 +1,6 @@
 import type { Product } from "@/types";
 import ProductCard from "./ProductCard";
+import Link from "next/link";
 import type { Lang } from "@/types";
 
 export default function Products({ products, lang }: { products: Product[]; lang: Lang }) {
@@ -9,6 +10,14 @@ export default function Products({ products, lang }: { products: Product[]; lang
         {products.map((product) => (
           <ProductCard key={product.id} product={product} lang={lang} />
         ))}
+      </div>
+      <div className="text-center mt-6">
+        <Link
+          href={`/${lang}/checkout`}
+          className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition-colors"
+        >
+          購入画面へ
+        </Link>
       </div>
     </div>
   );

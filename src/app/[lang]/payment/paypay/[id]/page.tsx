@@ -30,8 +30,6 @@ export default async function UserPayPayPage({
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">決済 ID: {id}</h1>
-
       <Order paymentDetails={paymentDetails} shipment={shipment} paymentProducts={paymentProducts} lang={l} />
     </div>
   );

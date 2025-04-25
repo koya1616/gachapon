@@ -127,10 +127,6 @@ export default function Cart({
                     onClose();
                     router.push(`/${lang}/checkout`);
                   }}
-                  // TODO: stock_quantityの数を確認。確認する方法は二段階
-                  // 1. sessionStorageで確認
-                  // 2. DBで確認
-                  // 3. 問題なければstock_quantityを減らす
                 >
                   {t(lang).cart.checkout}
                 </button>
