@@ -1,4 +1,4 @@
-import type { Address, Order, PaymentProduct, Product, Shipment, User } from "@/types";
+import type { Address, Order, PaymentProduct, PaypayPayment, Product, Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -119,6 +119,15 @@ export async function getPaypayPaymentsByUserId(user_id: number): Promise<Order[
   return executeQuery<Order>(query, params);
 }
 
+export async function findPaypayPaymentByMerchantPaymentId(merchant_payment_id: string): Promise<PaypayPayment | null> {
+  const query = `
+    SELECT * FROM paypay_payments WHERE merchant_payment_id = $1 LIMIT 1
+  `;
+  const params = [merchant_payment_id];
+  const results = await executeQuery<PaypayPayment>(query, params);
+  return results.length > 0 ? results[0] : null;
+}
+
 export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
   const query = `
     SELECT s.*
@@ -130,6 +139,15 @@ export async function findShipmentByMerchantPaymentId(merchant_payment_id: strin
   const params = [merchant_payment_id];
   const results = await executeQuery<Shipment>(query, params);
   return results.length > 0 ? results[0] : null;
+}
+
+export async function createShipment(shipment: Pick<Shipment, "paypay_payment_id" | "address">): Promise<void> {
+  const query = `
+    INSERT INTO shipments (paypay_payment_id, address)
+    VALUES ($1, $2)
+  `;
+  const params = [shipment.paypay_payment_id, shipment.address];
+  await executeQuery(query, params);
 }
 
 export async function findShipmentByMerchantPaymentIdAndUserId(
