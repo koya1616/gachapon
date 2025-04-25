@@ -61,3 +61,45 @@ export type PaymentProduct = {
   name: string;
   image: string;
 };
+
+export type LotteryEvent = {
+  id: number;
+  name: string;
+  description: string | null;
+  start_at: number;
+  end_at: number;
+  result_at: number;
+  payment_deadline_at: number;
+  created_at: number;
+  status: number;
+};
+
+export type LotteryProduct = {
+  id: number;
+  lottery_event_id: number;
+  product_id: number;
+  quantity_available: number;
+  created_at: number;
+};
+
+export type LotteryEntry = {
+  id: number;
+  user_id: number;
+  lottery_event_id: number;
+  lottery_product_id: number;
+  result: number;
+  created_at: number;
+};
+
+export enum LotteryStatus {
+  DRAFT = 0,
+  ACTIVE = 1,
+  FINISHED = 2,
+  CANCELLED = 3,
+}
+
+export enum LotteryEntryResult {
+  PROCESSING = 0,
+  WIN = 1,
+  LOSE = 2,
+}

@@ -1,4 +1,4 @@
-import type { Address, Order, PaymentProduct, PaypayPayment, Product, Shipment, User } from "@/types";
+import type { Address, LotteryEvent, Order, PaymentProduct, PaypayPayment, Product, Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
@@ -307,6 +307,29 @@ export async function updateProductById(id: number, productData: Partial<Product
 
   const products = await executeQuery<Product>(query, values);
   return products.length > 0 ? products[0] : null;
+}
+
+export async function getLotteryEvents(): Promise<LotteryEvent[]> {
+  const query = `
+    SELECT * FROM lottery_events
+  `;
+  return executeQuery<LotteryEvent>(query);
+}
+
+export async function createLotteryEvent(lotteryEvent: Omit<LotteryEvent, "id" | "created_at">): Promise<void> {
+  const query = `
+    INSERT INTO lottery_events (name, description, start_at, end_at, result_at, payment_deadline_at)
+    VALUES ($1, $2, $3, $4, $5, $6)
+  `;
+  const params = [
+    lotteryEvent.name,
+    lotteryEvent.description,
+    lotteryEvent.start_at,
+    lotteryEvent.end_at,
+    lotteryEvent.result_at,
+    lotteryEvent.payment_deadline_at,
+  ];
+  await executeQuery(query, params);
 }
 
 export { executeQuery };

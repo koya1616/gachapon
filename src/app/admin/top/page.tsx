@@ -51,6 +51,19 @@ export default function AdminTop() {
                     </div>
                   </div>
                 </Link>
+
+                <Link href="/admin/lotteries" className="block">
+                  <div className="bg-white overflow-hidden shadow rounded-lg">
+                    <div className="p-6">
+                      <div className="flex items-center">
+                        <div className="ml-4">
+                          <h3 className="text-lg font-medium text-gray-900">抽選管理</h3>
+                          <p className="mt-1 text-sm text-gray-500">抽選の作成、編集を行います</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

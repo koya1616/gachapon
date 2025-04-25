@@ -5,17 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import type { Lang } from "@/types";
 
 const AdminHeader = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const lang: Lang = "ja";
-
   const navigationLinks = [
     { name: "ダッシュボード", path: "/admin/top" },
     { name: "商品一覧", path: "/admin/products" },
+    { name: "抽選管理", path: "/admin/lotteries" },
     { name: "決済管理", path: "/admin/payment" },
     { name: "アップロード", path: "/admin/upload" },
   ];
