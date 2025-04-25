@@ -15,19 +15,38 @@ PAYPAY.Configure({
 });
 
 type PaypayQRCodeCreateResponse = { data: { url: string } };
-export const paypayQRCodeCreate = async (
-  merchantPaymentId: string,
-  amount: number,
-): Promise<PaypayQRCodeCreateResponse | null> => {
+export const paypayQRCodeCreate = async ({
+  merchantPaymentId,
+  orderItems,
+}: {
+  merchantPaymentId: string;
+  orderItems: Array<{
+    name: string;
+    quantity: number;
+    productId: string;
+    unitPrice: {
+      amount: number;
+      currency: "JPY";
+    };
+  }>;
+}): Promise<PaypayQRCodeCreateResponse | null> => {
+  const itemDescription =
+    orderItems
+      .map((item) => `${item.name} x${item.quantity}`)
+      .join(", ")
+      .substring(0, 200) + (orderItems.length > 200 ? "..." : "");
+
   const response = await PAYPAY.QRCodeCreate({
     merchantPaymentId: merchantPaymentId,
     amount: {
-      amount: amount,
+      amount: orderItems.reduce((total, item) => total + item.unitPrice.amount * item.quantity, 0),
       currency: "JPY",
     },
     codeType: "ORDER_QR",
     redirectUrl: `${PAYPAY_REDIRECT_URL}?merchantPaymentId=${merchantPaymentId}`,
     redirectType: "WEB_LINK",
+    orderItem: orderItems,
+    orderDescription: itemDescription,
   });
   return "BODY" in response ? (response.BODY as PaypayQRCodeCreateResponse) : null;
 };

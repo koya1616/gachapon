@@ -22,6 +22,61 @@ async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
   }
 }
 
+export async function executeTransaction<T>(callback: (client: Client) => Promise<T>): Promise<T> {
+  const client = new Client({ connectionString });
+
+  try {
+    await client.connect();
+    await client.query("BEGIN");
+
+    const result = await callback(client);
+
+    await client.query("COMMIT");
+    return result;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    console.error("Transaction error:", error);
+    throw error;
+  } finally {
+    await client.end();
+  }
+}
+
+export async function executeQueryWithClient<T extends QueryResultRow = Record<string, unknown>>(
+  client: Client,
+  query: string,
+  params: unknown[] = [],
+): Promise<T[]> {
+  const result: QueryResult<T> = await client.query(query, params);
+  return result.rows;
+}
+
+export async function createAndGetPaypayPaymentWithTransaction(
+  client: Client,
+  paypayPayment: Omit<PaypayPayment, "id" | "created_at">,
+): Promise<PaypayPayment | null> {
+  const query = `
+    INSERT INTO paypay_payments (user_id, merchant_payment_id)
+    VALUES ($1, $2)
+    RETURNING *
+  `;
+  const params = [paypayPayment.user_id, paypayPayment.merchant_payment_id];
+  const results = await executeQueryWithClient<PaypayPayment>(client, query, params);
+  return results.length > 0 ? results[0] : null;
+}
+
+export async function createShipmentWithTransaction(
+  client: Client,
+  shipment: Pick<Shipment, "paypay_payment_id" | "address">,
+): Promise<void> {
+  const query = `
+    INSERT INTO shipments (paypay_payment_id, address)
+    VALUES ($1, $2)
+  `;
+  const params = [shipment.paypay_payment_id, shipment.address];
+  await executeQueryWithClient(client, query, params);
+}
+
 export async function getProducts(): Promise<Product[]> {
   return executeQuery<Product>("SELECT * FROM products");
 }
@@ -141,15 +196,6 @@ export async function findShipmentByMerchantPaymentId(merchant_payment_id: strin
   return results.length > 0 ? results[0] : null;
 }
 
-export async function createShipment(shipment: Pick<Shipment, "paypay_payment_id" | "address">): Promise<void> {
-  const query = `
-    INSERT INTO shipments (paypay_payment_id, address)
-    VALUES ($1, $2)
-  `;
-  const params = [shipment.paypay_payment_id, shipment.address];
-  await executeQuery(query, params);
-}
-
 export async function findShipmentByMerchantPaymentIdAndUserId(
   merchant_payment_id: string,
   user_id: number,
@@ -185,6 +231,20 @@ export async function updateShipmentStatus(
 
   const params = [Date.now(), id];
   await executeQuery(query, params);
+}
+
+export async function createPaymentProductsWithTransaction(
+  client: Client,
+  paymentProducts: Omit<PaymentProduct, "id" | "name" | "image">[],
+): Promise<void> {
+  const query = `
+    INSERT INTO payment_products (paypay_payment_id, quantity, price, product_id)
+    VALUES ($1, $2, $3, $4)
+  `;
+  for (const product of paymentProducts) {
+    const params = [product.paypay_payment_id, product.quantity, product.price, product.product_id];
+    await executeQueryWithClient(client, query, params);
+  }
 }
 
 export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: number): Promise<PaymentProduct[]> {

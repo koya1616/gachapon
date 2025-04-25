@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
 import AddressForm from "@/components/AddressForm";
-import type { Address } from "@/types";
+import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function CheckoutPage() {
   const lang = params.lang as string;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
-  const { cart, totalPrice } = useCart();
+  const { cart, totalPrice, clear_cart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<"credit" | "paypay" | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,22 +24,39 @@ export default function CheckoutPage() {
     setIsLoading(true);
 
     if (paymentMethod === "paypay") {
-      // Handle PayPay payment - this would need to be implemented
-      // Similar to how it's done in the existing code
-
-      // Example implementation (placeholder)
       try {
-        // This would need actual implementation based on the existing PayPay integration
-        // const merchantPaymentId = generateMerchantPaymentId(userId);
-        // const response = await createPayPayPayment(merchantPaymentId, totalPrice);
-        // if (response.url) {
-        //   window.location.href = response.url;
-        // }
+        const response = await fetch("/api/paypay", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            [PAYPAY_TYPE]: PAYPAY_QR_CODE_CREATE,
+          },
+          body: JSON.stringify({
+            merchantPaymentId: `PAYPAY_${Date.now()}_${crypto.randomUUID().split("-")[0]}`,
+            orderItems: cart.map((item) => ({
+              name: item.name,
+              quantity: item.quantity,
+              productId: item.id,
+              unitPrice: {
+                amount: item.price,
+              },
+            })),
+          }),
+        });
 
-        // For now just redirect to a placeholder
-        router.push(`/${lang}/payment/paypay/placeholder`);
+        if (!response.ok) {
+          throw new Error("Failed to create PayPay payment");
+        }
+
+        const data = await response.json();
+        if (!data.url) {
+          throw new Error("No URL returned from PayPay");
+        }
+
+        clear_cart();
+        router.push(data.url);
       } catch (error) {
-        console.error("Payment failed:", error);
+        alert("Failed to process PayPay payment. Please try again.");
         setIsLoading(false);
       }
     } else {
