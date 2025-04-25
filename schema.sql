@@ -80,6 +80,98 @@ ALTER TABLE public.authentication_codes ALTER COLUMN id ADD GENERATED ALWAYS AS 
 
 
 --
+-- Name: lottery_entries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lottery_entries (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    lottery_event_id integer NOT NULL,
+    lottery_product_id integer NOT NULL,
+    result integer DEFAULT 1 NOT NULL,
+    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
+);
+
+
+ALTER TABLE public.lottery_entries OWNER TO postgres;
+
+--
+-- Name: lottery_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.lottery_entries ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.lottery_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: lottery_events; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lottery_events (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
+    start_at bigint NOT NULL,
+    end_at bigint NOT NULL,
+    result_at bigint NOT NULL,
+    payment_deadline_at bigint NOT NULL,
+    created_at text DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL,
+    status integer DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE public.lottery_events OWNER TO postgres;
+
+--
+-- Name: lottery_events_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.lottery_events ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.lottery_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: lottery_products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lottery_products (
+    id integer NOT NULL,
+    lottery_event_id integer NOT NULL,
+    product_id integer NOT NULL,
+    quantity_available integer DEFAULT 1 NOT NULL,
+    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
+);
+
+
+ALTER TABLE public.lottery_products OWNER TO postgres;
+
+--
+-- Name: lottery_products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.lottery_products ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.lottery_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: payment_products; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -239,6 +331,30 @@ ALTER TABLE ONLY public.authentication_codes
 
 
 --
+-- Name: lottery_entries lottery_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_entries
+    ADD CONSTRAINT lottery_entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lottery_events lottery_events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_events
+    ADD CONSTRAINT lottery_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lottery_products lottery_products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_products
+    ADD CONSTRAINT lottery_products_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: payment_products payment_products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -300,6 +416,30 @@ CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
 
 
 --
+-- Name: lottery_products fk_lottery_event_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_products
+    ADD CONSTRAINT fk_lottery_event_id FOREIGN KEY (lottery_event_id) REFERENCES public.lottery_events(id);
+
+
+--
+-- Name: lottery_entries fk_lottery_event_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_entries
+    ADD CONSTRAINT fk_lottery_event_id FOREIGN KEY (lottery_event_id) REFERENCES public.lottery_events(id);
+
+
+--
+-- Name: lottery_entries fk_lottery_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_entries
+    ADD CONSTRAINT fk_lottery_product_id FOREIGN KEY (lottery_product_id) REFERENCES public.lottery_products(id);
+
+
+--
 -- Name: shipments fk_paypay_payment_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -324,6 +464,14 @@ ALTER TABLE ONLY public.payment_products
 
 
 --
+-- Name: lottery_products fk_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_products
+    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
 -- Name: authentication_codes fk_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -344,6 +492,14 @@ ALTER TABLE ONLY public.addresses
 --
 
 ALTER TABLE ONLY public.paypay_payments
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: lottery_entries fk_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lottery_entries
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
