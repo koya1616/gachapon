@@ -16,7 +16,7 @@ async function loginAction(prevState: { success: boolean }, formData: FormData) 
   const data = await response.json();
 
   if (data.success) {
-    window.location.href = "/admin/upload";
+    window.location.href = "/admin/top";
   }
 
   return { success: data.success };

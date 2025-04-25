@@ -6,9 +6,10 @@ import { ADMIN_CODE } from "@/const/cookies";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest) {
   try {
-    const product = await findProductById(Number(params.id));
+    const id = request.nextUrl.pathname.split("/").pop();
+    const product = await findProductById(Number(id));
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== ENV_ADMIN_CODE) {
@@ -28,7 +29,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
   try {
     const productData = await request.json();
-    const productId = Number(params.id);
+    const id = request.nextUrl.pathname.split("/").pop();
+    const productId = Number(id);
 
     const updatedProduct = await updateProductById(productId, productData);
     if (!updatedProduct) {
