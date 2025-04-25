@@ -78,6 +78,15 @@ const translations = {
         address: "Failed to save. Please try again.",
       },
     },
+    checkout: {
+      title: "Checkout Confirmation",
+      quantity: "Quantity",
+      method: "Payment Method",
+      credit: "Credit Card",
+      continue: "Continue Shopping",
+      processing: "Processing",
+      pay: "Pay Now",
+    },
   },
   ja: {
     cart: {
@@ -156,6 +165,15 @@ const translations = {
         address: "保存に失敗しました。再度お試しください。",
       },
     },
+    checkout: {
+      title: "決済確認",
+      quantity: "数量",
+      method: "支払い方法",
+      credit: "クレジットカード",
+      continue: "ショッピングを続ける",
+      processing: "処理中",
+      pay: "決済する",
+    },
   },
   zh: {
     cart: {
@@ -233,6 +251,15 @@ const translations = {
       fail: {
         address: "保存失败，请重试。",
       },
+    },
+    checkout: {
+      title: "结账确认",
+      quantity: "数量",
+      method: "支付方式",
+      credit: "信用卡",
+      continue: "继续购物",
+      processing: "处理中",
+      pay: "立即支付",
     },
   },
 };
