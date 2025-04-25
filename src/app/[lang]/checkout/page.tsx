@@ -194,6 +194,15 @@ export default function CheckoutPage() {
         </div>
       </div>
 
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 className="text-lg font-semibold mb-2">{t(l).checkout.notice_title}</h2>
+        <ul className="list-disc pl-5 space-y-1 text-gray-700">
+          <li>{t(l).checkout.notice_address}</li>
+          <li>{t(l).checkout.notice_shipping}</li>
+          <li>{t(l).checkout.notice_development}</li>
+        </ul>
+      </div>
+
       <div className="flex justify-between">
         <Link
           href={`/${lang}`}

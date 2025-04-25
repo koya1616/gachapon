@@ -86,6 +86,10 @@ const translations = {
       continue: "Continue Shopping",
       processing: "Processing",
       pay: "Pay Now",
+      notice_title: "Notice Before Payment",
+      notice_address: "Please verify that your delivery address is correct",
+      notice_shipping: "After confirming your payment, there may be some time before the product is shipped",
+      notice_development: "Since this is under development, no actual payment will be processed",
     },
   },
   ja: {
@@ -173,6 +177,10 @@ const translations = {
       continue: "ショッピングを続ける",
       processing: "処理中",
       pay: "決済する",
+      notice_title: "お支払い前のお知らせ",
+      notice_address: "お届け先住所に間違いがないかご確認ください",
+      notice_shipping: "ご入金確認後、商品の発送までにお時間をいただく場合がございます",
+      notice_development: "開発中のため、実際に決済は行われません",
     },
   },
   zh: {
@@ -233,7 +241,7 @@ const translations = {
         delivered_at: "到达时间",
         created_at: "创建时间",
         cancelled_at: "取消时间",
-        payment_failed_at: " 支付失败时间",
+        payment_failed_at: "支付失败时间",
         no_shipment: "没有配送信息",
       },
       product: {
@@ -260,6 +268,10 @@ const translations = {
       continue: "继续购物",
       processing: "处理中",
       pay: "立即支付",
+      notice_title: "付款前重要通知",
+      notice_address: "请确认您的收货地址是否正确",
+      notice_shipping: "付款确认后，发货可能需要一些时间",
+      notice_development: "正在开发中，无法进行实际支付",
     },
   },
 };
