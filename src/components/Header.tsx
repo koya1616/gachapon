@@ -30,13 +30,13 @@ export default function Header({ lang }: { lang: Lang }) {
               alt="Logo"
               width={56}
               height={56}
-              className="rounded-full"
+              className="rounded-full w-10 h-10 sm:w-14 sm:h-14"
             />
-            <div className="ml-2 text-xl font-semibold">gasyaponpon</div>
+            <div className="ml-2 text-base sm:text-xl font-semibold">gasyaponpon</div>
           </div>
         </button>
 
-        <div className="py-4 flex justify-end items-center gap-4">
+        <div className="py-4 flex justify-end items-center gap-2 sm:gap-4">
           <LanguageDropdown lang={lang} />
           <button type="button" className="cursor-pointer" onClick={() => router.push(`/${lang}/account`)}>
             <div className="h-11 w-11 flex items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
