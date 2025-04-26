@@ -1,10 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { generateToken, verifyToken } from "../../src/lib/jwt";
 
 describe("JWT Module", () => {
-  beforeEach(() => {
-    process.env.JWT_SECRET_KEY = "test-secret-key";
-  });
+  process.env.JWT_SECRET_KEY = "test-secret-key";
 
   describe("generateToken", () => {
     it("正しいパラメータでトークンを生成し、検証できること", () => {
