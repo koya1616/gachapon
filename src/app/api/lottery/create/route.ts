@@ -7,9 +7,23 @@ import {
   createLotteryProductsWithTransaction,
   executeTransaction,
 } from "@/lib/db/index";
+import type { LotteryStatus } from "@/types";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
+export type CreateLotteryEventApiRequestBody = {
+  startAt: number;
+  endAt: number;
+  resultAt: number;
+  paymentDeadlineAt: number;
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
+  name: string;
+  description: string;
+  status: LotteryStatus;
+};
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
@@ -18,11 +32,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const data = await request.json();
+    const data: CreateLotteryEventApiRequestBody = await request.json();
     await executeTransaction(async (client) => {
       const lotteryEvent = await createLotteryEventWithTransaction(client, {
         name: data.name,
-        description: data.description || null,
+        description: data.description,
         start_at: data.startAt,
         end_at: data.endAt,
         result_at: data.resultAt,

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LotteryStatus, type Product } from "@/types";
 import Loading from "@/components/Loading";
+import type { CreateLotteryEventApiRequestBody } from "@/app/api/lottery/create/route";
 
 export default function CreateLotteryPage() {
   const router = useRouter();
@@ -125,21 +126,19 @@ export default function CreateLotteryPage() {
         }
       }
 
-      const apiData = {
-        ...formData,
-        startAt: new Date(formData.startAt).getTime(),
-        endAt: new Date(formData.endAt).getTime(),
-        resultAt: new Date(formData.resultAt).getTime(),
-        paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
-        products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
-      };
-
       const response = await fetch("/api/lottery/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(apiData),
+        body: JSON.stringify({
+          ...formData,
+          startAt: new Date(formData.startAt).getTime(),
+          endAt: new Date(formData.endAt).getTime(),
+          resultAt: new Date(formData.resultAt).getTime(),
+          paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
+          products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
+        } as CreateLotteryEventApiRequestBody),
       });
 
       if (!response.ok) {
