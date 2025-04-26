@@ -55,10 +55,18 @@ export async function POST(request: NextRequest) {
 
         await createPaymentProductsWithTransaction(client, paymentProductsData);
 
-        return await paypayQRCodeCreate({
+        const response = await paypayQRCodeCreate({
           merchantPaymentId: payload.merchantPaymentId,
           orderItems: payload.orderItems,
         });
+
+        if (response && "data" in response) {
+          if (!response.data.url) {
+            throw new Error("PayPay QR code URL not found");
+          }
+        }
+
+        return response;
       });
 
       return NextResponse.json({ url: body ? body.data.url : null }, { status: body ? 200 : 500 });
