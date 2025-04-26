@@ -66,8 +66,8 @@ export async function createShipmentWithTransaction(
 export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
   const query = `
     SELECT s.*
-    FROM paypay_payments pp
-    INNER JOIN shipments s ON pp.id = s.paypay_payment_id
+    FROM shipments s
+    INNER JOIN paypay_payments pp ON s.paypay_payment_id = pp.id
     WHERE pp.merchant_payment_id = $1
     LIMIT 1
   `;
@@ -82,8 +82,8 @@ export async function findShipmentByMerchantPaymentIdAndUserId(
 ): Promise<Shipment | null> {
   const query = `
     SELECT s.*
-    FROM paypay_payments pp
-    INNER JOIN shipments s ON pp.id = s.paypay_payment_id
+    FROM shipments s
+    INNER JOIN paypay_payments pp ON s.paypay_payment_id = pp.id
     WHERE pp.merchant_payment_id = $1 AND pp.user_id = $2
     LIMIT 1
   `;
