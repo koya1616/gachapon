@@ -34,7 +34,6 @@ const translations = {
       status: "Status",
       logout: "Logout",
       no_orders: "No order history available",
-      currency: "$",
     },
     order: {
       status: {
@@ -125,7 +124,6 @@ const translations = {
       status: "状態",
       logout: "ログアウト",
       no_orders: "注文履歴はありません",
-      currency: "¥",
     },
     order: {
       status: {
@@ -216,7 +214,6 @@ const translations = {
       status: "状态",
       logout: "登出",
       no_orders: "没有订单历史",
-      currency: "¥",
     },
     order: {
       status: {
