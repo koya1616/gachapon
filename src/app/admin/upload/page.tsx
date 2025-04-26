@@ -2,9 +2,9 @@
 
 import { useState, useCallback, useMemo, memo } from "react";
 
-interface UploadResult {
+type UploadResult = {
   key: string;
-}
+};
 
 interface FileUploadFormProps {
   onUploadSuccess: (result: UploadResult) => void;
@@ -48,10 +48,10 @@ const FileUploadForm = memo(({ onUploadSuccess }: FileUploadFormProps) => {
           body: fileFormData,
         });
 
-        const data = await response.json();
+        const data: UploadResult = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "アップロードに失敗しました");
+          throw new Error("アップロードに失敗しました");
         }
 
         onUploadSuccess(data);

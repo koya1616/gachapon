@@ -27,25 +27,21 @@ export async function POST(request: NextRequest) {
     const cookieStore = await cookies();
     const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
     if (adminToken !== ENV_ADMIN_CODE) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const formData = await request.formData();
     const file = formData.get("file");
 
     if (!file || typeof file === "string") {
-      return NextResponse.json({ error: "Please select a file" }, { status: 400 });
+      return NextResponse.json({ message: "Please select a file" }, { status: 400 });
     }
 
     await uploadFileToR2(file);
 
-    return NextResponse.json({
-      success: true,
-      url: `https://${R2_BUCKET_NAME}.${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${file.name}`,
-      key: file.name,
-    });
+    return NextResponse.json({ key: file.name }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+    return NextResponse.json({ message: "Upload failed" }, { status: 500 });
   }
 }
 
