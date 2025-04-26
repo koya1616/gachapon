@@ -6,6 +6,7 @@
     "dev": "docker compose up -d && next dev --turbopack",
     "build": "next build",
     "start": "docker compose up -d && next start",
+    "preview": "next build && next start",
     "biome-check": "biome check .",
     "lint": "biome lint --write . && biome format --write ."
   },
