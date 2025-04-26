@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getPaypayPayments } from "@/lib/db/index";
+import { getPaypayPayments } from "@/lib/db";
 import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
 import Link from "next/link";

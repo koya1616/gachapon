@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
-import { findPaypayPaymentByMerchantPaymentId } from "@/lib/db/index";
+import { findPaypayPaymentByMerchantPaymentId } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export async function GET(request: NextRequest) {
