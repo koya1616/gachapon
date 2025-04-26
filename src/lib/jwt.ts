@@ -8,8 +8,7 @@ interface TokenPayload {
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "";
 
 export function generateToken(payload: Omit<TokenPayload, "exp">): string {
-  const token = jwt.sign(payload, Buffer.from(JWT_SECRET_KEY, "utf-8"), { expiresIn: "30D" } as SignOptions);
-  return token;
+  return jwt.sign(payload, Buffer.from(JWT_SECRET_KEY, "utf-8"), { expiresIn: "30D" } as SignOptions);
 }
 
 export function verifyToken(token: string): TokenPayload | null {
