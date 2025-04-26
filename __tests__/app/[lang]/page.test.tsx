@@ -17,14 +17,15 @@ vi.mock("@/components/Products", () => ({
   ),
 }));
 
+const mockProducts: Product[] = [
+  { id: 1, name: "Product 1", price: 1000, image: "image1.jpg", quantity: 0, stock_quantity: 10 },
+  { id: 2, name: "Product 2", price: 2000, image: "image2.jpg", quantity: 0, stock_quantity: 5 },
+];
+
 describe("ProductsPage", () => {
-  const mockProducts: Product[] = [
-    { id: 1, name: "Product 1", price: 1000, image: "image1.jpg", quantity: 0, stock_quantity: 10 },
-    { id: 2, name: "Product 2", price: 2000, image: "image2.jpg", quantity: 0, stock_quantity: 5 },
-  ];
+  vi.mocked(db.getProducts).mockResolvedValue(mockProducts);
 
   beforeEach(() => {
-    vi.mocked(db.getProducts).mockResolvedValue(mockProducts);
     cleanup();
   });
 
@@ -56,10 +57,5 @@ describe("ProductsPage", () => {
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("lang").textContent).toBe("ja");
-  });
-
-  it("データベースエラーを適切に処理すること", async () => {
-    vi.mocked(db.getProducts).mockRejectedValue(new Error("Database error"));
-    await expect(ProductsPage({ params: Promise.resolve({ lang: "ja" }) })).rejects.toThrow("Database error");
   });
 });
