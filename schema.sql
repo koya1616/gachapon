@@ -88,7 +88,7 @@ CREATE TABLE public.lottery_entries (
     user_id integer NOT NULL,
     lottery_event_id integer NOT NULL,
     lottery_product_id integer NOT NULL,
-    result integer DEFAULT 1 NOT NULL,
+    result integer DEFAULT 0 NOT NULL,
     created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
 );
 
@@ -122,7 +122,7 @@ CREATE TABLE public.lottery_events (
     result_at bigint NOT NULL,
     payment_deadline_at bigint NOT NULL,
     created_at text DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL,
-    status integer DEFAULT 1 NOT NULL
+    status integer DEFAULT 0 NOT NULL
 );
 
 
