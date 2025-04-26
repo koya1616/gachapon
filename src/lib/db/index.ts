@@ -1,24 +1,6 @@
-import type { Address, LotteryEvent, PaymentProduct, Shipment, User } from "@/types";
+import type { Shipment, User } from "@/types";
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
-
-export {
-  getProducts,
-  createProducts,
-  findProductById,
-  updateProductById,
-} from "./products/query";
-export {
-  findPaypayPaymentByMerchantPaymentId,
-  getPaypayPayments,
-  getPaypayPaymentsByUserId,
-} from "./paypayPayments/query";
-export { createAndGetPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
-export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
-export { createLotteryEventWithTransaction } from "./lotteryEvents/transaction";
-export { getLotteryEvents } from "./lotteryEvents/query";
-export { createPaymentProductsWithTransaction } from "./paymentProducts/transaction";
-export { getPaymentProductsByPaypayPaymentId } from "./paymentProducts/query";
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -99,34 +81,6 @@ export async function createUser(email: string): Promise<void> {
   await executeQuery(query, params);
 }
 
-export async function findAddressByUserId(user_id: number): Promise<Address | null> {
-  const query = `
-    SELECT * FROM addresses WHERE user_id = $1
-  `;
-  const params = [user_id];
-  const addresses = await executeQuery<Address>(query, params);
-  return addresses.length > 0 ? addresses[0] : null;
-}
-
-export async function createAddress(address: Omit<Address, "id">): Promise<void> {
-  const query = `
-    INSERT INTO addresses (user_id, name, country, postal_code, address)
-    VALUES ($1, $2, $3, $4, $5)
-  `;
-  const params = [address.user_id, address.name, address.country, address.postal_code, address.address];
-  await executeQuery(query, params);
-}
-
-export async function updateAddress(address: Address): Promise<void> {
-  const query = `
-    UPDATE addresses
-    SET name = $1, country = $2, postal_code = $3, address = $4
-    WHERE id = $5
-  `;
-  const params = [address.name, address.country, address.postal_code, address.address, address.id];
-  await executeQuery(query, params);
-}
-
 export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
   const query = `
     SELECT s.*
@@ -178,3 +132,25 @@ export async function updateShipmentStatus(
 }
 
 export { executeQuery };
+export {
+  getProducts,
+  createProducts,
+  findProductById,
+  updateProductById,
+} from "./products/query";
+export {
+  findPaypayPaymentByMerchantPaymentId,
+  getPaypayPayments,
+  getPaypayPaymentsByUserId,
+} from "./paypayPayments/query";
+export { createAndGetPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
+export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
+export { createLotteryEventWithTransaction } from "./lotteryEvents/transaction";
+export { getLotteryEvents } from "./lotteryEvents/query";
+export { createPaymentProductsWithTransaction } from "./paymentProducts/transaction";
+export { getPaymentProductsByPaypayPaymentId } from "./paymentProducts/query";
+export {
+  findAddressByUserId,
+  createAddress,
+  updateAddress,
+} from "./addresses/query";

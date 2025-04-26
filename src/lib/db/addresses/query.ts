@@ -1,0 +1,30 @@
+import type { Address } from "@/types";
+import { executeQuery } from "..";
+
+export async function findAddressByUserId(user_id: number): Promise<Address | null> {
+  const query = `
+    SELECT * FROM addresses WHERE user_id = $1
+  `;
+  const params = [user_id];
+  const addresses = await executeQuery<Address>(query, params);
+  return addresses.length > 0 ? addresses[0] : null;
+}
+
+export async function createAddress(address: Omit<Address, "id">): Promise<void> {
+  const query = `
+    INSERT INTO addresses (user_id, name, country, postal_code, address)
+    VALUES ($1, $2, $3, $4, $5)
+  `;
+  const params = [address.user_id, address.name, address.country, address.postal_code, address.address];
+  await executeQuery(query, params);
+}
+
+export async function updateAddress(address: Address): Promise<void> {
+  const query = `
+    UPDATE addresses
+    SET name = $1, country = $2, postal_code = $3, address = $4
+    WHERE id = $5
+  `;
+  const params = [address.name, address.country, address.postal_code, address.address, address.id];
+  await executeQuery(query, params);
+}
