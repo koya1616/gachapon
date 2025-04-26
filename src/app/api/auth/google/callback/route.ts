@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { createUser, findUserByEmail } from "@/lib/db/index";
+import { createUser, findUserByEmail } from "@/lib/db";
 import { generateToken } from "@/lib/jwt";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";

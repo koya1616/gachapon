@@ -63,24 +63,6 @@ export async function createShipmentWithTransaction(
   await executeQueryWithClient(client, query, params);
 }
 
-export async function findUserByEmail(email: string): Promise<User | null> {
-  const query = `
-    SELECT * FROM users WHERE email = $1 LIMIT 1
-  `;
-  const params = [email];
-  const users = await executeQuery<User>(query, params);
-  return users.length > 0 ? users[0] : null;
-}
-
-export async function createUser(email: string): Promise<void> {
-  const query = `
-    INSERT INTO users (email)
-    VALUES ($1)
-  `;
-  const params = [email];
-  await executeQuery(query, params);
-}
-
 export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
   const query = `
     SELECT s.*
@@ -154,3 +136,4 @@ export {
   createAddress,
   updateAddress,
 } from "./addresses/query";
+export { findUserByEmail, createUser } from "./users/query";
