@@ -1,4 +1,4 @@
-import { getLotteryEvents } from "@/lib/db/index";
+import { getLotteryEvents } from "@/lib/db";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";

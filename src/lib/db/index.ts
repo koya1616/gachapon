@@ -15,6 +15,8 @@ export {
 } from "./paypayPayments/query";
 export { createAndGetPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
 export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
+export { createLotteryEventWithTransaction } from "./lotteryEvents/transaction";
+export { getLotteryEvents } from "./lotteryEvents/query";
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -212,34 +214,6 @@ export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: num
   `;
   const params = [paypay_payment_id];
   return executeQuery<PaymentProduct>(query, params);
-}
-
-export async function getLotteryEvents(): Promise<LotteryEvent[]> {
-  const query = `
-    SELECT * FROM lottery_events
-  `;
-  return executeQuery<LotteryEvent>(query);
-}
-
-export async function createLotteryEventWithTransaction(
-  client: Client,
-  lotteryEvent: Omit<LotteryEvent, "id" | "created_at">,
-): Promise<LotteryEvent> {
-  const query = `
-    INSERT INTO lottery_events (name, description, start_at, end_at, result_at, payment_deadline_at)
-    VALUES ($1, $2, $3, $4, $5, $6)
-    RETURNING *
-  `;
-  const params = [
-    lotteryEvent.name,
-    lotteryEvent.description,
-    lotteryEvent.start_at,
-    lotteryEvent.end_at,
-    lotteryEvent.result_at,
-    lotteryEvent.payment_deadline_at,
-  ];
-  const result = await executeQueryWithClient<LotteryEvent>(client, query, params);
-  return result[0];
 }
 
 export { executeQuery };
