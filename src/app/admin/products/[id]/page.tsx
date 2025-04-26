@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { Product } from "@/types";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -33,12 +33,12 @@ export default function ProductDetail() {
         if (!response.ok) {
           throw new Error("Failed to fetch product details");
         }
-        const data = await response.json();
-        setProduct(data.product);
+        const data: Product = await response.json();
+        setProduct(data);
         setEditForm({
-          name: data.product.name,
-          price: String(data.product.price),
-          stock_quantity: String(data.product.stock_quantity),
+          name: data.name,
+          price: String(data.price),
+          stock_quantity: String(data.stock_quantity),
         });
       } catch (err) {
         setError("商品詳細の取得に失敗しました。");
@@ -105,7 +105,6 @@ export default function ProductDetail() {
         </div>
         <div className="text-center py-10">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500" />
-          <p className="mt-2">読み込み中...</p>
         </div>
       </div>
     );

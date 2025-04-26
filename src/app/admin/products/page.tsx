@@ -34,7 +34,6 @@ export default function ProductsList() {
         <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">商品一覧</h1>
         <div className="text-center py-10">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500" />
-          <p className="mt-2">読み込み中...</p>
         </div>
       </div>
     );
