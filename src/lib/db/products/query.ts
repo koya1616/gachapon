@@ -2,7 +2,7 @@ import type { Product } from "@/types";
 import { executeQuery } from "..";
 
 export async function getProducts(): Promise<Product[]> {
-  return executeQuery<Product>("SELECT * FROM products");
+  return executeQuery<Product>("SELECT * FROM products ORDER BY stock_quantity DESC");
 }
 
 export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<Product> {
