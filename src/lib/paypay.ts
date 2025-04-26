@@ -45,7 +45,7 @@ export const paypayQRCodeCreate = async ({
     codeType: "ORDER_QR",
     redirectUrl: `${PAYPAY_REDIRECT_URL}?merchantPaymentId=${merchantPaymentId}`,
     redirectType: "WEB_LINK",
-    orderItem: orderItems,
+    orderItems: orderItems,
     orderDescription: itemDescription,
   });
   return "BODY" in response ? (response.BODY as PaypayQRCodeCreateResponse) : null;
