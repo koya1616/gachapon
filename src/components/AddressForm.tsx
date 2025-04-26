@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
 import type { Address, Lang } from "@/types";
-import ButtonLoading from "./ButtonLoading";
 
 const AddressForm = ({ lang }: { lang: Lang }) => {
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
@@ -228,7 +227,7 @@ const AddressForm = ({ lang }: { lang: Lang }) => {
               className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
               disabled={isLoading}
             >
-              {isLoading ? <ButtonLoading color="white" /> : <span>{t(l).form.register}</span>}
+              {isLoading ? "Loading..." : <span>{t(l).form.register}</span>}
             </button>
           </div>
         )}
