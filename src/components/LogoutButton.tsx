@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { Lang } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
 import ButtonLoading from "./ButtonLoading";
@@ -9,7 +9,7 @@ export default function LogoutButton({ lang }: { lang: Lang }) {
   const [isLoading, setIsLoading] = useState(false);
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/auth/logout");
@@ -19,7 +19,7 @@ export default function LogoutButton({ lang }: { lang: Lang }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [l]);
 
   return (
     <button
