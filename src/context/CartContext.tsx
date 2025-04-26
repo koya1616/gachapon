@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from "react";
 import type { Product } from "@/types";
 import { CART } from "@/const/sessionStorage";
 
@@ -31,6 +31,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setCart(parsedCart);
       } catch (error) {
         setCart([]);
+        sessionStorage.removeItem(CART);
       }
     }
   }, []);
@@ -56,15 +57,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const removeFromCart = useCallback((productId: number) => {
-    setCart((prevCart) => {
-      const newCart = prevCart.filter((item) => item.id !== productId);
-
-      if (newCart.length === 0) {
-        sessionStorage.removeItem(CART);
-      }
-
-      return newCart;
-    });
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   }, []);
 
   const updateQuantity = useCallback(
@@ -84,30 +77,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clear_cart = useCallback(() => {
     setCart([]);
-    sessionStorage.removeItem(CART);
   }, []);
 
   const toggleCart = useCallback(() => setIsCartOpen((prev) => !prev), []);
 
   const closeCart = useCallback(() => setIsCartOpen(false), []);
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        isCartOpen,
-        totalPrice,
-        add_to_cart,
-        removeFromCart,
-        updateQuantity,
-        clear_cart,
-        toggleCart,
-        closeCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      cart,
+      isCartOpen,
+      totalPrice,
+      add_to_cart,
+      removeFromCart,
+      updateQuantity,
+      clear_cart,
+      toggleCart,
+      closeCart,
+    }),
+    [cart, isCartOpen, totalPrice, add_to_cart, removeFromCart, updateQuantity, clear_cart, toggleCart, closeCart],
   );
+
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
