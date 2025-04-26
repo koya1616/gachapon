@@ -2,6 +2,13 @@ import type { Address, LotteryEvent, Order, PaymentProduct, PaypayPayment, Produ
 import { Client } from "pg";
 import type { QueryResult, QueryResultRow } from "pg";
 
+export {
+  getProducts,
+  createProducts,
+  findProductById,
+  updateProductById,
+} from "./products/query";
+
 const connectionString = process.env.DATABASE_URL;
 
 async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
@@ -75,19 +82,6 @@ export async function createShipmentWithTransaction(
   `;
   const params = [shipment.paypay_payment_id, shipment.address];
   await executeQueryWithClient(client, query, params);
-}
-
-export async function getProducts(): Promise<Product[]> {
-  return executeQuery<Product>("SELECT * FROM products");
-}
-
-export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<void> {
-  const query = `
-    INSERT INTO products (name, price, image)
-    VALUES ($1, $2, $3)
-  `;
-  const params = [product.name, product.price, product.image];
-  await executeQuery(query, params);
 }
 
 export async function findUserByEmail(email: string): Promise<User | null> {
@@ -272,50 +266,6 @@ export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: num
   `;
   const params = [paypay_payment_id];
   return executeQuery<PaymentProduct>(query, params);
-}
-
-export async function findProductById(id: number): Promise<Product | null> {
-  const query = "SELECT * FROM products WHERE id = $1 LIMIT 1";
-  const params = [id];
-  const products = await executeQuery<Product>(query, params);
-  return products.length > 0 ? products[0] : null;
-}
-
-export async function updateProductById(id: number, productData: Partial<Product>): Promise<Product | null> {
-  const updates: string[] = [];
-  const values: unknown[] = [];
-  let paramCounter = 1;
-
-  if (productData.name !== undefined) {
-    updates.push(`name = $${paramCounter++}`);
-    values.push(productData.name);
-  }
-
-  if (productData.price !== undefined) {
-    updates.push(`price = $${paramCounter++}`);
-    values.push(productData.price);
-  }
-
-  if (productData.stock_quantity !== undefined) {
-    updates.push(`stock_quantity = $${paramCounter++}`);
-    values.push(productData.stock_quantity);
-  }
-
-  if (updates.length === 0) {
-    return findProductById(id);
-  }
-
-  values.push(id);
-
-  const query = `
-    UPDATE products
-    SET ${updates.join(", ")}
-    WHERE id = $${paramCounter}
-    RETURNING *
-  `;
-
-  const products = await executeQuery<Product>(query, values);
-  return products.length > 0 ? products[0] : null;
 }
 
 export async function getLotteryEvents(): Promise<LotteryEvent[]> {

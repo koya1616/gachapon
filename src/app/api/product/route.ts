@@ -1,4 +1,4 @@
-import { createProducts, getProducts } from "@/lib/db/index";
+import { createProducts, getProducts } from "@/lib/db";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";

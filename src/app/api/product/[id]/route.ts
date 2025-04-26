@@ -1,4 +1,4 @@
-import { findProductById, updateProductById } from "@/lib/db/index";
+import { findProductById, updateProductById } from "@/lib/db";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
