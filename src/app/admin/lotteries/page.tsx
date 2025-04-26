@@ -21,8 +21,8 @@ export default function LotteriesPage() {
       const response = await fetch("/api/lottery");
       if (!response.ok) throw new Error("Failed to fetch lotteries");
 
-      const data = await response.json();
-      setLotteries(data.lotteryEvents);
+      const lotteryEvents: LotteryEvent[] = await response.json();
+      setLotteries(lotteryEvents);
     } catch (error) {
       setLotteries([]);
     } finally {
