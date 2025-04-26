@@ -75,15 +75,15 @@ export default function ProductDetail() {
           name: editForm.name,
           price: Number(editForm.price),
           stock_quantity: Number(editForm.stock_quantity),
-        }),
+        } as Partial<Product>),
       });
 
       if (!response.ok) {
         throw new Error("Failed to update product");
       }
 
-      const updatedProduct = await response.json();
-      setProduct(updatedProduct.product);
+      const updatedProduct: Product = await response.json();
+      setProduct(updatedProduct);
       setIsEditing(false);
       setUpdateStatus({ loading: false, error: null, success: true });
     } catch (err) {

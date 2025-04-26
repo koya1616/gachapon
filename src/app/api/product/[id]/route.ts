@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
+import type { Product } from "@/types";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 
@@ -28,22 +29,16 @@ export async function PUT(request: NextRequest) {
   }
 
   try {
-    const productData = await request.json();
     const id = request.nextUrl.pathname.split("/").pop();
     const productId = Number(id);
+    const productData: Partial<Product> = await request.json();
 
     const updatedProduct = await updateProductById(productId, productData);
     if (!updatedProduct) {
       return NextResponse.json({ message: "Product not found or update failed" }, { status: 404 });
     }
 
-    return NextResponse.json(
-      {
-        message: "Product updated successfully",
-        product: updatedProduct,
-      },
-      { status: 200 },
-    );
+    return NextResponse.json(updatedProduct, { status: 200 });
   } catch (error) {
     console.error("Error updating product:", error);
     return NextResponse.json({ message: "Failed to update product" }, { status: 500 });
