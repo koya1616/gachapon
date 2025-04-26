@@ -1,6 +1,9 @@
 import type { Shipment } from "@/types";
 import { executeQuery } from "..";
 
+const shipmentStatuses = ["shipped", "delivered", "payment_failed", "cancelled"] as const;
+export type ShipmentStatus = (typeof shipmentStatuses)[number];
+
 export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
   const query = `
     SELECT s.*
@@ -30,11 +33,8 @@ export async function findShipmentByMerchantPaymentIdAndUserId(
   return results.length > 0 ? results[0] : null;
 }
 
-export async function updateShipmentStatus(
-  id: number,
-  status: "shipped" | "delivered" | "payment_failed" | "cancelled",
-): Promise<void> {
-  const statusMap = {
+export async function updateShipmentStatus(id: number, status: ShipmentStatus): Promise<void> {
+  const statusMap: Record<ShipmentStatus, string> = {
     shipped: "shipped_at",
     delivered: "delivered_at",
     payment_failed: "payment_failed_at",

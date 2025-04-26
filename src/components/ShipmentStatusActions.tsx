@@ -3,42 +3,40 @@
 import { useState } from "react";
 import type { Shipment } from "@/types";
 import { useRouter } from "next/navigation";
+import type { ShipmentStatus } from "@/lib/db/shipments/query";
+import type { UpdateShipmentStatusRequest } from "@/app/api/shipment/status/route";
 
 type StatusConfig = {
-  type: "shipped" | "delivered" | "payment_failed" | "cancelled";
+  type: ShipmentStatus;
   label: string;
   bgColor: string;
   hoverColor: string;
   disabledColor: string;
 };
 
-const StatusButton = ({
-  config,
-  isLoading,
-  onUpdateStatus,
-}: {
+type StatusButtonProps = {
   config: StatusConfig;
-  isLoading: string | null;
-  onUpdateStatus: (status: "shipped" | "delivered" | "payment_failed" | "cancelled") => Promise<void>;
-}) => {
+  isLoading: boolean;
+  onUpdateStatus: (status: ShipmentStatus) => Promise<void>;
+};
+
+const StatusButton = ({ config, isLoading, onUpdateStatus }: StatusButtonProps) => {
   const { type, label, bgColor, hoverColor, disabledColor } = config;
-  const isCurrentlyLoading = isLoading === type;
 
   return (
     <button
       type="button"
       onClick={() => onUpdateStatus(type)}
-      disabled={!!isLoading}
-      className={`px-3 py-2 ${bgColor} text-white rounded-md ${hoverColor} ${disabledColor} flex items-center cursor-pointer ${
-        isCurrentlyLoading ? "opacity-70" : ""
-      }`}
+      disabled={isLoading}
+      className={`px-3 py-2 ${bgColor} text-white rounded-md ${hoverColor} ${disabledColor} flex items-center cursor-pointer ${isLoading ? "opacity-70" : ""}`}
     >
-      {isCurrentlyLoading ? <div>Loading...</div> : label}
+      {isLoading ? <div className="mr-2 animate-spin">⏳</div> : null}
+      {label}
     </button>
   );
 };
 
-const statusConfigs: Record<string, StatusConfig> = {
+const statusConfigs: Record<ShipmentStatus, StatusConfig> = {
   shipped: {
     type: "shipped",
     label: "発送済みにする",
@@ -70,7 +68,7 @@ const statusConfigs: Record<string, StatusConfig> = {
 };
 
 export default function ShipmentStatusActions({ shipment }: { shipment: Shipment }) {
-  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { cancelled_at, payment_failed_at, shipped_at, delivered_at } = shipment;
@@ -79,22 +77,29 @@ export default function ShipmentStatusActions({ shipment }: { shipment: Shipment
   const showPaymentFailed = !cancelled_at && !payment_failed_at && !shipped_at && !delivered_at;
   const showCancelled = !cancelled_at && !shipped_at && !delivered_at;
 
-  const updateStatus = async (status: "shipped" | "delivered" | "payment_failed" | "cancelled") => {
-    setIsLoading(status);
+  const updateStatus = async (status: ShipmentStatus) => {
+    setIsLoading(true);
 
-    await fetch("/api/shipment/status", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ shipmentId: shipment.id, status }),
-    })
-      .then(() => {
-        router.refresh();
-      })
-      .finally(() => {
-        setIsLoading(null);
+    try {
+      const response = await fetch("/api/shipment/status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ shipmentId: shipment.id, status } as UpdateShipmentStatusRequest),
       });
+      const data: { message: string } = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      router.refresh();
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
