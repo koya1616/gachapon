@@ -40,8 +40,8 @@ export default function CreateLotteryPage() {
       const response = await fetch("/api/product");
       if (!response.ok) throw new Error("商品の取得に失敗しました");
 
-      const data = await response.json();
-      setProducts(data.products || []);
+      const data: Product[] = await response.json();
+      setProducts(data);
     } catch (error) {
       setError((error as Error).message);
     } finally {

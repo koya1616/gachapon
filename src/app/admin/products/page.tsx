@@ -16,11 +16,10 @@ export default function ProductsList() {
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }
-        const data = await response.json();
-        setProducts(data.products || []);
+        const data: Product[] = await response.json();
+        setProducts(data);
       } catch (err) {
         setError("商品データの取得に失敗しました。");
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -78,7 +77,6 @@ export default function ProductsList() {
         </Link>
       </div>
 
-      {/* デスクトップ用テーブル表示 */}
       <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
           <thead className="bg-gray-50">
