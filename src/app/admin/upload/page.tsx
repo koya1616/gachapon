@@ -1,5 +1,7 @@
 "use client";
 
+import type { Product } from "@/types";
+import { useRouter } from "next/navigation";
 import { useState, useCallback, useMemo, memo } from "react";
 
 type UploadResult = {
@@ -12,7 +14,6 @@ interface FileUploadFormProps {
 
 interface ProductFormProps {
   imageUrl: string;
-  onSubmitSuccess: () => void;
 }
 
 const FileUploadForm = memo(({ onUploadSuccess }: FileUploadFormProps) => {
@@ -93,8 +94,14 @@ const FileUploadForm = memo(({ onUploadSuccess }: FileUploadFormProps) => {
   );
 });
 
-const ProductForm = memo(({ imageUrl, onSubmitSuccess }: ProductFormProps) => {
-  const [formData, setFormData] = useState({ name: "", image: imageUrl, price: "" });
+const ProductForm = memo(({ imageUrl }: ProductFormProps) => {
+  const router = useRouter();
+  const [formData, setFormData] = useState<Omit<Product, "id" | "quantity">>({
+    name: "",
+    image: imageUrl,
+    price: 0,
+    stock_quantity: 0,
+  });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -109,23 +116,24 @@ const ProductForm = memo(({ imageUrl, onSubmitSuccess }: ProductFormProps) => {
       setIsSubmitting(true);
 
       try {
-        await fetch("/api/product", {
+        const response = await fetch("/api/product", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         });
+        const product: Product = await response.json();
         await fetch("/api/deploy");
         alert("商品が作成されました。反映されるまでに数分かかります。");
-        onSubmitSuccess();
+        router.push(`/admin/products/${product.id}`);
       } catch (error) {
         setError("商品作成に失敗しました");
       } finally {
         setIsSubmitting(false);
       }
     },
-    [formData, onSubmitSuccess],
+    [formData, router],
   );
 
   const submitButtonClassName = useMemo(
@@ -180,42 +188,11 @@ const ProductForm = memo(({ imageUrl, onSubmitSuccess }: ProductFormProps) => {
   );
 });
 
-const UploadSuccess = memo(
-  ({ result, productName, productPrice }: { result: UploadResult; productName: string; productPrice: string }) => (
-    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-      <p>送信完了しました！</p>
-      <p className="mt-2">名前: {productName}</p>
-      <p>価格: {productPrice}円</p>
-      <div>
-        <img
-          src={`https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/${result.key}`}
-          alt="Uploaded"
-          className="mt-2 w-full h-auto rounded-md"
-        />
-      </div>
-    </div>
-  ),
-);
-
 export default function Upload() {
   const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [productData, setProductData] = useState({ name: "", price: "" });
 
   const handleUploadSuccess = useCallback((result: UploadResult) => {
     setUploadResult(result);
-  }, []);
-
-  const handleProductSubmitSuccess = useCallback(() => {
-    const nameElement = document.getElementById("name") as HTMLInputElement | null;
-    const priceElement = document.getElementById("price") as HTMLInputElement | null;
-
-    setSubmitted(true);
-    setProductData({
-      name: nameElement?.value || "",
-      price: priceElement?.value || "",
-    });
-    window.location.reload();
   }, []);
 
   return (
@@ -240,14 +217,7 @@ export default function Upload() {
             </a>
           </div>
 
-          {submitted ? (
-            <UploadSuccess result={uploadResult} productName={productData.name} productPrice={productData.price} />
-          ) : (
-            <ProductForm
-              imageUrl={`https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/${uploadResult.key}`}
-              onSubmitSuccess={handleProductSubmitSuccess}
-            />
-          )}
+          <ProductForm imageUrl={`https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/${uploadResult.key}`} />
         </>
       )}
     </div>

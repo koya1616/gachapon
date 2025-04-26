@@ -5,13 +5,15 @@ export async function getProducts(): Promise<Product[]> {
   return executeQuery<Product>("SELECT * FROM products");
 }
 
-export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<void> {
+export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<Product> {
   const query = `
     INSERT INTO products (name, price, image)
     VALUES ($1, $2, $3)
+    RETURNING *
   `;
   const params = [product.name, product.price, product.image];
-  await executeQuery(query, params);
+  const products = await executeQuery<Product>(query, params);
+  return products[0];
 }
 
 export async function findProductById(id: number): Promise<Product | null> {
