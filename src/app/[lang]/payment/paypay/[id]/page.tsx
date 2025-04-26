@@ -1,5 +1,5 @@
 import Order from "@/components/Order";
-import { findShipmentByMerchantPaymentIdAndUserId, getPaymentProductsByPaypayPaymentId } from "@/lib/db/index";
+import { findShipmentByMerchantPaymentIdAndUserId, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
 import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { cookies } from "next/headers";
 import { USER_TOKEN } from "@/const/cookies";
