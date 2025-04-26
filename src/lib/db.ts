@@ -237,14 +237,23 @@ export async function createPaymentProductsWithTransaction(
   client: Client,
   paymentProducts: Omit<PaymentProduct, "id" | "name" | "image">[],
 ): Promise<void> {
+  if (paymentProducts.length === 0) return;
+
+  const placeholders = paymentProducts
+    .map((_, index) => `($${index * 4 + 1}, $${index * 4 + 2}, $${index * 4 + 3}, $${index * 4 + 4})`)
+    .join(", ");
+
   const query = `
     INSERT INTO payment_products (paypay_payment_id, quantity, price, product_id)
-    VALUES ($1, $2, $3, $4)
+    VALUES ${placeholders}
   `;
-  for (const product of paymentProducts) {
-    const params = [product.paypay_payment_id, product.quantity, product.price, product.product_id];
-    await executeQueryWithClient(client, query, params);
-  }
+  const params = paymentProducts.flatMap((product) => [
+    product.paypay_payment_id,
+    product.quantity,
+    product.price,
+    product.product_id,
+  ]);
+  await executeQueryWithClient(client, query, params);
 }
 
 export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: number): Promise<PaymentProduct[]> {
@@ -316,10 +325,14 @@ export async function getLotteryEvents(): Promise<LotteryEvent[]> {
   return executeQuery<LotteryEvent>(query);
 }
 
-export async function createLotteryEvent(lotteryEvent: Omit<LotteryEvent, "id" | "created_at">): Promise<void> {
+export async function createLotteryEventWithTransaction(
+  client: Client,
+  lotteryEvent: Omit<LotteryEvent, "id" | "created_at">,
+): Promise<LotteryEvent> {
   const query = `
     INSERT INTO lottery_events (name, description, start_at, end_at, result_at, payment_deadline_at)
     VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *
   `;
   const params = [
     lotteryEvent.name,
@@ -329,7 +342,33 @@ export async function createLotteryEvent(lotteryEvent: Omit<LotteryEvent, "id" |
     lotteryEvent.result_at,
     lotteryEvent.payment_deadline_at,
   ];
-  await executeQuery(query, params);
+  const result = await executeQueryWithClient<LotteryEvent>(client, query, params);
+  return result[0];
+}
+
+export async function createLotteryProductsWithTransaction(
+  client: Client,
+  lotteryProducts: Array<{
+    lottery_event_id: number;
+    product_id: number;
+    quantity_available: number;
+  }>,
+): Promise<void> {
+  if (lotteryProducts.length === 0) return;
+
+  const placeholders = lotteryProducts.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`).join(", ");
+
+  const values = lotteryProducts.flatMap((product) => [
+    product.lottery_event_id,
+    product.product_id,
+    product.quantity_available,
+  ]);
+
+  const query = `
+    INSERT INTO lottery_products (lottery_event_id, product_id, quantity_available)
+    VALUES ${placeholders}
+  `;
+  await executeQueryWithClient(client, query, values);
 }
 
 export { executeQuery };
