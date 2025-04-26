@@ -3,7 +3,7 @@ import type { QueryResult, QueryResultRow } from "pg";
 
 const connectionString = process.env.DATABASE_URL;
 
-async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
+export async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
   query: string,
   params: unknown[] = [],
 ): Promise<T[]> {
@@ -50,7 +50,6 @@ export async function executeQueryWithClient<T extends QueryResultRow = Record<s
   return result.rows;
 }
 
-export { executeQuery };
 export {
   getProducts,
   createProducts,
