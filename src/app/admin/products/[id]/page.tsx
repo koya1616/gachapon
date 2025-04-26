@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { Product } from "@/types";
 import { useParams } from "next/navigation";
+import Loading from "@/components/Loading";
 
 export default function ProductDetail() {
   const params = useParams();
@@ -103,9 +104,7 @@ export default function ProductDetail() {
             ← 商品一覧に戻る
           </Link>
         </div>
-        <div className="text-center py-10">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500" />
-        </div>
+        <Loading />
       </div>
     );
   }

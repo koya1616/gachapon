@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LotteryStatus, type Product } from "@/types";
+import Loading from "@/components/Loading";
 
 export default function CreateLotteryPage() {
   const router = useRouter();
@@ -311,9 +312,7 @@ export default function CreateLotteryPage() {
           </div>
 
           {productLoading ? (
-            <div className="flex justify-center items-center py-6">
-              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500" />
-            </div>
+            <Loading />
           ) : (
             <div className="mt-6">
               {selectedProducts.map((product, index) => (

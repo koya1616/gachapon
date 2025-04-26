@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type LotteryEvent, LotteryStatus } from "@/types";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/date";
+import Loading from "@/components/Loading";
 
 export default function LotteriesPage() {
   const [lotteries, setLotteries] = useState<LotteryEvent[]>([]);
@@ -82,9 +83,7 @@ export default function LotteriesPage() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500" />
-        </div>
+        <Loading />
       ) : (
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
