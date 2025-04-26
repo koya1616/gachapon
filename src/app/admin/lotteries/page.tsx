@@ -22,7 +22,7 @@ export default function LotteriesPage() {
       if (!response.ok) throw new Error("Failed to fetch lotteries");
 
       const data = await response.json();
-      setLotteries(data);
+      setLotteries(data.lotteryEvents);
     } catch (error) {
       setLotteries([]);
     } finally {
@@ -116,6 +116,18 @@ export default function LotteriesPage() {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
+                          結果発表
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          支払期限
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
                           ステータス
                         </th>
                         <th scope="col" className="relative px-6 py-3">
@@ -134,6 +146,12 @@ export default function LotteriesPage() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-500">{formatDate(lottery.end_at)}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">{formatDate(lottery.result_at)}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-500">{formatDate(lottery.payment_deadline_at)}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(lottery.status)}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
