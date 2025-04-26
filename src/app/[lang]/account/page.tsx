@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { USER_TOKEN } from "@/const/cookies";
 import { verifyToken } from "@/lib/jwt";
 import { redirect } from "next/navigation";
-import { getPaypayPaymentsByUserId } from "@/lib/db";
+import { getPaypayPaymentsByUserId } from "@/lib/db/index";
 import { formatDate } from "@/lib/date";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 

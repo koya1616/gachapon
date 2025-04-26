@@ -10,7 +10,7 @@ import {
   createAndGetPaypayPaymentWithTransaction,
   createShipmentWithTransaction,
   createPaymentProductsWithTransaction,
-} from "@/lib/db";
+} from "@/lib/db/index";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();

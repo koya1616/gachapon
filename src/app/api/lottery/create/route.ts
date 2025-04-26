@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
-import { createLotteryEventWithTransaction, createLotteryProductsWithTransaction, executeTransaction } from "@/lib/db";
+import {
+  createLotteryEventWithTransaction,
+  createLotteryProductsWithTransaction,
+  executeTransaction,
+} from "@/lib/db/index";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
 

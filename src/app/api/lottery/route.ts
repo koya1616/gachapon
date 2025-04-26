@@ -1,11 +1,10 @@
-import { getLotteryEvents, getProducts } from "@/lib/db";
+import { getLotteryEvents } from "@/lib/db/index";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 
 const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-1;
 
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies();

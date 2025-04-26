@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Order from "@/components/Order";
 import ShipmentStatusActions from "@/components/ShipmentStatusActions";
-import { findShipmentByMerchantPaymentId, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
+import { findShipmentByMerchantPaymentId, getPaymentProductsByPaypayPaymentId } from "@/lib/db/index";
 import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";

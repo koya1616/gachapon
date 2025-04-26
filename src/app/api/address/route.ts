@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
-import { createAddress, findAddressByUserId, updateAddress } from "@/lib/db";
+import { createAddress, findAddressByUserId, updateAddress } from "@/lib/db/index";
 
 export async function GET() {
   const cookieStore = await cookies();

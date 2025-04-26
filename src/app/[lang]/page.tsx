@@ -1,5 +1,5 @@
 import Products from "@/components/Products";
-import { getProducts } from "@/lib/db";
+import { getProducts } from "@/lib/db/index";
 
 export default async function ProductsPage({
   params,

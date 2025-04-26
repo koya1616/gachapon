@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { updateShipmentStatus, findShipmentByMerchantPaymentId } from "@/lib/db";
+import { updateShipmentStatus } from "@/lib/db/index";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 
