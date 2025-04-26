@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
 import { createAddress, findAddressByUserId, updateAddress } from "@/lib/db";
+import type { Address } from "@/types";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json();
+  const body: Address = await request.json();
 
   if (body.id === 0) {
     await createAddress({ ...body, user_id: userToken.id });
