@@ -39,6 +39,7 @@ export default function CheckoutPage() {
               productId: item.id,
               unitPrice: {
                 amount: item.price,
+                currency: "JPY",
               },
             })),
           }),
