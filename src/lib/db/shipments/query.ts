@@ -50,3 +50,16 @@ export async function updateShipmentStatus(id: number, status: ShipmentStatus): 
   const params = [Date.now(), id];
   await executeQuery(query, params);
 }
+
+export async function createShipment(
+  shipment: Pick<Shipment, "paypay_payment_id" | "address">,
+): Promise<Shipment | null> {
+  const query = `
+    INSERT INTO shipments (paypay_payment_id, address)
+    VALUES ($1, $2)
+    RETURNING *
+  `;
+  const params = [shipment.paypay_payment_id, shipment.address];
+  const results = await executeQuery<Shipment>(query, params);
+  return results.length > 0 ? results[0] : null;
+}

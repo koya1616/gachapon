@@ -60,6 +60,7 @@ export {
   findPaypayPaymentByMerchantPaymentId,
   getPaypayPayments,
   getPaypayPaymentsByUserId,
+  createPaypayPayment,
 } from "./paypayPayments/query";
 export { createPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
 export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
@@ -78,4 +79,5 @@ export {
   findShipmentByMerchantPaymentId,
   findShipmentByMerchantPaymentIdAndUserId,
   updateShipmentStatus,
+  createShipment,
 } from "./shipments/query";

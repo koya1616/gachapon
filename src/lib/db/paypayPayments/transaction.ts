@@ -4,7 +4,7 @@ import { executeQueryWithClient } from "..";
 
 export async function createPaypayPaymentWithTransaction(
   client: Client,
-  paypayPayment: Omit<PaypayPayment, "id" | "created_at">,
+  paypayPayment: Omit<PaypayPayment, "id">,
 ): Promise<PaypayPayment | null> {
   const query = `
     INSERT INTO paypay_payments (user_id, merchant_payment_id)

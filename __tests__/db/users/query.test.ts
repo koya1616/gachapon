@@ -5,7 +5,7 @@ import { UserFactory } from "../../factory/user";
 
 describe("Usersテーブルに関するテスト", () => {
   afterAll(async () => {
-    await executeQuery("TRUNCATE TABLE users CASCADE");
+    await executeQuery("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
   });
 
   describe("findUserByEmail", () => {
