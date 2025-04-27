@@ -1,11 +1,14 @@
 import "../setup";
 import { createUser, executeQuery, findUserByEmail } from "@/lib/db";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { UserFactory } from "../../factory/user";
 
 describe("findUserByEmail", () => {
   const testEmail = `${crypto.randomUUID().split("-")[0]}@example.com`;
+
+  let user: UserFactory;
   beforeAll(async () => {
-    await executeQuery("INSERT INTO users (email) VALUES ($1)", [testEmail]);
+    user = await UserFactory.create(testEmail);
   });
 
   afterAll(async () => {
@@ -14,6 +17,7 @@ describe("findUserByEmail", () => {
 
   it("有効なメールアドレスの場合、ユーザー情報を返すべき", async () => {
     const result = await findUserByEmail(testEmail);
+    expect(result?.id).toBe(user.id);
     expect(result?.email).toBe(testEmail);
   });
 
@@ -30,8 +34,7 @@ describe("createUser", () => {
 
   it("有効なメールアドレスの場合、ユーザー情報を返すべき", async () => {
     const email = `${crypto.randomUUID().split("-")[0]}@example.com`;
-    await createUser(email);
-    const result = await findUserByEmail(email);
-    expect(result?.email).toBe(email);
+    const user = await createUser(email);
+    expect(user?.email).toBe(email);
   });
 });

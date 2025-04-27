@@ -35,8 +35,7 @@ export async function GET(request: NextRequest) {
   let user = await findUserByEmail(userData.email);
 
   if (!user) {
-    await createUser(userData.email);
-    user = await findUserByEmail(userData.email);
+    user = await createUser(userData.email);
 
     if (!user) redirect("/error");
   }

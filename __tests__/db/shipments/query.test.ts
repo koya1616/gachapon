@@ -1,7 +1,6 @@
 import "../setup";
 import {
   executeQuery,
-  findPaypayPaymentByMerchantPaymentId,
   findShipmentByMerchantPaymentId,
   findShipmentByMerchantPaymentIdAndUserId,
   updateShipmentStatus,
