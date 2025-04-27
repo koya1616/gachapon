@@ -1,5 +1,6 @@
 import "../setup";
 import {
+  createShipment,
   executeQuery,
   findShipmentByMerchantPaymentId,
   findShipmentByMerchantPaymentIdAndUserId,
@@ -12,11 +13,11 @@ import { UserFactory } from "../../factory/user";
 let testMerchantPaymentId: string;
 let user: UserFactory;
 
-const setUpUser = async () => {
+const setUpUser = async (withShipment?: boolean) => {
   return await UserFactory.create(`${crypto.randomUUID().split("-")[0]}@example.com`, {
     paypayPayment: {
       value: { merchant_payment_id: testMerchantPaymentId },
-      options: { withShipment: true },
+      options: { withShipment: withShipment || true },
     },
   });
 };
@@ -104,6 +105,20 @@ describe("Usersテーブルに関するテスト", () => {
 
       const result = await executeQuery("SELECT * FROM shipments WHERE id = $1", [user.shipment?.id]);
       expect(result[0][`${status}_at`]).not.toBeNull();
+    });
+  });
+
+  describe("createShipment", () => {
+    beforeAll(async () => {
+      testMerchantPaymentId = `${crypto.randomUUID().split("-")[0]}`;
+      user = await setUpUser(false);
+    });
+
+    it("配送レコードが作成されること", async () => {
+      const shipment = await createShipment({ paypay_payment_id: Number(user.paypayPayment?.id), address: "住所" });
+      expect(shipment?.id).not.toBeNull
+      expect(shipment?.paypay_payment_id).toBe(Number(user.paypayPayment?.id))
+      expect(shipment?.address).toBe("住所")
     });
   });
 });
