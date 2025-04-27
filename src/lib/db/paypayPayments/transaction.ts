@@ -2,7 +2,7 @@ import type { PaypayPayment } from "@/types";
 import type { Client } from "pg";
 import { executeQueryWithClient } from "..";
 
-export async function createAndGetPaypayPaymentWithTransaction(
+export async function createPaypayPaymentWithTransaction(
   client: Client,
   paypayPayment: Omit<PaypayPayment, "id" | "created_at">,
 ): Promise<PaypayPayment | null> {

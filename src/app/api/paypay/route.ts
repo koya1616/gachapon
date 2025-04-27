@@ -7,7 +7,7 @@ import { USER_TOKEN } from "@/const/cookies";
 import {
   executeTransaction,
   findAddressByUserId,
-  createAndGetPaypayPaymentWithTransaction,
+  createPaypayPaymentWithTransaction,
   createShipmentWithTransaction,
   createPaymentProductsWithTransaction,
 } from "@/lib/db";
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
           throw new Error("Address not found");
         }
 
-        const payment = await createAndGetPaypayPaymentWithTransaction(client, {
+        const payment = await createPaypayPaymentWithTransaction(client, {
           user_id: userToken.id,
           merchant_payment_id: payload.merchantPaymentId,
         });

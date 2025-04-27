@@ -61,7 +61,7 @@ export {
   getPaypayPayments,
   getPaypayPaymentsByUserId,
 } from "./paypayPayments/query";
-export { createAndGetPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
+export { createPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
 export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
 export { createLotteryEventWithTransaction } from "./lotteryEvents/transaction";
 export { getLotteryEvents } from "./lotteryEvents/query";
