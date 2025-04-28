@@ -5,7 +5,7 @@ export async function getProducts(): Promise<Product[]> {
   return executeQuery<Product>("SELECT * FROM products ORDER BY stock_quantity DESC");
 }
 
-export async function createProducts(product: Omit<Product, "id" | "quantity">): Promise<Product> {
+export async function createProducts(product: Omit<Product, "id" | "quantity" | "stock_quantity">): Promise<Product> {
   const query = `
     INSERT INTO products (name, price, image)
     VALUES ($1, $2, $3)

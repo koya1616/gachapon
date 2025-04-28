@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const productData: Omit<Product, "id" | "quantity"> = await request.json();
+    const productData: Omit<Product, "id" | "quantity" | "stock_quantity"> = await request.json();
     const product = await createProducts(productData);
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
