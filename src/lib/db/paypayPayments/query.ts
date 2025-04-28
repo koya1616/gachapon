@@ -48,7 +48,7 @@ export async function findPaypayPaymentByMerchantPaymentId(merchant_payment_id: 
   return results.length > 0 ? results[0] : null;
 }
 
-export async function createPaypayPayment(paypayPayment: Omit<PaypayPayment, "id">): Promise<PaypayPayment | null> {
+export async function createPaypayPayment(paypayPayment: Omit<PaypayPayment, "id">): Promise<PaypayPayment> {
   const query = `
     INSERT INTO paypay_payments (user_id, merchant_payment_id)
     VALUES ($1, $2)
@@ -56,5 +56,5 @@ export async function createPaypayPayment(paypayPayment: Omit<PaypayPayment, "id
   `;
   const params = [paypayPayment.user_id, paypayPayment.merchant_payment_id];
   const results = await executeQuery<PaypayPayment>(query, params);
-  return results.length > 0 ? results[0] : null;
+  return results[0];
 }

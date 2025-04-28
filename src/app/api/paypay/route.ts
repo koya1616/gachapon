@@ -35,10 +35,6 @@ export async function POST(request: NextRequest) {
           merchant_payment_id: payload.merchantPaymentId,
         });
 
-        if (!payment) {
-          throw new Error("Failed to create payment record");
-        }
-
         await createShipmentWithTransaction(client, {
           paypay_payment_id: payment.id,
           address: `${address.country} ${address.postal_code} ${address.address}`,
