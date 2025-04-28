@@ -61,12 +61,8 @@ export default function CheckoutPage() {
         setIsLoading(false);
       }
     } else {
-      // Handle credit card payment
-      // This would need to be implemented based on the credit card processor used
-
-      // For now just show a placeholder implementation
       try {
-        // Credit card implementation would go here
+        // TODO: stripe実装
         router.push(`/${lang}/payment/credit/success`);
       } catch (error) {
         console.error("Credit card payment failed:", error);
