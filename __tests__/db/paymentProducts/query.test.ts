@@ -1,4 +1,4 @@
-import { createPaymentProducts } from "@/lib/db";
+import { createPaymentProducts, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
 import { UserFactory } from "../../factory/user";
 import { beforeAll, describe, expect, it } from "vitest";
 
@@ -34,6 +34,28 @@ describe("PaymentProductsテーブルに関するテスト", () => {
       expect(result[0].quantity).toBe(1);
       expect(result[0].price).toBe(10);
       expect(result[0].product_id).toBe(user.paymentProduct?.[0].product_id);
+    });
+  });
+
+  describe("getPaymentProductsByPaypayPaymentId", () => {
+    beforeAll(async () => {
+      user = await setUpUser();
+    });
+
+    it("Paypay Payment IDが存在する場合、決済商品レコードが取得できること", async () => {
+      const result = await getPaymentProductsByPaypayPaymentId(user.paypayPayment?.id as number);
+      const paymentProduct = user.paymentProduct?.find((product) => product.id === user.paypayPayment?.id);
+      expect(result).toHaveLength(1);
+      expect(result[0].id).not.toBeNull();
+      expect(result[0].paypay_payment_id).toBe(user.paypayPayment?.id);
+      expect(result[0].quantity).toBe(1);
+      expect(result[0].price).toBe(100);
+      expect(result[0].product_id).toBe(paymentProduct?.product_id);
+    });
+
+    it("Paypay Payment IDが存在しない場合、空の配列が返されること", async () => {
+      const result = await getPaymentProductsByPaypayPaymentId(99999999);
+      expect(result).toHaveLength(0);
     });
   });
 });
