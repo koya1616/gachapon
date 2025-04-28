@@ -1,4 +1,3 @@
-import "./setup";
 import { describe, it, expect } from "vitest";
 import { executeQuery } from "../../src/lib/db";
 

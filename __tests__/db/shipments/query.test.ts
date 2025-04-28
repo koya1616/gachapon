@@ -1,4 +1,3 @@
-import "../setup";
 import {
   createShipment,
   executeQuery,
@@ -17,18 +16,12 @@ const setUpUser = async (withShipment?: boolean) => {
   return await UserFactory.create(`${crypto.randomUUID().split("-")[0]}@example.com`, {
     paypayPayment: {
       value: { merchant_payment_id: testMerchantPaymentId },
-      options: { withShipment: withShipment || true },
+      options: { withShipment: withShipment ?? true },
     },
   });
 };
 
 describe("Shipmentsテーブルに関するテスト", () => {
-  afterAll(async () => {
-    await executeQuery("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
-    await executeQuery("TRUNCATE TABLE paypay_payments RESTART IDENTITY CASCADE");
-    await executeQuery("TRUNCATE TABLE shipments RESTART IDENTITY CASCADE");
-  });
-
   describe("findShipmentByMerchantPaymentId", () => {
     beforeAll(async () => {
       testMerchantPaymentId = `${crypto.randomUUID().split("-")[0]}`;

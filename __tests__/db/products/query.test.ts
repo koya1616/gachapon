@@ -1,6 +1,5 @@
-import "../setup";
-import { createProducts, executeQuery, findProductById, getProducts, updateProductById } from "@/lib/db";
-import { describe, it, expect, afterAll, beforeAll, beforeEach } from "vitest";
+import { createProducts, findProductById, getProducts, updateProductById } from "@/lib/db";
+import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 import { ProductFactory } from "../../factory/product";
 
 let product: ProductFactory;
@@ -10,10 +9,6 @@ const setUpProduct = async () => {
 };
 
 describe("Productsテーブルに関するテスト", () => {
-  afterAll(async () => {
-    await executeQuery("TRUNCATE TABLE products RESTART IDENTITY CASCADE");
-  });
-
   describe("getProducts", () => {
     beforeAll(async () => {
       product = await setUpProduct();

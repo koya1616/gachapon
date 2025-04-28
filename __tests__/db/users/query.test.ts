@@ -1,13 +1,8 @@
-import "../setup";
-import { createUser, executeQuery, findUserByEmail } from "@/lib/db";
+import { createUser, findUserByEmail } from "@/lib/db";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { UserFactory } from "../../factory/user";
 
 describe("Usersテーブルに関するテスト", () => {
-  afterAll(async () => {
-    await executeQuery("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
-  });
-
   describe("findUserByEmail", () => {
     const testEmail = `${crypto.randomUUID().split("-")[0]}@example.com`;
 
