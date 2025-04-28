@@ -22,7 +22,7 @@ const setUpUser = async (withShipment?: boolean) => {
   });
 };
 
-describe("Usersテーブルに関するテスト", () => {
+describe("Shipmentsテーブルに関するテスト", () => {
   afterAll(async () => {
     await executeQuery("TRUNCATE TABLE users RESTART IDENTITY CASCADE");
     await executeQuery("TRUNCATE TABLE paypay_payments RESTART IDENTITY CASCADE");
@@ -116,9 +116,9 @@ describe("Usersテーブルに関するテスト", () => {
 
     it("配送レコードが作成されること", async () => {
       const shipment = await createShipment({ paypay_payment_id: Number(user.paypayPayment?.id), address: "住所" });
-      expect(shipment?.id).not.toBeNull
-      expect(shipment?.paypay_payment_id).toBe(Number(user.paypayPayment?.id))
-      expect(shipment?.address).toBe("住所")
+      expect(shipment.id).not.toBeNull();
+      expect(shipment.paypay_payment_id).toBe(Number(user.paypayPayment?.id));
+      expect(shipment.address).toBe("住所");
     });
   });
 });

@@ -7,8 +7,8 @@ export class UserFactory {
   paypayPayment: PaypayPayment | null;
   shipment: Shipment | null;
 
-  constructor(email: string) {
-    this.id = 0;
+  constructor(email: string, id?: number) {
+    this.id = id || 0;
     this.email = email;
     this.paypayPayment = null;
     this.shipment = null;
@@ -25,9 +25,8 @@ export class UserFactory {
       };
     },
   ): Promise<UserFactory> {
-    const factory = new UserFactory(email || `${crypto.randomUUID().split("-")[0]}@example.com`);
-    const user = await createUser(factory.email);
-    factory.id = user?.id || 0;
+    const user = await createUser(email || `${crypto.randomUUID().split("-")[0]}@example.com`);
+    const factory = new UserFactory(user.email, user.id);
 
     if (options?.paypayPayment) {
       factory.paypayPayment = await createPaypayPayment({ ...options.paypayPayment.value, user_id: factory.id });

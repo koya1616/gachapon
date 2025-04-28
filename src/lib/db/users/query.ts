@@ -10,7 +10,7 @@ export async function findUserByEmail(email: string): Promise<User | null> {
   return users.length > 0 ? users[0] : null;
 }
 
-export async function createUser(email: string): Promise<User | null> {
+export async function createUser(email: string): Promise<User> {
   const query = `
     INSERT INTO users (email)
     VALUES ($1)
@@ -18,5 +18,5 @@ export async function createUser(email: string): Promise<User | null> {
   `;
   const params = [email];
   const result = await executeQuery<User>(query, params);
-  return result.length > 0 ? result[0] : null;
+  return result[0];
 }

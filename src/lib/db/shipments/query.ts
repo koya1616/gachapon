@@ -51,9 +51,7 @@ export async function updateShipmentStatus(id: number, status: ShipmentStatus): 
   await executeQuery(query, params);
 }
 
-export async function createShipment(
-  shipment: Pick<Shipment, "paypay_payment_id" | "address">,
-): Promise<Shipment | null> {
+export async function createShipment(shipment: Pick<Shipment, "paypay_payment_id" | "address">): Promise<Shipment> {
   const query = `
     INSERT INTO shipments (paypay_payment_id, address)
     VALUES ($1, $2)
@@ -61,5 +59,5 @@ export async function createShipment(
   `;
   const params = [shipment.paypay_payment_id, shipment.address];
   const results = await executeQuery<Shipment>(query, params);
-  return results.length > 0 ? results[0] : null;
+  return results[0];
 }
