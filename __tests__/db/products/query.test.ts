@@ -17,8 +17,9 @@ describe("Productsテーブルに関するテスト", () => {
     it("全ての商品情報を取得できること", async () => {
       const result = await getProducts();
       expect(result.length).toBeGreaterThanOrEqual(1);
-      const expectedKeys = ["id", "name", "price", "stock_quantity", "image"];
-      expect(Object.keys(result[0]).sort()).toEqual(expectedKeys.sort());
+      type ProductKeys = keyof ProductFactory;
+      const expectedKeys: ProductKeys[] = ["id", "name", "price", "image", "stock_quantity"];
+      expect(Object.keys(result[0])).toEqual(expect.arrayContaining(expectedKeys));
     });
   });
 

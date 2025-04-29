@@ -51,6 +51,19 @@ describe("LotteryEventsテーブルに関するテスト", () => {
         "created_at",
       ];
       expect(Object.keys(result[0]).sort()).toEqual(expectedKeys.sort());
+      type LotteryEventKeys = keyof LotteryEventFactory;
+      const typeKeys: LotteryEventKeys[] = [
+        "id",
+        "name",
+        "description",
+        "start_at",
+        "end_at",
+        "result_at",
+        "payment_deadline_at",
+        "status",
+        "created_at",
+      ];
+      expect(Object.keys(result[0])).toEqual(expect.arrayContaining(typeKeys));
     });
   });
 });
