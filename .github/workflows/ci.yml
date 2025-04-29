@@ -25,22 +25,23 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10.8.0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'pnpm'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
-
       - name: Install dependencies
         run: pnpm install
+
+      - name: Import PostgreSQL schema
+        run: psql -h localhost -U postgres -d test_db -f schema.sql
+        env:
+          PGPASSWORD: password
 
       - name: Run Vitest
         run: pnpm ci
