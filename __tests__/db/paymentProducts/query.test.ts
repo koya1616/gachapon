@@ -53,6 +53,8 @@ describe("PaymentProductsテーブルに関するテスト", () => {
       expect(result[0].quantity).toBe(1);
       expect(result[0].price).toBe(100);
       expect(result[0].product_id).toBe(paymentProduct?.product_id);
+      const expectedKeys = ["id", "paypay_payment_id", "quantity", "price", "product_id", "name", "image"];
+      expect(Object.keys(result[0]).sort()).toEqual(expectedKeys.sort());
     });
 
     it("Paypay Payment IDが存在しない場合、空の配列が返されること", async () => {
