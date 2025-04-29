@@ -21,12 +21,14 @@ export async function createAddress(address: Omit<Address, "id">): Promise<Addre
   return result[0];
 }
 
-export async function updateAddress(address: Address): Promise<void> {
+export async function updateAddress(address: Address): Promise<Address> {
   const query = `
     UPDATE addresses
     SET name = $1, country = $2, postal_code = $3, address = $4
     WHERE id = $5
+    RETURNING *
   `;
   const params = [address.name, address.country, address.postal_code, address.address, address.id];
-  await executeQuery(query, params);
+  const result = await executeQuery<Address>(query, params);
+  return result[0];
 }
