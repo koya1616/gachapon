@@ -36,9 +36,21 @@ describe("LotteryEventsテーブルに関するテスト", () => {
       lotteryEvent = await setUpLotteryEvent();
     });
 
-    it("全ての商品情報を取得できること", async () => {
+    it("全ての抽選イベントを取得できること", async () => {
       const result = await getLotteryEvents();
       expect(result.length).toBeGreaterThanOrEqual(1);
+      const expectedKeys = [
+        "id",
+        "name",
+        "description",
+        "start_at",
+        "end_at",
+        "result_at",
+        "payment_deadline_at",
+        "status",
+        "created_at",
+      ];
+      expect(Object.keys(result[0]).sort()).toEqual(expectedKeys.sort());
     });
   });
 });
