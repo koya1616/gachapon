@@ -1,9 +1,6 @@
 import {
-  createPaymentProducts,
   createPaypayPayment,
-  executeQuery,
   findPaypayPaymentByMerchantPaymentId,
-  getPaymentProductsByPaypayPaymentId,
   getPaypayPayments,
   getPaypayPaymentsByUserId,
 } from "@/lib/db";
