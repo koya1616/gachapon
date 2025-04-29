@@ -6,10 +6,8 @@ import type { Address } from "@/types";
 let user: UserFactory;
 
 const setUpUser = async (withAddress: boolean) => {
-  if (withAddress) {
-    return await UserFactory.create(`${crypto.randomUUID().split("-")[0]}@example.com`, { address: { value: {} } });
-  }
-  return await UserFactory.create(`${crypto.randomUUID().split("-")[0]}@example.com`);
+  const email = `${crypto.randomUUID().split("-")[0]}@example.com`;
+  return await UserFactory.create(email, withAddress ? { address: { value: {} } } : undefined);
 };
 
 type AddressKeys = keyof Address;
