@@ -9,7 +9,7 @@ const setUpProduct = async () => {
   return await ProductFactory.create();
 };
 
-type ProductKeys = keyof ProductFactory;
+type ProductKeys = keyof Product;
 const expectedKeys: ProductKeys[] = ["id", "name", "price", "image", "stock_quantity"];
 
 describe("Productsテーブルに関するテスト", () => {
