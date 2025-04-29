@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../factory/lotteryEvent";
-import { createLotteryEvent } from "@/lib/db";
+import { createLotteryEvent, getLotteryEvents } from "@/lib/db";
 
 let lotteryEvent: LotteryEventFactory;
 
@@ -28,6 +28,17 @@ describe("LotteryEventsテーブルに関するテスト", () => {
       expect(Number(result.result_at)).toBeGreaterThanOrEqual(Number(result.end_at));
       expect(Number(result.payment_deadline_at)).toBeGreaterThanOrEqual(Number(result.result_at));
       expect(result.status).toBe(0);
+    });
+  });
+
+  describe("getLotteryEvents", () => {
+    beforeAll(async () => {
+      lotteryEvent = await setUpLotteryEvent();
+    });
+
+    it("全ての商品情報を取得できること", async () => {
+      const result = await getLotteryEvents();
+      expect(result.length).toBeGreaterThanOrEqual(1);
     });
   });
 });
