@@ -39,3 +39,17 @@ export async function createPaymentProducts(
   ]);
   return await executeQuery<PaymentProduct>(query, params);
 }
+
+export async function findPaymentProductByPaypayPaymentIdAndProductId(
+  paypay_payment_id: number,
+  product_id: number,
+): Promise<PaymentProduct | null> {
+  const query = `
+    SELECT *
+    FROM payment_products
+    WHERE payment_products.paypay_payment_id = $1 AND payment_products.product_id = $2
+  `;
+  const params = [paypay_payment_id, product_id];
+  const result = await executeQuery<PaymentProduct>(query, params);
+  return result.length > 0 ? result[0] : null;
+}

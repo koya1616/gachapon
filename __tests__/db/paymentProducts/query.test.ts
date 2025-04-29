@@ -1,4 +1,8 @@
-import { createPaymentProducts, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
+import {
+  createPaymentProducts,
+  findPaymentProductByPaypayPaymentIdAndProductId,
+  getPaymentProductsByPaypayPaymentId,
+} from "@/lib/db";
 import { UserFactory } from "../../factory/user";
 import { beforeAll, describe, expect, it } from "vitest";
 import type { PaymentProduct } from "@/types";
@@ -66,6 +70,31 @@ describe("PaymentProductsテーブルに関するテスト", () => {
     it("Paypay Payment IDが存在しない場合、空の配列が返されること", async () => {
       const result = await getPaymentProductsByPaypayPaymentId(99999999);
       expect(result).toHaveLength(0);
+    });
+  });
+
+  describe("findPaymentProductByPaypayPaymentIdAndProductId", () => {
+    beforeAll(async () => {
+      user = await setUpUser();
+    });
+
+    it("Paypay Payment IDとProduct IDが一致する場合、決済商品レコードが取得できること", async () => {
+      const paymentProduct = user.paymentProduct?.find(
+        (product) => product.paypay_payment_id === user.paypayPayment?.id,
+      );
+      const result = await findPaymentProductByPaypayPaymentIdAndProductId(
+        user.paypayPayment?.id as number,
+        paymentProduct?.product_id as number,
+      );
+      expect(result).toBeTruthy();
+      expect(result?.id).not.toBeNull();
+      expect(result?.paypay_payment_id).toBe(user.paypayPayment?.id);
+      expect(result?.quantity).toBe(1);
+      expect(result?.price).toBe(100);
+      expect(result?.product_id).toBe(paymentProduct?.product_id);
+      expect(Object.keys(result as PaymentProduct)).toEqual(
+        expect.arrayContaining(["id", "paypay_payment_id", "quantity", "price", "product_id"]),
+      );
     });
   });
 });
