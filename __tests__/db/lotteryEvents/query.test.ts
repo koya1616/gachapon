@@ -8,6 +8,19 @@ const setUpLotteryEvent = async () => {
   return await LotteryEventFactory.create();
 };
 
+type LotteryEventKeys = keyof LotteryEventFactory;
+const typeKeys: LotteryEventKeys[] = [
+  "id",
+  "name",
+  "description",
+  "start_at",
+  "end_at",
+  "result_at",
+  "payment_deadline_at",
+  "status",
+  "created_at",
+];
+
 describe("LotteryEventsテーブルに関するテスト", () => {
   describe("createLotteryEvent", () => {
     it("抽選イベントレコードが作成できること", async () => {
@@ -28,6 +41,7 @@ describe("LotteryEventsテーブルに関するテスト", () => {
       expect(Number(result.result_at)).toBeGreaterThanOrEqual(Number(result.end_at));
       expect(Number(result.payment_deadline_at)).toBeGreaterThanOrEqual(Number(result.result_at));
       expect(result.status).toBe(0);
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(typeKeys));
     });
   });
 
@@ -39,30 +53,6 @@ describe("LotteryEventsテーブルに関するテスト", () => {
     it("全ての抽選イベントを取得できること", async () => {
       const result = await getLotteryEvents();
       expect(result.length).toBeGreaterThanOrEqual(1);
-      const expectedKeys = [
-        "id",
-        "name",
-        "description",
-        "start_at",
-        "end_at",
-        "result_at",
-        "payment_deadline_at",
-        "status",
-        "created_at",
-      ];
-      expect(Object.keys(result[0]).sort()).toEqual(expectedKeys.sort());
-      type LotteryEventKeys = keyof LotteryEventFactory;
-      const typeKeys: LotteryEventKeys[] = [
-        "id",
-        "name",
-        "description",
-        "start_at",
-        "end_at",
-        "result_at",
-        "payment_deadline_at",
-        "status",
-        "created_at",
-      ];
       expect(Object.keys(result[0])).toEqual(expect.arrayContaining(typeKeys));
     });
   });

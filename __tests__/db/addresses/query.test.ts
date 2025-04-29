@@ -9,6 +9,9 @@ const setUpUser = async () => {
   return await UserFactory.create(`${crypto.randomUUID().split("-")[0]}@example.com`, { address: { value: {} } });
 };
 
+type AddressKeys = keyof Address;
+const expectedKeys: AddressKeys[] = ["id", "user_id", "name", "country", "postal_code", "address"];
+
 describe("addressesテーブルに関するテスト", () => {
   describe("findAddressByUserId", () => {
     beforeAll(async () => {
@@ -23,8 +26,6 @@ describe("addressesテーブルに関するテスト", () => {
       expect(result?.country).toBe(user.address?.country);
       expect(result?.postal_code).toBe(user.address?.postal_code);
       expect(result?.address).toBe(user.address?.address);
-      type AddressKeys = keyof Address;
-      const expectedKeys: AddressKeys[] = ["id", "user_id", "name", "country", "postal_code", "address"];
       expect(Object.keys(result as Address)).toEqual(expect.arrayContaining(expectedKeys));
     });
   });

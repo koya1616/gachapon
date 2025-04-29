@@ -14,6 +14,9 @@ const setUpUser = async () => {
   });
 };
 
+type PaymentProductKeys = keyof PaymentProduct;
+const typeKeys: PaymentProductKeys[] = ["id", "paypay_payment_id", "quantity", "price", "product_id", "name", "image"];
+
 describe("PaymentProductsテーブルに関するテスト", () => {
   describe("createPaymentProducts", () => {
     beforeAll(async () => {
@@ -35,6 +38,9 @@ describe("PaymentProductsテーブルに関するテスト", () => {
       expect(result[0].quantity).toBe(1);
       expect(result[0].price).toBe(10);
       expect(result[0].product_id).toBe(user.paymentProduct?.[0].product_id);
+      expect(Object.keys(result[0])).toEqual(
+        expect.arrayContaining(["id", "paypay_payment_id", "quantity", "price", "product_id"]),
+      );
     });
   });
 
@@ -54,16 +60,6 @@ describe("PaymentProductsテーブルに関するテスト", () => {
       expect(result[0].quantity).toBe(1);
       expect(result[0].price).toBe(100);
       expect(result[0].product_id).toBe(paymentProduct?.product_id);
-      type PaymentProductKeys = keyof PaymentProduct;
-      const typeKeys: PaymentProductKeys[] = [
-        "id",
-        "paypay_payment_id",
-        "quantity",
-        "price",
-        "product_id",
-        "name",
-        "image",
-      ];
       expect(Object.keys(result[0])).toEqual(expect.arrayContaining(typeKeys));
     });
 
