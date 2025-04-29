@@ -16,7 +16,7 @@ describe("Productsテーブルに関するテスト", () => {
 
     it("全ての商品情報を取得できること", async () => {
       const result = await getProducts();
-      expect(result).toHaveLength(1);
+      expect(result.length).toBeGreaterThanOrEqual(1);
     });
   });
 

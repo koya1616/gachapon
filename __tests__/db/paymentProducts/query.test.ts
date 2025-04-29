@@ -44,7 +44,9 @@ describe("PaymentProductsテーブルに関するテスト", () => {
 
     it("Paypay Payment IDが存在する場合、決済商品レコードが取得できること", async () => {
       const result = await getPaymentProductsByPaypayPaymentId(user.paypayPayment?.id as number);
-      const paymentProduct = user.paymentProduct?.find((product) => product.id === user.paypayPayment?.id);
+      const paymentProduct = user.paymentProduct?.find(
+        (product) => product.paypay_payment_id === user.paypayPayment?.id,
+      );
       expect(result).toHaveLength(1);
       expect(result[0].id).not.toBeNull();
       expect(result[0].paypay_payment_id).toBe(user.paypayPayment?.id);
