@@ -1,5 +1,5 @@
-import { createPaymentProducts, createPaypayPayment, createShipment, createUser } from "@/lib/db";
-import type { PaymentProduct, PaypayPayment, Shipment } from "@/types";
+import { createAddress, createPaymentProducts, createPaypayPayment, createShipment, createUser } from "@/lib/db";
+import type { Address, PaymentProduct, PaypayPayment, Shipment } from "@/types";
 import { ProductFactory } from "./product";
 
 export class UserFactory {
@@ -8,6 +8,7 @@ export class UserFactory {
   paypayPayment: PaypayPayment | null;
   shipment: Shipment | null;
   paymentProduct: PaymentProduct[] | null;
+  address: Address | null;
 
   constructor(email: string, id?: number) {
     this.id = id || 0;
@@ -15,6 +16,7 @@ export class UserFactory {
     this.paypayPayment = null;
     this.shipment = null;
     this.paymentProduct = null;
+    this.address = null;
   }
 
   public static async create(
@@ -26,6 +28,9 @@ export class UserFactory {
           withShipment?: boolean;
           withPaymentProduct?: boolean;
         };
+      };
+      address?: {
+        value: Partial<Pick<Address, "name" | "country" | "postal_code" | "address">>;
       };
     },
   ): Promise<UserFactory> {
@@ -52,6 +57,16 @@ export class UserFactory {
           },
         ]);
       }
+    }
+
+    if (options?.address) {
+      factory.address = await createAddress({
+        user_id: factory.id,
+        name: options.address.value.name || "Test User",
+        country: options.address.value.country || "JP",
+        postal_code: options.address.value.postal_code || "123-4567",
+        address: options.address.value.address || "Tokyo, Japan",
+      });
     }
     return factory;
   }

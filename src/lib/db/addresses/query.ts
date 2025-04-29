@@ -10,13 +10,15 @@ export async function findAddressByUserId(user_id: number): Promise<Address | nu
   return addresses.length > 0 ? addresses[0] : null;
 }
 
-export async function createAddress(address: Omit<Address, "id">): Promise<void> {
+export async function createAddress(address: Omit<Address, "id">): Promise<Address> {
   const query = `
     INSERT INTO addresses (user_id, name, country, postal_code, address)
     VALUES ($1, $2, $3, $4, $5)
+    RETURNING *
   `;
   const params = [address.user_id, address.name, address.country, address.postal_code, address.address];
-  await executeQuery(query, params);
+  const result = await executeQuery<Address>(query, params);
+  return result[0];
 }
 
 export async function updateAddress(address: Address): Promise<void> {
