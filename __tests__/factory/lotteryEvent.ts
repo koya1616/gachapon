@@ -1,4 +1,6 @@
-import { createLotteryEvent } from "@/lib/db";
+import { createLotteryEvent, createLotteryProducts } from "@/lib/db";
+import type { LotteryProduct } from "@/types";
+import { ProductFactory } from "./product";
 
 export class LotteryEventFactory {
   id: number;
@@ -10,6 +12,7 @@ export class LotteryEventFactory {
   payment_deadline_at: number;
   status: number;
   created_at: number;
+  lotteryProducts: LotteryProduct[] | null;
 
   constructor(
     name: string,
@@ -29,6 +32,7 @@ export class LotteryEventFactory {
     this.payment_deadline_at = payment_deadline_at;
     this.status = status;
     this.created_at = Date.now();
+    this.lotteryProducts = null;
   }
 
   public static async create(
@@ -39,6 +43,11 @@ export class LotteryEventFactory {
     result_at?: number,
     payment_deadline_at?: number,
     status?: number,
+    options?: {
+      lotteryProducts?: {
+        value: Partial<Pick<LotteryProduct, "product_id" | "quantity_available">>[];
+      };
+    },
   ): Promise<LotteryEventFactory> {
     const now = Date.now();
     const lotteryEvent = await createLotteryEvent({
@@ -61,6 +70,18 @@ export class LotteryEventFactory {
     );
     factory.id = lotteryEvent.id;
     factory.created_at = lotteryEvent.created_at;
+
+    if (options?.lotteryProducts) {
+      const product = await ProductFactory.create();
+      factory.lotteryProducts = await createLotteryProducts(
+        options.lotteryProducts.value.map((lotteryProduct) => ({
+          lottery_event_id: factory.id,
+          product_id: lotteryProduct.product_id || product.id,
+          quantity_available: lotteryProduct.quantity_available || 1,
+        })),
+      );
+    }
+
     return factory;
   }
 }
