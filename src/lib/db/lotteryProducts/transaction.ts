@@ -1,5 +1,6 @@
 import type { Client } from "pg";
 import { executeQueryWithClient } from "..";
+import type { LotteryProduct } from "@/types";
 
 export async function createLotteryProductsWithTransaction(
   client: Client,
@@ -8,8 +9,8 @@ export async function createLotteryProductsWithTransaction(
     product_id: number;
     quantity_available: number;
   }>,
-): Promise<void> {
-  if (lotteryProducts.length === 0) return;
+): Promise<LotteryProduct[]> {
+  if (lotteryProducts.length === 0) return [];
 
   const placeholders = lotteryProducts.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`).join(", ");
 
@@ -22,6 +23,7 @@ export async function createLotteryProductsWithTransaction(
   const query = `
     INSERT INTO lottery_products (lottery_event_id, product_id, quantity_available)
     VALUES ${placeholders}
+    RETURNING *
   `;
-  await executeQueryWithClient(client, query, values);
+  return await executeQueryWithClient<LotteryProduct>(client, query, values);
 }
