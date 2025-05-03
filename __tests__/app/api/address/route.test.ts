@@ -13,11 +13,9 @@ vi.mock("next/headers", () => ({
 }));
 
 const mockCookieStore = (token: string) => {
-  vi.mocked(cookies).mockReturnValue(
-    Promise.resolve({
-      get: vi.fn().mockReturnValue({ name: USER_TOKEN, value: token }),
-    } as unknown as ReadonlyRequestCookies),
-  );
+  vi.mocked(cookies).mockResolvedValue({
+    get: vi.fn().mockReturnValue({ name: USER_TOKEN, value: token }),
+  } as unknown as ReadonlyRequestCookies);
 };
 
 let user: UserFactory;
