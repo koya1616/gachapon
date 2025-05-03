@@ -18,9 +18,8 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
-
   if (!userToken) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   const body: Address = await request.json();
@@ -30,5 +29,5 @@ export async function POST(request: NextRequest) {
   } else {
     await updateAddress({ ...body, user_id: userToken.id });
   }
-  return NextResponse.json({ message: "ok" }, { status: 200 });
+  return NextResponse.json({ message: "OK", data: null }, { status: 200 });
 }
