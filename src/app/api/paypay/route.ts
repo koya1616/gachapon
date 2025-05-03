@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { PAYPAY_GET_CODE_PAYMENT_DETAILS, PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
-import { paypayGetCodePaymentDetails, paypayQRCodeCreate } from "@/lib/paypay";
+import { paypayGetCodePaymentDetails, paypayQRCodeCreate, type PaypayQRCodeCreateRequest } from "@/lib/paypay";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   }
 
   const paypayType = request.headers.get(PAYPAY_TYPE);
-  const payload = await request.json();
+  const payload: PaypayQRCodeCreateRequest = await request.json();
 
   if (paypayType === PAYPAY_QR_CODE_CREATE) {
     try {
@@ -41,20 +41,17 @@ export async function POST(request: NextRequest) {
         });
 
         const paymentProductsData = payload.orderItems.map(
-          (item: { quantity: number; unitPrice: { amount: number }; productId: number }) => ({
+          (item: { quantity: number; unitPrice: { amount: number }; productId: string }) => ({
             paypay_payment_id: payment.id,
             quantity: item.quantity,
             price: item.unitPrice.amount,
-            product_id: item.productId,
+            product_id: Number(item.productId),
           }),
         );
 
         await createPaymentProductsWithTransaction(client, paymentProductsData);
 
-        const response = await paypayQRCodeCreate({
-          merchantPaymentId: payload.merchantPaymentId,
-          orderItems: payload.orderItems,
-        });
+        const response = await paypayQRCodeCreate(payload);
 
         if (response && "data" in response) {
           if (!response.data.url) {

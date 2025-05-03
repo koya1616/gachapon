@@ -7,6 +7,7 @@ import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
 import AddressForm from "@/components/AddressForm";
 import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
+import type { PaypayQRCodeCreateRequest } from "@/lib/paypay";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -36,13 +37,12 @@ export default function CheckoutPage() {
             orderItems: cart.map((item) => ({
               name: item.name,
               quantity: item.quantity,
-              productId: item.id,
+              productId: String(item.id),
               unitPrice: {
                 amount: item.price,
-                currency: "JPY",
               },
             })),
-          }),
+          } as PaypayQRCodeCreateRequest),
         });
 
         if (!response.ok) {
