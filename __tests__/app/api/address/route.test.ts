@@ -127,4 +127,39 @@ describe("POST /api/address", () => {
       address: "123 Main St",
     });
   });
+
+  it("アドレスを登録しているユーザーの場合は更新する", async () => {
+    user = await setUpUser(true);
+    mockCookieStore(generateToken({ id: user.id, type: "user" }));
+
+    const response = await POST(
+      new NextRequest("http://localhost/api/address", {
+        method: "POST",
+        body: JSON.stringify({
+          id: user.address?.id,
+          user_id: user.id,
+          name: "Jane Doe",
+          country: "JP",
+          postal_code: "54321",
+          address: "456 Main St",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    const data = await response.json();
+    expect(data).toEqual({ message: "OK", data: null });
+    const address = await findAddressByUserId(user.id);
+    expect(address).toEqual({
+      id: user.address?.id,
+      user_id: user.id,
+      name: "Jane Doe",
+      country: "JP",
+      postal_code: "54321",
+      address: "456 Main St",
+    });
+  });
 });
