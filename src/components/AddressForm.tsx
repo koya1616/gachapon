@@ -30,7 +30,7 @@ const AddressForm = ({ lang }: { lang: Lang }) => {
       window.location.href = "/ja/login";
       return;
     }
-    const address: Address | null = await response.json();
+    const { data: address }: { data: Address | null } = await response.json();
     setFormData({
       id: address?.id || 0,
       user_id: address?.user_id || 0,

@@ -9,10 +9,10 @@ export async function GET() {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
   const address = await findAddressByUserId(userToken.id);
-  return NextResponse.json(address, { status: 200 });
+  return NextResponse.json({ message: "OK", data: address }, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
