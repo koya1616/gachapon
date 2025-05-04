@@ -1,6 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { PAYPAY_GET_CODE_PAYMENT_DETAILS, PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
-import { paypayGetCodePaymentDetails, paypayQRCodeCreate, type PaypayQRCodeCreateRequest } from "@/lib/paypay";
+import {
+  paypayGetCodePaymentDetails,
+  type PaypayGetCodePaymentDetailsStatus,
+  paypayQRCodeCreate,
+  type PaypayQRCodeCreateRequest,
+} from "@/lib/paypay";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
@@ -79,17 +84,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Internal Server Error", data: null }, { status: 500 });
     }
     return NextResponse.json(
-      { message: "OK", data: { status: body.data.status } } as ApiResponse<{
-        status:
-          | "CREATED"
-          | "AUTHORIZED"
-          | "REAUTHORIZING"
-          | "COMPLETED"
-          | "REFUNDED"
-          | "FAILED"
-          | "CANCELED"
-          | "EXPIRED";
-      }>,
+      {
+        message: "OK",
+        data: { status: body.data.status },
+      } as ApiResponse<{ status: PaypayGetCodePaymentDetailsStatus }>,
       { status: 200 },
     );
   }

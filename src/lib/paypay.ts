@@ -49,9 +49,18 @@ export const paypayQRCodeCreate = async ({
   return "BODY" in response ? (response.BODY as PaypayQRCodeCreateResponse) : null;
 };
 
+export type PaypayGetCodePaymentDetailsStatus =
+  | "CREATED"
+  | "AUTHORIZED"
+  | "REAUTHORIZING"
+  | "COMPLETED"
+  | "REFUNDED"
+  | "FAILED"
+  | "CANCELED"
+  | "EXPIRED";
 export type PaypayGetCodePaymentDetailsResponse = {
   data: {
-    status: "CREATED" | "AUTHORIZED" | "REAUTHORIZING" | "COMPLETED" | "REFUNDED" | "FAILED" | "CANCELED" | "EXPIRED";
+    status: PaypayGetCodePaymentDetailsStatus;
     requestedAt: number;
     acceptedAt: number;
     amount: {
