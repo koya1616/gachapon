@@ -4,8 +4,6 @@ import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 import type { ShipmentStatus } from "@/lib/db/shipments/query";
 
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export type UpdateShipmentStatusRequest = {
   shipmentId: number;
   status: ShipmentStatus;
@@ -15,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-    if (adminToken !== ENV_ADMIN_CODE) {
+    if (adminToken !== process.env.ADMIN_CODE) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 

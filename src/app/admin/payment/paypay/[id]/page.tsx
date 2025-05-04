@@ -6,8 +6,6 @@ import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
 
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export default async function PayPayPage({
   params,
 }: {
@@ -15,7 +13,7 @@ export default async function PayPayPage({
 }) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== ENV_ADMIN_CODE) {
+  if (adminToken !== process.env.ADMIN_CODE) {
     redirect("/admin/login");
   }
 

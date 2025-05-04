@@ -5,12 +5,10 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export default async function Payment() {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== ENV_ADMIN_CODE) {
+  if (adminToken !== process.env.ADMIN_CODE) {
     redirect("/admin/login");
   }
 

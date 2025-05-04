@@ -5,12 +5,10 @@ import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 import type { Product } from "@/types";
 
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== ENV_ADMIN_CODE) {
+  if (adminToken !== process.env.ADMIN_CODE) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 

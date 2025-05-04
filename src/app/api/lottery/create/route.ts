@@ -9,8 +9,6 @@ import {
 } from "@/lib/db/index";
 import type { LotteryStatus } from "@/types";
 
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export type CreateLotteryEventApiRequestBody = {
   startAt: number;
   endAt: number;
@@ -27,7 +25,7 @@ export type CreateLotteryEventApiRequestBody = {
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== ENV_ADMIN_CODE) {
+  if (adminToken !== process.env.ADMIN_CODE) {
     return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
   }
 
