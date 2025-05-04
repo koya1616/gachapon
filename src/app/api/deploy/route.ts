@@ -2,43 +2,29 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
 
-const VERCEL_API_TOKEN = process.env.VERCEL_API_TOKEN;
-const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID;
-const ENV_ADMIN_CODE = process.env.ADMIN_CODE || "";
-
 export async function GET() {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== ENV_ADMIN_CODE) {
+  if (adminToken !== (process.env.ADMIN_CODE || "")) {
     return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
-  const deploymentId = await listDeployments();
-
-  const payload = {
-    name: "gachapo",
-    target: "production",
-    deploymentId: deploymentId,
-  };
-
-  const options = {
-    method: "post",
-    contentType: "application/json",
-    headers: { Authorization: `Bearer ${VERCEL_API_TOKEN}` },
-    body: JSON.stringify(payload),
-  };
-
-  await fetch("https://api.vercel.com/v13/deployments", options);
-  return NextResponse.json({ message: "OK", data: null }, { status: 200 });
-}
-
-async function listDeployments() {
-  const options = {
+  const VERCEL_API_TOKEN = process.env.VERCEL_API_TOKEN;
+  const response = await fetch(`https://api.vercel.com/v6/deployments?projectId=${process.env.VERCEL_PROJECT_ID}`, {
     method: "get",
-    contentType: "application/json",
-    headers: { Authorization: `Bearer ${VERCEL_API_TOKEN}` },
-  };
-  const response = await fetch(`https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}`, options);
+    headers: { Authorization: `Bearer ${VERCEL_API_TOKEN}`, "Content-Type": "application/json" },
+  });
   const data = await response.json();
-  return data.deployments[0].uid;
+  const deploymentId = data.deployments[0].uid;
+
+  await fetch("https://api.vercel.com/v13/deployments", {
+    method: "post",
+    headers: { Authorization: `Bearer ${VERCEL_API_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: "gachapo",
+      target: "production",
+      deploymentId: deploymentId,
+    }),
+  });
+  return NextResponse.json({ message: "OK", data: null }, { status: 200 });
 }
