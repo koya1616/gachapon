@@ -10,7 +10,7 @@ export async function GET() {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== ENV_ADMIN_CODE) {
-    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   const deploymentId = await listDeployments();
@@ -29,7 +29,7 @@ export async function GET() {
   };
 
   await fetch("https://api.vercel.com/v13/deployments", options);
-  return NextResponse.json({ message: "Deployment triggered successfully" }, { status: 200 });
+  return NextResponse.json({ message: "OK", data: null }, { status: 200 });
 }
 
 async function listDeployments() {
