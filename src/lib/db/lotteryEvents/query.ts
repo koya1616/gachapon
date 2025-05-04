@@ -26,3 +26,12 @@ export async function createLotteryEvent(lotteryEvent: Omit<LotteryEvent, "id" |
   const events = await executeQuery<LotteryEvent>(query, params);
   return events[0];
 }
+
+export async function findLotteryEventById(id: number): Promise<LotteryEvent | null> {
+  const query = `
+    SELECT * FROM lottery_events WHERE id = $1 LIMIT 1
+  `;
+  const params = [id];
+  const result = await executeQuery<LotteryEvent>(query, params);
+  return result.length > 0 ? result[0] : null;
+}

@@ -10,7 +10,6 @@ import Loading from "@/components/Loading";
 export default function LotteriesPage() {
   const [lotteries, setLotteries] = useState<LotteryEvent[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     fetchLotteries();
@@ -20,9 +19,12 @@ export default function LotteriesPage() {
     try {
       setLoading(true);
       const response = await fetch("/api/lottery");
-      if (!response.ok) throw new Error("Failed to fetch lotteries");
+      if (response.status === 401) {
+        window.location.href = "/admin/login";
+        return;
+      }
 
-      const lotteryEvents: LotteryEvent[] = await response.json();
+      const { data: lotteryEvents }: { data: LotteryEvent[] } = await response.json();
       setLotteries(lotteryEvents);
     } catch (error) {
       setLotteries([]);
