@@ -13,13 +13,11 @@ async function loginAction(prevState: { success: boolean }, formData: FormData) 
     body: JSON.stringify({ code }),
   });
 
-  const data = await response.json();
-
-  if (data.success) {
+  if (response.ok) {
     window.location.href = "/admin/top";
   }
 
-  return { success: data.success };
+  return { success: response.ok };
 }
 
 export default function Login() {

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   const { code } = await request.json();
 
   if (!ENV_ADMIN_CODE || code !== ENV_ADMIN_CODE) {
-    return NextResponse.json({ success: false }, { status: 403 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   const expirationDate = new Date();
@@ -22,5 +22,5 @@ export async function POST(request: NextRequest) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
   });
-  return NextResponse.json({ success: true }, { status: 200 });
+  return NextResponse.json({ message: "OK", data: null }, { status: 200 });
 }

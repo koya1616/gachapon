@@ -41,7 +41,7 @@ describe("POST /api/auth/admin/login", () => {
 
     expect(response.status).toBe(200);
     const data = await response.json();
-    expect(data).toEqual({ success: true });
+    expect(data).toEqual({ message: "OK", data: null });
     expect(setCookieMock).toHaveBeenCalledWith(
       ADMIN_CODE,
       "test_admin_code",
@@ -69,9 +69,9 @@ describe("POST /api/auth/admin/login", () => {
       }),
     );
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(401);
     const data = await response.json();
-    expect(data).toEqual({ success: false });
+    expect(data).toEqual({ message: "Unauthorized", data: null });
     expect(setCookieMock).not.toHaveBeenCalled();
   });
 });
