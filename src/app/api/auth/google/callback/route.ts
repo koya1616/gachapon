@@ -5,10 +5,6 @@ import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
 import { USER_TOKEN } from "@/const/cookies";
 
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
-const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
-const REDIRECT_URI = process.env.GOOGLE_AUTH_REDIRECT_URI || "";
-
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code") || "";
 
@@ -17,9 +13,9 @@ export async function GET(request: NextRequest) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       code,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-      redirect_uri: REDIRECT_URI,
+      client_id: process.env.GOOGLE_CLIENT_ID || "",
+      client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
+      redirect_uri: process.env.GOOGLE_AUTH_REDIRECT_URI || "",
       grant_type: "authorization_code",
     }).toString(),
   });
@@ -36,8 +32,6 @@ export async function GET(request: NextRequest) {
 
   if (!user) {
     user = await createUser(userData.email);
-
-    if (!user) redirect("/error");
   }
   const token = generateToken({ id: user.id, type: "user" });
 
