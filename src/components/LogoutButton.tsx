@@ -10,14 +10,9 @@ export default function LogoutButton({ lang }: { lang: Lang }) {
 
   const handleLogout = useCallback(async () => {
     setIsLoading(true);
-    try {
-      const response = await fetch("/api/auth/logout");
-      if (response.ok) {
-        window.location.href = `/${l}/login`;
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    await fetch("/api/auth/logout").finally(() => {
+      window.location.href = `/${l}/login`;
+    });
   }, [l]);
 
   return (
