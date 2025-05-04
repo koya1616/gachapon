@@ -11,6 +11,7 @@ import {
   createShipmentWithTransaction,
   createPaymentProductsWithTransaction,
 } from "@/lib/db";
+import type { ApiResponse } from "@/types";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
@@ -53,26 +54,45 @@ export async function POST(request: NextRequest) {
 
         const response = await paypayQRCodeCreate(payload);
 
-        if (response && "data" in response) {
-          if (!response.data.url) {
-            throw new Error("PayPay QR code URL not found");
-          }
+        if (!response) {
+          throw new Error("PayPay QR code URL not found");
         }
 
         return response;
       });
 
-      return NextResponse.json({ url: body ? body.data.url : null }, { status: body ? 200 : 500 });
+      return NextResponse.json({ message: "OK", data: { url: body.data.url } } as ApiResponse<{ url: string }>, {
+        status: 200,
+      });
     } catch (error) {
-      console.error("Error creating payment:", error);
-      return NextResponse.json({ message: "Error creating payment" }, { status: 500 });
+      console.error(`ERROR_CODE_0002: ${error}`);
+      return NextResponse.json({ message: "Internal Server Error", data: null }, { status: 500 });
     }
   }
 
   if (paypayType === PAYPAY_GET_CODE_PAYMENT_DETAILS) {
     const body = await paypayGetCodePaymentDetails(payload.merchantPaymentId);
-    return NextResponse.json({ status: body ? body.data.status : null }, { status: body ? 200 : 500 });
+    if (!body) {
+      console.error(
+        `ERROR_CODE_0003: PayPay payment details not found for merchantPaymentId ${payload.merchantPaymentId}`,
+      );
+      return NextResponse.json({ message: "Internal Server Error", data: null }, { status: 500 });
+    }
+    return NextResponse.json(
+      { message: "OK", data: { status: body.data.status } } as ApiResponse<{
+        status:
+          | "CREATED"
+          | "AUTHORIZED"
+          | "REAUTHORIZING"
+          | "COMPLETED"
+          | "REFUNDED"
+          | "FAILED"
+          | "CANCELED"
+          | "EXPIRED";
+      }>,
+      { status: 200 },
+    );
   }
 
-  return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  return NextResponse.json({ message: "Bad Request", data: null }, { status: 400 });
 }

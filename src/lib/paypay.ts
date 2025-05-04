@@ -22,6 +22,7 @@ export type PaypayQRCodeCreateRequest = {
     productId: string;
     unitPrice: {
       amount: number;
+      currency: "JPY";
     };
   }[];
 };

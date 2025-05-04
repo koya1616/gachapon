@@ -44,6 +44,7 @@ describe("PayPay Utilities", () => {
         productId: "product-id",
         unitPrice: {
           amount: 1000,
+          currency: "JPY",
         },
       },
     ],
@@ -71,6 +72,7 @@ describe("PayPay Utilities", () => {
             productId: "another-product-id",
             unitPrice: {
               amount: 500,
+              currency: "JPY",
             },
           },
         ],
@@ -108,6 +110,7 @@ describe("PayPay Utilities", () => {
             productId: "product-id",
             unitPrice: {
               amount: 1000,
+              currency: "JPY",
             },
           },
         ],

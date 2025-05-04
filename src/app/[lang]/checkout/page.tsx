@@ -8,6 +8,7 @@ import Link from "next/link";
 import AddressForm from "@/components/AddressForm";
 import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
 import type { PaypayQRCodeCreateRequest } from "@/lib/paypay";
+import type { ApiResponse } from "@/types";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -26,33 +27,26 @@ export default function CheckoutPage() {
 
     if (paymentMethod === "paypay") {
       try {
+        const body: PaypayQRCodeCreateRequest = {
+          merchantPaymentId: `PAYPAY_${Date.now()}_${crypto.randomUUID().split("-")[0]}`,
+          orderItems: cart.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+            productId: String(item.id),
+            unitPrice: { amount: item.price, currency: "JPY" },
+          })),
+        };
         const response = await fetch("/api/paypay", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            [PAYPAY_TYPE]: PAYPAY_QR_CODE_CREATE,
-          },
-          body: JSON.stringify({
-            merchantPaymentId: `PAYPAY_${Date.now()}_${crypto.randomUUID().split("-")[0]}`,
-            orderItems: cart.map((item) => ({
-              name: item.name,
-              quantity: item.quantity,
-              productId: String(item.id),
-              unitPrice: {
-                amount: item.price,
-              },
-            })),
-          } as PaypayQRCodeCreateRequest),
+          headers: { "Content-Type": "application/json", [PAYPAY_TYPE]: PAYPAY_QR_CODE_CREATE },
+          body: JSON.stringify(body),
         });
 
         if (!response.ok) {
           throw new Error("Failed to create PayPay payment");
         }
 
-        const data = await response.json();
-        if (!data.url) {
-          throw new Error("No URL returned from PayPay");
-        }
+        const { data }: ApiResponse<{ url: string }> = await response.json();
 
         clear_cart();
         router.push(data.url);
