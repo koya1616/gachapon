@@ -1,7 +1,7 @@
 import { createShipmentWithTransaction, executeTransaction, findShipmentByMerchantPaymentId } from "@/lib/db";
 import type { Shipment } from "@/types";
 import { describe, it, expect, beforeEach } from "vitest";
-import { UserFactory } from "../../factory/user";
+import { UserFactory } from "../../../factory/user";
 
 let testMerchantPaymentId: string;
 let user: UserFactory;

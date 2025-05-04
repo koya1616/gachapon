@@ -1,6 +1,6 @@
 import type { PaypayPayment } from "@/types";
 import { beforeEach, describe, expect, it } from "vitest";
-import { UserFactory } from "../../factory/user";
+import { UserFactory } from "../../../factory/user";
 import { createPaypayPaymentWithTransaction, executeTransaction, findPaypayPaymentByMerchantPaymentId } from "@/lib/db";
 
 type PaypayPaymentKeys = keyof PaypayPayment;

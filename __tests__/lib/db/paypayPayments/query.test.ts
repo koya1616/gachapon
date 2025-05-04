@@ -4,7 +4,7 @@ import {
   getPaypayPayments,
   getPaypayPaymentsByUserId,
 } from "@/lib/db";
-import { UserFactory } from "../../factory/user";
+import { UserFactory } from "../../../factory/user";
 import { beforeAll, describe, expect, it } from "vitest";
 import type { Order, PaypayPayment } from "@/types";
 

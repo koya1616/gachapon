@@ -1,6 +1,6 @@
 import { createProducts, findProductById, getProducts, updateProductById } from "@/lib/db";
 import { describe, it, expect, beforeAll, beforeEach } from "vitest";
-import { ProductFactory } from "../../factory/product";
+import { ProductFactory } from "../../../factory/product";
 import type { Product } from "@/types";
 
 let product: ProductFactory;
@@ -62,7 +62,7 @@ describe("Productsテーブルに関するテスト", () => {
         price: 1919,
         stock_quantity: 9191,
       });
-      expect(result).not.toBeNull;
+      expect(result).not.toBeNull();
       expect(result?.name).toBe("更新する商品");
       expect(result?.price).toBe(1919);
       expect(result?.stock_quantity).toBe(9191);

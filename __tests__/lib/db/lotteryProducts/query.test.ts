@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { LotteryEventFactory } from "../../factory/lotteryEvent";
+import { LotteryEventFactory } from "../../../factory/lotteryEvent";
 import { createLotteryProducts } from "@/lib/db";
-import { ProductFactory } from "../../factory/product";
+import { ProductFactory } from "../../../factory/product";
 import type { LotteryProduct } from "@/types";
 
 let lotteryEvent: LotteryEventFactory;

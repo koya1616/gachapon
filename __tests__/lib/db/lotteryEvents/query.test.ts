@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { LotteryEventFactory } from "../../factory/lotteryEvent";
+import { LotteryEventFactory } from "../../../factory/lotteryEvent";
 import { createLotteryEvent, getLotteryEvents } from "@/lib/db";
 import type { LotteryEvent } from "@/types";
 

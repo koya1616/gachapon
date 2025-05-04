@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { UserFactory } from "../../factory/user";
+import { UserFactory } from "../../../factory/user";
 import { createAddress, findAddressByUserId, updateAddress } from "@/lib/db";
 import type { Address } from "@/types";
 

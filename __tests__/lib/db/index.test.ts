@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { executeQuery } from "../../src/lib/db";
+import { executeQuery } from "../../../src/lib/db";
 
 describe("Database connection", () => {
   it("should connect to the test database", async () => {
