@@ -37,18 +37,11 @@ export default function CreateLotteryPage() {
   }, []);
 
   const fetchProducts = async () => {
-    try {
-      setProductLoading(true);
-      const response = await fetch("/api/product");
-      if (!response.ok) throw new Error("商品の取得に失敗しました");
-
-      const data: Product[] = await response.json();
-      setProducts(data);
-    } catch (error) {
-      setError((error as Error).message);
-    } finally {
-      setProductLoading(false);
-    }
+    setProductLoading(true);
+    const response = await fetch("/api/product");
+    const { data: products }: { data: Product[] } = await response.json();
+    setProducts(products);
+    setProductLoading(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

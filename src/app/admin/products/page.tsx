@@ -8,22 +8,14 @@ import Loading from "@/components/Loading";
 export default function ProductsList() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const response = await fetch("/api/product");
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data: Product[] = await response.json();
-        setProducts(data);
-      } catch (err) {
-        setError("商品データの取得に失敗しました。");
-      } finally {
-        setLoading(false);
-      }
+      setLoading(true);
+      const response = await fetch("/api/product");
+      const { data: products }: { data: Product[] } = await response.json();
+      setProducts(products);
+      setLoading(false);
     };
 
     fetchProducts();
@@ -34,22 +26,6 @@ export default function ProductsList() {
       <div className="max-w-6xl mx-auto p-4 sm:p-6">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">商品一覧</h1>
         <Loading />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="max-w-6xl mx-auto p-4 sm:p-6">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">商品一覧</h1>
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <p>{error}</p>
-        </div>
-        <div className="flex justify-end mb-6">
-          <Link href="/admin/upload" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
-            商品を追加
-          </Link>
-        </div>
       </div>
     );
   }
