@@ -13,12 +13,13 @@ export async function POST(request: NextRequest) {
   }
 
   const productData: Omit<Product, "id" | "quantity" | "stock_quantity"> = await request.json();
-  const product = await createProducts(productData);
-  if (!product) {
+  try {
+    const product = await createProducts(productData);
+    return NextResponse.json({ message: "OK", data: product }, { status: 200 });
+  } catch (error) {
     console.error(`ERROR_CODE_0005: ${productData}`);
     return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
   }
-  return NextResponse.json({ message: "OK", data: product }, { status: 200 });
 }
 
 export async function GET() {
