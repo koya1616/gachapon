@@ -123,7 +123,13 @@ const ProductForm = memo(({ imageUrl }: ProductFormProps) => {
           },
           body: JSON.stringify(formData),
         });
-        const product: Product = await response.json();
+
+        if (response.status === 401) {
+          window.location.href = "/admin/login";
+          return;
+        }
+
+        const { data: product }: { data: Product } = await response.json();
         await fetch("/api/deploy");
         alert("商品が作成されました。反映されるまでに数分かかります。");
         router.push(`/admin/products/${product.id}`);

@@ -9,17 +9,16 @@ export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
-  try {
-    const productData: Omit<Product, "id" | "quantity" | "stock_quantity"> = await request.json();
-    const product = await createProducts(productData);
-    return NextResponse.json(product, { status: 201 });
-  } catch (error) {
-    console.error("Error creating product:", error);
-    return NextResponse.json({ message: "Failed to create product" }, { status: 500 });
+  const productData: Omit<Product, "id" | "quantity" | "stock_quantity"> = await request.json();
+  const product = await createProducts(productData);
+  if (!product) {
+    console.error(`ERROR_CODE_0005: ${productData}`);
+    return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
   }
+  return NextResponse.json({ message: "OK", data: product }, { status: 200 });
 }
 
 export async function GET() {
