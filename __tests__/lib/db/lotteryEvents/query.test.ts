@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
-import { createLotteryEvent, getLotteryEvents } from "@/lib/db";
+import { createLotteryEvent, getLotteryEvents, findLotteryEventById } from "@/lib/db";
 import type { LotteryEvent } from "@/types";
 
 let lotteryEvent: LotteryEventFactory;
@@ -55,6 +55,28 @@ describe("LotteryEventsテーブルに関するテスト", () => {
       const result = await getLotteryEvents();
       expect(result.length).toBeGreaterThanOrEqual(1);
       expect(Object.keys(result[0])).toEqual(expect.arrayContaining(typeKeys));
+    });
+  });
+
+  describe("findLotteryEventById", () => {
+    let createdLotteryEvent: LotteryEvent;
+
+    beforeAll(async () => {
+      createdLotteryEvent = await setUpLotteryEvent();
+    });
+
+    it("IDによって抽選イベントを取得できること", async () => {
+      const result = await findLotteryEventById(createdLotteryEvent.id);
+      expect(result).not.toBeNull();
+      expect(result?.id).toBe(createdLotteryEvent.id);
+      expect(result?.name).toBe(createdLotteryEvent.name);
+      expect(result?.description).toBe(createdLotteryEvent.description);
+      expect(Object.keys(result as LotteryEvent)).toEqual(expect.arrayContaining(typeKeys));
+    });
+
+    it("存在しないIDの場合はnullを返すこと", async () => {
+      const result = await findLotteryEventById(999999);
+      expect(result).toBeNull();
     });
   });
 });
