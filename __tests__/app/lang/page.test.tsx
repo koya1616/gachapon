@@ -30,33 +30,28 @@ describe("ProductsPage", () => {
     cleanup();
   });
 
-  it("デフォルトで日本語のProductsコンポーネントをレンダリングすること", async () => {
-    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "ja" }) })}</CartProvider>);
+  const renderProductsPageWithLang = async (lang: string, expectedLang?: Lang) => {
+    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang }) })}</CartProvider>);
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("products-count").textContent).toBe("2");
-    expect(screen.getByTestId("lang").textContent).toBe("ja");
+    expect(screen.getByTestId("lang").textContent).toBe(expectedLang || lang);
+  };
+
+  it("デフォルトで日本語のProductsコンポーネントをレンダリングすること", async () => {
+    await renderProductsPageWithLang("ja");
     expect(db.getProducts).toHaveBeenCalledTimes(1);
   });
 
   it("英語のProductsコンポーネントをレンダリングすること", async () => {
-    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "en" }) })}</CartProvider>);
-
-    expect(screen.getByTestId("products-component")).toBeDefined();
-    expect(screen.getByTestId("lang").textContent).toBe("en");
+    await renderProductsPageWithLang("en");
   });
 
   it("中国語のProductsコンポーネントをレンダリングすること", async () => {
-    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "zh" }) })}</CartProvider>);
-
-    expect(screen.getByTestId("products-component")).toBeDefined();
-    expect(screen.getByTestId("lang").textContent).toBe("zh");
+    await renderProductsPageWithLang("zh");
   });
 
   it("サポートされていない言語コードの場合、デフォルトで日本語を使用すること", async () => {
-    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "fr" }) })}</CartProvider>);
-
-    expect(screen.getByTestId("products-component")).toBeDefined();
-    expect(screen.getByTestId("lang").textContent).toBe("ja");
+    await renderProductsPageWithLang("fr", "ja");
   });
 });
