@@ -49,7 +49,12 @@ const FileUploadForm = memo(({ onUploadSuccess }: FileUploadFormProps) => {
           body: fileFormData,
         });
 
-        const data: UploadResult = await response.json();
+        const { data }: { data: UploadResult } = await response.json();
+
+        if (response.status === 401) {
+          window.location.href = "/admin/login";
+          return;
+        }
 
         if (!response.ok) {
           throw new Error("アップロードに失敗しました");
