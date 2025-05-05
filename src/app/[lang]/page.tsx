@@ -1,4 +1,4 @@
-import Products from "@/components/Products";
+import Products from "@/app/[lang]/_components/Products";
 import { getProducts } from "@/lib/db";
 
 export default async function ProductsPage({
