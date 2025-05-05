@@ -3,12 +3,13 @@ import { render, screen, cleanup } from "@testing-library/react";
 import ProductsPage from "@/app/[lang]/page";
 import * as db from "@/lib/db";
 import type { Lang, Product } from "@/types";
+import { CartProvider } from "@/context/CartContext";
 
 vi.mock("@/lib/db", () => ({
   getProducts: vi.fn(),
 }));
 
-vi.mock("@/components/Products", () => ({
+vi.mock("@/app/[lang]/_components/Products", () => ({
   default: ({ products, lang }: { products: Product[]; lang: Lang }) => (
     <div data-testid="products-component">
       <div data-testid="products-count">{products.length}</div>
@@ -22,7 +23,7 @@ const mockProducts: Product[] = [
   { id: 2, name: "Product 2", price: 2000, image: "image2.jpg", quantity: 0, stock_quantity: 5 },
 ];
 
-describe.skip("ProductsPage", () => {
+describe("ProductsPage", () => {
   vi.mocked(db.getProducts).mockResolvedValue(mockProducts);
 
   beforeEach(() => {
@@ -30,7 +31,7 @@ describe.skip("ProductsPage", () => {
   });
 
   it("デフォルトで日本語のProductsコンポーネントをレンダリングすること", async () => {
-    render(await ProductsPage({ params: Promise.resolve({ lang: "ja" }) }));
+    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "ja" }) })}</CartProvider>);
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("products-count").textContent).toBe("2");
@@ -39,21 +40,21 @@ describe.skip("ProductsPage", () => {
   });
 
   it("英語のProductsコンポーネントをレンダリングすること", async () => {
-    render(await ProductsPage({ params: Promise.resolve({ lang: "en" }) }));
+    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "en" }) })}</CartProvider>);
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("lang").textContent).toBe("en");
   });
 
   it("中国語のProductsコンポーネントをレンダリングすること", async () => {
-    render(await ProductsPage({ params: Promise.resolve({ lang: "zh" }) }));
+    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "zh" }) })}</CartProvider>);
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("lang").textContent).toBe("zh");
   });
 
   it("サポートされていない言語コードの場合、デフォルトで日本語を使用すること", async () => {
-    render(await ProductsPage({ params: Promise.resolve({ lang: "fr" }) }));
+    render(<CartProvider>{await ProductsPage({ params: Promise.resolve({ lang: "fr" }) })}</CartProvider>);
 
     expect(screen.getByTestId("products-component")).toBeDefined();
     expect(screen.getByTestId("lang").textContent).toBe("ja");
