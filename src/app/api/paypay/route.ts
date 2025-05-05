@@ -22,13 +22,13 @@ export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   const paypayType = request.headers.get(PAYPAY_TYPE);
-  const payload: PaypayQRCodeCreateRequest = await request.json();
 
   if (paypayType === PAYPAY_QR_CODE_CREATE) {
+    const payload: PaypayQRCodeCreateRequest = await request.json();
     try {
       const body = await executeTransaction(async (client) => {
         const address = await findAddressByUserId(userToken.id);
@@ -76,6 +76,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (paypayType === PAYPAY_GET_CODE_PAYMENT_DETAILS) {
+    const payload: { merchantPaymentId: string } = await request.json();
     const body = await paypayGetCodePaymentDetails(payload.merchantPaymentId);
     if (!body) {
       console.error(
