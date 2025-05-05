@@ -77,6 +77,10 @@ export default function ProductDetail() {
       body: JSON.stringify(body),
     })
       .then(async (res) => {
+        if (res.status === 401) {
+          window.location.href = "/admin/login";
+          return;
+        }
         const { data: updatedProduct }: { data: Product } = await res.json();
         setProduct(updatedProduct);
         setIsEditing(false);

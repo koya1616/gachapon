@@ -18,7 +18,7 @@ export async function PUT(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
-    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   const id = request.nextUrl.pathname.split("/").pop();
