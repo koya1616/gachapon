@@ -29,24 +29,22 @@ export default function ProductDetail() {
 
   useEffect(() => {
     const fetchProductDetail = async () => {
-      try {
-        const response = await fetch(`/api/product/${params.id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch product details");
-        }
-        const data: Product = await response.json();
-        setProduct(data);
-        setEditForm({
-          name: data.name,
-          price: String(data.price),
-          stock_quantity: String(data.stock_quantity),
+      await fetch(`/api/product/${params.id}`)
+        .then(async (res) => {
+          const { data: product }: { data: Product } = await res.json();
+          setProduct(product);
+          setEditForm({
+            name: product.name,
+            price: String(product.price),
+            stock_quantity: String(product.stock_quantity),
+          });
+        })
+        .catch(() => {
+          setError("商品詳細の取得に失敗しました。");
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } catch (err) {
-        setError("商品詳細の取得に失敗しました。");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
     };
 
     if (params.id) {
