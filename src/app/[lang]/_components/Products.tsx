@@ -2,6 +2,7 @@ import type { Product } from "@/types";
 import ProductCard from "@/app/[lang]/_components/ProductCard";
 import Link from "next/link";
 import type { Lang } from "@/types";
+import { useTranslation as t } from "@/lib/translations";
 
 const Products = ({ products, lang }: { products: Product[]; lang: Lang }) => {
   return (
@@ -16,7 +17,7 @@ const Products = ({ products, lang }: { products: Product[]; lang: Lang }) => {
           href={`/${lang}/checkout`}
           className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition-colors"
         >
-          購入画面へ
+          {t(lang).product.to_payment}
         </Link>
       </div>
     </div>
