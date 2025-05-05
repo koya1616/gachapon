@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const cookieStore = await cookies();
     const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
     if (adminToken !== process.env.ADMIN_CODE) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
     }
 
     const body: UpdateShipmentStatusRequest = await request.json();
@@ -22,9 +22,9 @@ export async function POST(request: NextRequest) {
 
     await updateShipmentStatus(shipmentId, status);
 
-    return NextResponse.json({ message: "OK" }, { status: 200 });
+    return NextResponse.json({ message: "OK", data: null }, { status: 200 });
   } catch (error) {
     console.error("ERROR_CODE_0001:", error);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
   }
 }

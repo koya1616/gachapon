@@ -79,27 +79,26 @@ export default function ShipmentStatusActions({ shipment }: { shipment: Shipment
 
   const updateStatus = async (status: ShipmentStatus) => {
     setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/shipment/status", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ shipmentId: shipment.id, status } as UpdateShipmentStatusRequest),
+    const body: UpdateShipmentStatusRequest = { shipmentId: shipment.id, status };
+    await fetch("/api/shipment/status", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          alert("更新に失敗しました。再度お試しください。");
+        }
+        router.refresh();
+      })
+      .catch(() => {
+        alert("更新に失敗しました。再度お試しください。");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      const data: { message: string } = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
-
-      router.refresh();
-    } catch (err: unknown) {
-      alert(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
