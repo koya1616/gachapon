@@ -1,5 +1,5 @@
 import type { Product } from "@/types";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/app/[lang]/_components/ProductCard/ProductCard";
 import Link from "next/link";
 import type { Lang } from "@/types";
 
