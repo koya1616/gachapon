@@ -64,34 +64,31 @@ export default function ProductDetail() {
     e.preventDefault();
     setUpdateStatus({ loading: true, error: null, success: false });
 
-    try {
-      const response = await fetch(`/api/product/${params.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: editForm.name,
-          price: Number(editForm.price),
-          stock_quantity: Number(editForm.stock_quantity),
-        } as Partial<Product>),
+    const body: Partial<Product> = {
+      name: editForm.name,
+      price: Number(editForm.price),
+      stock_quantity: Number(editForm.stock_quantity),
+    };
+    await fetch(`/api/product/${params.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then(async (res) => {
+        const { data: updatedProduct }: { data: Product } = await res.json();
+        setProduct(updatedProduct);
+        setIsEditing(false);
+        setUpdateStatus({ loading: false, error: null, success: true });
+      })
+      .catch(() => {
+        setUpdateStatus({
+          loading: false,
+          error: "商品情報の更新に失敗しました。",
+          success: false,
+        });
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to update product");
-      }
-
-      const updatedProduct: Product = await response.json();
-      setProduct(updatedProduct);
-      setIsEditing(false);
-      setUpdateStatus({ loading: false, error: null, success: true });
-    } catch (err) {
-      setUpdateStatus({
-        loading: false,
-        error: "商品情報の更新に失敗しました。",
-        success: false,
-      });
-    }
   };
 
   if (loading) {
