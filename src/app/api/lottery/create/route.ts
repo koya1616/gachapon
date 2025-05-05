@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
-    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "Unauthorized", data: null }, { status: 401 });
   }
 
   try {
@@ -51,9 +51,9 @@ export async function POST(request: NextRequest) {
       await createLotteryProductsWithTransaction(client, lotteryProductsData);
     });
 
-    return NextResponse.json({ message: "抽選イベントが作成されました" }, { status: 201 });
+    return NextResponse.json({ message: "OK", data: null }, { status: 200 });
   } catch (error) {
-    console.error("Error creating lottery event:", error);
-    return NextResponse.json({ message: "抽選イベントの作成に失敗しました" }, { status: 500 });
+    console.error(`ERROR_CODE_0004: ${error}`);
+    return NextResponse.json({ message: "Internal Server Error", data: null }, { status: 500 });
   }
 }

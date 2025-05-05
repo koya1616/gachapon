@@ -126,24 +126,29 @@ export default function CreateLotteryPage() {
         }
       }
 
+      const body: CreateLotteryEventApiRequestBody = {
+        ...formData,
+        startAt: new Date(formData.startAt).getTime(),
+        endAt: new Date(formData.endAt).getTime(),
+        resultAt: new Date(formData.resultAt).getTime(),
+        paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
+        products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
+      };
       const response = await fetch("/api/lottery/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          startAt: new Date(formData.startAt).getTime(),
-          endAt: new Date(formData.endAt).getTime(),
-          resultAt: new Date(formData.resultAt).getTime(),
-          paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
-          products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
-        } as CreateLotteryEventApiRequestBody),
+        body: JSON.stringify(body),
       });
 
+      if (response.status === 401) {
+        router.push("/admin/login");
+        return;
+      }
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "抽選の作成に失敗しました");
+        throw new Error("抽選の作成に失敗しました");
       }
 
       setSuccess(true);
