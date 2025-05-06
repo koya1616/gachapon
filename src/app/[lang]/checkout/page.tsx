@@ -54,15 +54,8 @@ const CheckoutPage = () => {
         alert("Failed to process PayPay payment. Please try again.");
         setIsLoading(false);
       }
-    } else {
-      try {
-        // TODO: stripe実装
-        router.push(`/${lang}/payment/credit/success`);
-      } catch (error) {
-        console.error("Credit card payment failed:", error);
-        setIsLoading(false);
-      }
     }
+    setIsLoading(false);
   };
 
   return (
