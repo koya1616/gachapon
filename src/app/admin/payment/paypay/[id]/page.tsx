@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Order from "@/components/Order";
-import ShipmentStatusActions from "@/components/ShipmentStatusActions";
+import ShipmentStatusActions from "@/app/[lang]/payment/paypay/[id]/_components/ShipmentStatusActions";
 import { findShipmentByMerchantPaymentId, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
 import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { ADMIN_CODE } from "@/const/cookies";
