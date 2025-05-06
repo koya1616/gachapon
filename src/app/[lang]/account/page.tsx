@@ -21,7 +21,7 @@ export default async function AccountPage({
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
-    redirect(`/${l}/login`);
+    return redirect(`/${l}/login`);
   }
 
   const orders = await getPaypayPaymentsByUserId(userToken.id);

@@ -1,13 +1,13 @@
 import type { Order } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
 
-function getShipmentStatus(shipment: Order) {
+const getShipmentStatus = (shipment: Order): StatusType => {
   if (shipment.payment_failed_at) return "payment_failed";
   if (shipment.cancelled_at) return "cancelled";
   if (shipment.delivered_at) return "delivered";
   if (shipment.shipped_at) return "shipped";
   return "processing";
-}
+};
 
 type StatusType = "delivered" | "processing" | "shipped" | "payment_failed" | "cancelled";
 const statusStyles: Record<StatusType, string> = {
