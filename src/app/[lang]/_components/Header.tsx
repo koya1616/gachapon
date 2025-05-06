@@ -45,7 +45,7 @@ const CartIcon = React.memo(() => (
   </svg>
 ));
 
-function Header({ lang }: { lang: Lang }) {
+const Header = ({ lang }: { lang: Lang }) => {
   const router = useRouter();
   const path = usePathname();
   const showCart = !path.includes("/login") && !path.includes("/signup") && !path.includes("/account");
@@ -112,6 +112,6 @@ function Header({ lang }: { lang: Lang }) {
       />
     </header>
   );
-}
+};
 
 export default React.memo(Header);

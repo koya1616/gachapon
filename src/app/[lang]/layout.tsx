@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
+import Header from "@/app/[lang]/_components/Header";
 import { CartProvider } from "@/context/CartContext";
 import { redirect } from "next/navigation";
 import "../globals.css";
