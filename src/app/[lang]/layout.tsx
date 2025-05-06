@@ -4,7 +4,7 @@ import { CartProvider } from "@/context/CartContext";
 import { redirect } from "next/navigation";
 import "../globals.css";
 import { LANGS } from "@/const/language";
-import Footer from "@/components/Footer";
+import Footer from "@/app/[lang]/_components/Footer";
 
 export const metadata: Metadata = {
   title: "gachapon",
