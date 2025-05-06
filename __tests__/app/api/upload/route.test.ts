@@ -1,4 +1,3 @@
-// filepath: /Users/aoyamakoya/study/gachapon/__tests__/app/api/upload/route.test.ts
 import { describe, it, expect, vi, beforeEach, afterEach, beforeAll } from "vitest";
 import { POST } from "@/app/api/upload/route";
 import { cookies } from "next/headers";

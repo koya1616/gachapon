@@ -1,4 +1,3 @@
-// filepath: /Users/aoyamakoya/study/gachapon/__tests__/app/api/auth/google/route.test.ts
 import { describe, it, expect, vi, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
 import { GET } from "@/app/api/auth/google/route";
 import { cookies } from "next/headers";
