@@ -70,7 +70,7 @@ export default async function AccountPage({
                         href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
                         className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
                       >
-                        詳細
+                        {t(l).account.detail}
                       </Link>
                     </td>
                   </tr>

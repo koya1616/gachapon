@@ -34,6 +34,7 @@ const translations = {
       total: "Total",
       status: "Status",
       logout: "Logout",
+      detail: "Details",
       no_orders: "No order history available",
     },
     order: {
@@ -125,6 +126,7 @@ const translations = {
       total: "合計",
       status: "状態",
       logout: "ログアウト",
+      detail: "詳細",
       no_orders: "注文履歴はありません",
     },
     order: {
@@ -216,6 +218,7 @@ const translations = {
       total: "总计",
       status: "状态",
       logout: "登出",
+      detail: "详情",
       no_orders: "没有订单历史",
     },
     order: {
