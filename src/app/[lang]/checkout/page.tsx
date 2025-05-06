@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
-import AddressForm from "@/components/AddressForm";
+import AddressForm from "@/app/[lang]/_components/AddressForm";
 import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
 import type { PaypayQRCodeCreateRequest } from "@/lib/paypay";
 import type { ApiResponse } from "@/types";

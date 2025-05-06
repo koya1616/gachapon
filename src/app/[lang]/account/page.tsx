@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AddressForm from "@/components/AddressForm";
+import AddressForm from "@/app/[lang]/_components/AddressForm";
 import LogoutButton from "@/components/LogoutButton";
 import { useTranslation as t } from "@/lib/translations";
 import { cookies } from "next/headers";
