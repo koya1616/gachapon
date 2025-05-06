@@ -4,6 +4,8 @@ import Order from "@/components/Order";
 import type { Lang, PaymentProduct, Shipment } from "@/types";
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
 
+vi.stubEnv("TZ", "UTC");
+
 describe("Orderコンポーネント", () => {
   const mockPaymentProducts: PaymentProduct[] = [
     { id: 1, name: "商品1", price: 1000, image: "image1.jpg", quantity: 2, product_id: 1, paypay_payment_id: 1 },
@@ -75,7 +77,7 @@ describe("Orderコンポーネント", () => {
     await renderOrder({ shipment: modifiedShipment });
 
     expectTextToExist(expectedStatus);
-    expectDateDisplay(expectedLabel, "1970/1/20 4:00:20");
+    expectDateDisplay(expectedLabel, "1970/1/19 18:00:20");
   };
 
   beforeEach(() => {
@@ -96,9 +98,9 @@ describe("Orderコンポーネント", () => {
       "COMPLETED",
       "金額:",
       "リクエスト日時:",
-      "1970/1/20 4:00:00",
+      "1970/1/19 20:46:40",
       "承認日時:",
-      "1970/1/20 4:00:10",
+      "1970/1/19 23:33:21",
     ]);
 
     expect(screen.getAllByText("¥4,000").length).toBe(2);
@@ -109,8 +111,8 @@ describe("Orderコンポーネント", () => {
 
     expectTextsToExist(["配送情報", "配送ステータス:", "発送済み", "配送先住所:", "東京都渋谷区..."]);
 
-    expectDateDisplay("作成日時:", "1970/1/20 4:00:00");
-    expectDateDisplay("発送日時:", "1970/1/20 4:00:10");
+    expectDateDisplay("作成日時:", "1970/1/19 18:00:00");
+    expectDateDisplay("発送日時:", "1970/1/19 18:00:10");
   });
 
   it("商品情報が正しく表示されること", async () => {
