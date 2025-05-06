@@ -3,7 +3,7 @@
 import React, { useCallback } from "react";
 import Image from "next/image";
 import Cart from "@/app/[lang]/_components/Cart";
-import LanguageDropdown from "@/components/LanguageDropdown";
+import LanguageDropdown from "@/app/[lang]/_components/LanguageDropdown";
 import { useCart } from "@/context/CartContext";
 import type { Lang } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
