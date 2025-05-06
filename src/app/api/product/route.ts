@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const product = await createProducts(productData);
     return NextResponse.json({ message: "OK", data: product }, { status: 200 });
   } catch (error) {
-    console.error(`ERROR_CODE_0005: ${productData}`);
+    console.error(`ERROR_CODE_0005: ${JSON.stringify(productData, null, 2)}`);
     return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
   }
 }
