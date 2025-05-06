@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 import Image from "next/image";
-import Cart from "@/components/Cart";
+import Cart from "@/app/[lang]/_components/Cart";
 import LanguageDropdown from "@/components/LanguageDropdown";
 import { useCart } from "@/context/CartContext";
 import type { Lang } from "@/types";
