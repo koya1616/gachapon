@@ -2,14 +2,14 @@ import type { Client } from "pg";
 import { executeQueryWithClient } from "..";
 import type { LotteryProduct } from "@/types";
 
-export async function createLotteryProductsWithTransaction(
+export const createLotteryProductsWithTransaction = async (
   client: Client,
   lotteryProducts: Array<{
     lottery_event_id: number;
     product_id: number;
     quantity_available: number;
   }>,
-): Promise<LotteryProduct[]> {
+): Promise<LotteryProduct[]> => {
   if (lotteryProducts.length === 0) return [];
 
   const placeholders = lotteryProducts.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`).join(", ");
@@ -26,4 +26,4 @@ export async function createLotteryProductsWithTransaction(
     RETURNING *
   `;
   return await executeQueryWithClient<LotteryProduct>(client, query, values);
-}
+};

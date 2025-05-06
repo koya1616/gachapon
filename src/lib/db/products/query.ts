@@ -1,11 +1,13 @@
 import type { Product } from "@/types";
 import { executeQuery } from "..";
 
-export async function getProducts(): Promise<Product[]> {
+export const getProducts = async (): Promise<Product[]> => {
   return executeQuery<Product>("SELECT * FROM products ORDER BY stock_quantity DESC");
-}
+};
 
-export async function createProducts(product: Omit<Product, "id" | "quantity" | "stock_quantity">): Promise<Product> {
+export const createProducts = async (
+  product: Omit<Product, "id" | "quantity" | "stock_quantity">,
+): Promise<Product> => {
   const query = `
     INSERT INTO products (name, price, image)
     VALUES ($1, $2, $3)
@@ -14,16 +16,16 @@ export async function createProducts(product: Omit<Product, "id" | "quantity" | 
   const params = [product.name, product.price, product.image];
   const products = await executeQuery<Product>(query, params);
   return products[0];
-}
+};
 
-export async function findProductById(id: number): Promise<Product | null> {
+export const findProductById = async (id: number): Promise<Product | null> => {
   const query = "SELECT * FROM products WHERE id = $1 LIMIT 1";
   const params = [id];
   const products = await executeQuery<Product>(query, params);
   return products.length > 0 ? products[0] : null;
-}
+};
 
-export async function updateProductById(id: number, productData: Partial<Product>): Promise<Product | null> {
+export const updateProductById = async (id: number, productData: Partial<Product>): Promise<Product | null> => {
   const updates: string[] = [];
   const values: unknown[] = [];
   let paramCounter = 1;
@@ -58,4 +60,4 @@ export async function updateProductById(id: number, productData: Partial<Product
 
   const products = await executeQuery<Product>(query, values);
   return products.length > 0 ? products[0] : null;
-}
+};

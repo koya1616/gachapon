@@ -2,10 +2,10 @@ import type { PaymentProduct } from "@/types";
 import type { Client } from "pg";
 import { executeQueryWithClient } from "..";
 
-export async function createPaymentProductsWithTransaction(
+export const createPaymentProductsWithTransaction = async (
   client: Client,
   paymentProducts: Omit<PaymentProduct, "id" | "name" | "image">[],
-): Promise<PaymentProduct[]> {
+): Promise<PaymentProduct[]> => {
   if (paymentProducts.length === 0) return [];
 
   const placeholders = paymentProducts
@@ -24,4 +24,4 @@ export async function createPaymentProductsWithTransaction(
     product.product_id,
   ]);
   return await executeQueryWithClient(client, query, params);
-}
+};

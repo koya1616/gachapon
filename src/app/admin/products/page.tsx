@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Product } from "@/types";
 import Loading from "@/components/Loading";
 
-export default function ProductsList() {
+const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -182,4 +182,6 @@ export default function ProductsList() {
       </div>
     </div>
   );
-}
+};
+
+export default ProductsList;

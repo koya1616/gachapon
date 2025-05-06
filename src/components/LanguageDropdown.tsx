@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
 
-function LanguageDropdown({ lang }: { lang: Lang }) {
+const LanguageDropdown = ({ lang }: { lang: Lang }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -86,6 +86,6 @@ function LanguageDropdown({ lang }: { lang: Lang }) {
       {dropdownOptions}
     </div>
   );
-}
+};
 
 export default React.memo(LanguageDropdown);

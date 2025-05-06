@@ -3,10 +3,10 @@ import type { QueryResult, QueryResultRow } from "pg";
 
 const connectionString = process.env.DATABASE_URL;
 
-export async function executeQuery<T extends QueryResultRow = Record<string, unknown>>(
+export const executeQuery = async <T extends QueryResultRow = Record<string, unknown>>(
   query: string,
   params: unknown[] = [],
-): Promise<T[]> {
+): Promise<T[]> => {
   const client = new Client({ connectionString });
 
   try {
@@ -19,9 +19,9 @@ export async function executeQuery<T extends QueryResultRow = Record<string, unk
   } finally {
     await client.end();
   }
-}
+};
 
-export async function executeTransaction<T>(callback: (client: Client) => Promise<T>): Promise<T> {
+export const executeTransaction = async <T>(callback: (client: Client) => Promise<T>): Promise<T> => {
   const client = new Client({ connectionString });
 
   try {
@@ -39,16 +39,16 @@ export async function executeTransaction<T>(callback: (client: Client) => Promis
   } finally {
     await client.end();
   }
-}
+};
 
-export async function executeQueryWithClient<T extends QueryResultRow = Record<string, unknown>>(
+export const executeQueryWithClient = async <T extends QueryResultRow = Record<string, unknown>>(
   client: Client,
   query: string,
   params: unknown[] = [],
-): Promise<T[]> {
+): Promise<T[]> => {
   const result: QueryResult<T> = await client.query(query, params);
   return result.rows;
-}
+};
 
 export {
   getProducts,

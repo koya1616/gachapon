@@ -1,13 +1,13 @@
 import type { LotteryProduct } from "@/types";
 import { executeQuery } from "..";
 
-export async function createLotteryProducts(
+export const createLotteryProducts = async (
   lotteryProducts: Array<{
     lottery_event_id: number;
     product_id: number;
     quantity_available: number;
   }>,
-): Promise<LotteryProduct[]> {
+): Promise<LotteryProduct[]> => {
   if (lotteryProducts.length === 0) return [];
 
   const placeholders = lotteryProducts.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`).join(", ");
@@ -25,4 +25,4 @@ export async function createLotteryProducts(
   `;
 
   return await executeQuery<LotteryProduct>(query, values);
-}
+};

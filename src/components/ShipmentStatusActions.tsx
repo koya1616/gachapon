@@ -67,7 +67,7 @@ const statusConfigs: Record<ShipmentStatus, StatusConfig> = {
   },
 };
 
-export default function ShipmentStatusActions({ shipment }: { shipment: Shipment }) {
+const ShipmentStatusActions = ({ shipment }: { shipment: Shipment }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -124,4 +124,6 @@ export default function ShipmentStatusActions({ shipment }: { shipment: Shipment
       </div>
     </div>
   );
-}
+};
+
+export default ShipmentStatusActions;

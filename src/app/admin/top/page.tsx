@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function AdminTop() {
+const AdminTop = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="py-10">
@@ -71,4 +71,6 @@ export default function AdminTop() {
       </div>
     </div>
   );
-}
+};
+
+export default AdminTop;

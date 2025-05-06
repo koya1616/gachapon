@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 
-async function loginAction(prevState: { success: boolean }, formData: FormData) {
+const loginAction = async (prevState: { success: boolean }, formData: FormData) => {
   const code = formData.get("code") as string;
 
   const response = await fetch("/api/auth/admin/login", {
@@ -18,9 +18,9 @@ async function loginAction(prevState: { success: boolean }, formData: FormData) 
   }
 
   return { success: response.ok };
-}
+};
 
-export default function Login() {
+const Login = () => {
   const [state, formAction, isPending] = useActionState(loginAction, { success: true });
 
   return (
@@ -61,4 +61,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

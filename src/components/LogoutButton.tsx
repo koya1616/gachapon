@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import type { Lang } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
 
-export default function LogoutButton({ lang }: { lang: Lang }) {
+const LogoutButton = ({ lang }: { lang: Lang }) => {
   const [isLoading, setIsLoading] = useState(false);
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
@@ -25,4 +25,6 @@ export default function LogoutButton({ lang }: { lang: Lang }) {
       {isLoading ? "Loading..." : <span>{t(l).account.logout}</span>}
     </button>
   );
-}
+};
+
+export default LogoutButton;

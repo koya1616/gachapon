@@ -111,11 +111,11 @@ const isLoginPage = (pathname: string) => {
   return pathname.includes("/admin/login");
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   const pathname = usePathname();
   const showHeader = !isLoginPage(pathname);
 
@@ -127,4 +127,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

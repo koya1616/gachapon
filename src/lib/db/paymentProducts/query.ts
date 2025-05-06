@@ -1,7 +1,7 @@
 import type { PaymentProduct } from "@/types";
 import { executeQuery } from "..";
 
-export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: number): Promise<PaymentProduct[]> {
+export const getPaymentProductsByPaypayPaymentId = async (paypay_payment_id: number): Promise<PaymentProduct[]> => {
   const query = `
     SELECT
       pp.id AS id,
@@ -17,11 +17,11 @@ export async function getPaymentProductsByPaypayPaymentId(paypay_payment_id: num
   `;
   const params = [paypay_payment_id];
   return executeQuery<PaymentProduct>(query, params);
-}
+};
 
-export async function createPaymentProducts(
+export const createPaymentProducts = async (
   paymentProducts: Omit<PaymentProduct, "id" | "name" | "image">[],
-): Promise<PaymentProduct[]> {
+): Promise<PaymentProduct[]> => {
   const placeholders = paymentProducts
     .map((_, index) => `($${index * 4 + 1}, $${index * 4 + 2}, $${index * 4 + 3}, $${index * 4 + 4})`)
     .join(", ");
@@ -38,12 +38,12 @@ export async function createPaymentProducts(
     product.product_id,
   ]);
   return await executeQuery<PaymentProduct>(query, params);
-}
+};
 
-export async function findPaymentProductByPaypayPaymentIdAndProductId(
+export const findPaymentProductByPaypayPaymentIdAndProductId = async (
   paypay_payment_id: number,
   product_id: number,
-): Promise<PaymentProduct | null> {
+): Promise<PaymentProduct | null> => {
   const query = `
     SELECT *
     FROM payment_products
@@ -52,4 +52,4 @@ export async function findPaymentProductByPaypayPaymentIdAndProductId(
   const params = [paypay_payment_id, product_id];
   const result = await executeQuery<PaymentProduct>(query, params);
   return result.length > 0 ? result[0] : null;
-}
+};

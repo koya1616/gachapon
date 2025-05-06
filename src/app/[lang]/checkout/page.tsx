@@ -10,7 +10,7 @@ import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
 import type { PaypayQRCodeCreateRequest } from "@/lib/paypay";
 import type { ApiResponse } from "@/types";
 
-export default function CheckoutPage() {
+const CheckoutPage = () => {
   const router = useRouter();
   const params = useParams();
   const lang = params.lang as string;
@@ -213,4 +213,6 @@ export default function CheckoutPage() {
       </div>
     </div>
   );
-}
+};
+
+export default CheckoutPage;

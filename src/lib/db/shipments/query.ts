@@ -4,7 +4,7 @@ import { executeQuery } from "..";
 const shipmentStatuses = ["shipped", "delivered", "payment_failed", "cancelled"] as const;
 export type ShipmentStatus = (typeof shipmentStatuses)[number];
 
-export async function findShipmentByMerchantPaymentId(merchant_payment_id: string): Promise<Shipment | null> {
+export const findShipmentByMerchantPaymentId = async (merchant_payment_id: string): Promise<Shipment | null> => {
   const query = `
     SELECT s.*
     FROM shipments s
@@ -15,12 +15,12 @@ export async function findShipmentByMerchantPaymentId(merchant_payment_id: strin
   const params = [merchant_payment_id];
   const results = await executeQuery<Shipment>(query, params);
   return results.length > 0 ? results[0] : null;
-}
+};
 
-export async function findShipmentByMerchantPaymentIdAndUserId(
+export const findShipmentByMerchantPaymentIdAndUserId = async (
   merchant_payment_id: string,
   user_id: number,
-): Promise<Shipment | null> {
+): Promise<Shipment | null> => {
   const query = `
     SELECT s.*
     FROM shipments s
@@ -31,9 +31,9 @@ export async function findShipmentByMerchantPaymentIdAndUserId(
   const params = [merchant_payment_id, user_id];
   const results = await executeQuery<Shipment>(query, params);
   return results.length > 0 ? results[0] : null;
-}
+};
 
-export async function updateShipmentStatus(id: number, status: ShipmentStatus): Promise<void> {
+export const updateShipmentStatus = async (id: number, status: ShipmentStatus): Promise<void> => {
   const statusMap: Record<ShipmentStatus, string> = {
     shipped: "shipped_at",
     delivered: "delivered_at",
@@ -49,9 +49,9 @@ export async function updateShipmentStatus(id: number, status: ShipmentStatus): 
 
   const params = [Date.now(), id];
   await executeQuery(query, params);
-}
+};
 
-export async function createShipment(shipment: Pick<Shipment, "paypay_payment_id" | "address">): Promise<Shipment> {
+export const createShipment = async (shipment: Pick<Shipment, "paypay_payment_id" | "address">): Promise<Shipment> => {
   const query = `
     INSERT INTO shipments (paypay_payment_id, address)
     VALUES ($1, $2)
@@ -60,4 +60,4 @@ export async function createShipment(shipment: Pick<Shipment, "paypay_payment_id
   const params = [shipment.paypay_payment_id, shipment.address];
   const results = await executeQuery<Shipment>(query, params);
   return results[0];
-}
+};

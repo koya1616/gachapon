@@ -1,7 +1,7 @@
 import type { Order, PaypayPayment } from "@/types";
 import { executeQuery } from "..";
 
-export async function getPaypayPayments(): Promise<Order[]> {
+export const getPaypayPayments = async (): Promise<Order[]> => {
   const query = `
   SELECT
     pp.id AS paypay_payment_id,
@@ -17,9 +17,9 @@ export async function getPaypayPayments(): Promise<Order[]> {
   INNER JOIN shipments s ON pp.id = s.paypay_payment_id
 `;
   return executeQuery<Order>(query);
-}
+};
 
-export async function getPaypayPaymentsByUserId(user_id: number): Promise<Order[]> {
+export const getPaypayPaymentsByUserId = async (user_id: number): Promise<Order[]> => {
   const query = `
     SELECT
       pp.id AS paypay_payment_id,
@@ -37,18 +37,20 @@ export async function getPaypayPaymentsByUserId(user_id: number): Promise<Order[
   `;
   const params = [user_id];
   return executeQuery<Order>(query, params);
-}
+};
 
-export async function findPaypayPaymentByMerchantPaymentId(merchant_payment_id: string): Promise<PaypayPayment | null> {
+export const findPaypayPaymentByMerchantPaymentId = async (
+  merchant_payment_id: string,
+): Promise<PaypayPayment | null> => {
   const query = `
     SELECT * FROM paypay_payments WHERE merchant_payment_id = $1 LIMIT 1
   `;
   const params = [merchant_payment_id];
   const results = await executeQuery<PaypayPayment>(query, params);
   return results.length > 0 ? results[0] : null;
-}
+};
 
-export async function createPaypayPayment(paypayPayment: Omit<PaypayPayment, "id">): Promise<PaypayPayment> {
+export const createPaypayPayment = async (paypayPayment: Omit<PaypayPayment, "id">): Promise<PaypayPayment> => {
   const query = `
     INSERT INTO paypay_payments (user_id, merchant_payment_id)
     VALUES ($1, $2)
@@ -57,4 +59,4 @@ export async function createPaypayPayment(paypayPayment: Omit<PaypayPayment, "id
   const params = [paypayPayment.user_id, paypayPayment.merchant_payment_id];
   const results = await executeQuery<PaypayPayment>(query, params);
   return results[0];
-}
+};

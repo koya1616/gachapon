@@ -7,7 +7,7 @@ import { LotteryStatus, type Product } from "@/types";
 import Loading from "@/components/Loading";
 import type { CreateLotteryEventApiRequestBody } from "@/app/api/lottery/create/route";
 
-export default function CreateLotteryPage() {
+const CreateLotteryPage = () => {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<Array<{ id: string; productId: number; quantity: number }>>(
@@ -476,4 +476,6 @@ export default function CreateLotteryPage() {
       </form>
     </div>
   );
-}
+};
+
+export default CreateLotteryPage;
