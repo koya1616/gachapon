@@ -67,7 +67,7 @@ const CartItem = memo(function CartItem({ item, onUpdateQuantity, onRemove, lang
   );
 });
 
-export default function Cart({
+const Cart = ({
   isOpen,
   cart,
   totalPrice,
@@ -76,7 +76,7 @@ export default function Cart({
   onRemoveItem,
   onClearCart,
   lang,
-}: CartProps) {
+}: CartProps) => {
   if (!isOpen) return null;
 
   const router = useRouter();
@@ -137,4 +137,6 @@ export default function Cart({
       </div>
     </div>
   );
-}
+};
+
+export default Cart;
