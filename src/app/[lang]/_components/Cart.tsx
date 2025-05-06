@@ -67,16 +67,7 @@ const CartItem = memo(function CartItem({ item, onUpdateQuantity, onRemove, lang
   );
 });
 
-const Cart = ({
-  isOpen,
-  cart,
-  totalPrice,
-  onClose,
-  onUpdateQuantity,
-  onRemoveItem,
-  onClearCart,
-  lang,
-}: CartProps) => {
+const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, lang }: CartProps) => {
   if (!isOpen) return null;
 
   const router = useRouter();
