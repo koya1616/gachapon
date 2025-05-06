@@ -1,6 +1,6 @@
 import Link from "next/link";
 import AddressForm from "@/app/[lang]/_components/AddressForm";
-import LogoutButton from "@/components/LogoutButton";
+import LogoutButton from "@/app/[lang]/account/_components/LogoutButton";
 import { useTranslation as t } from "@/lib/translations";
 import { cookies } from "next/headers";
 import { USER_TOKEN } from "@/const/cookies";
