@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { type LotteryEvent, LotteryStatus } from "@/types";
-import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/date";
 import Loading from "@/components/Loading";
 
-export default function LotteriesPage() {
+const LotteriesPage = () => {
   const [lotteries, setLotteries] = useState<LotteryEvent[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -195,4 +194,6 @@ export default function LotteriesPage() {
       )}
     </div>
   );
-}
+};
+
+export default LotteriesPage;
