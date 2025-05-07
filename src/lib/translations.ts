@@ -16,9 +16,9 @@ const translations = {
       to_payment: "Proceed to Payment",
     },
     login: {
-      facebook: "Login with Facebook",
-      google: "Login with Google",
-      twitter: "Login with Twitter",
+      facebook: "Sign in with Facebook",
+      google: "Sign in with Google",
+      twitter: "Sign in with Twitter",
       not_have_account: "Don't have an account?",
       sign_up: "Sign Up",
     },
