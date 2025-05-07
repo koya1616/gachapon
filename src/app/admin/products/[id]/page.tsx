@@ -6,7 +6,7 @@ import type { Product } from "@/types";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 
-export default function ProductDetail() {
+const ProductDetail = () => {
   const params = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -264,4 +264,6 @@ export default function ProductDetail() {
       )}
     </div>
   );
-}
+};
+
+export default ProductDetail;
