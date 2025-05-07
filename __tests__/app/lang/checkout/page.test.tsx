@@ -3,7 +3,6 @@ import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CheckoutPage from "@/app/[lang]/checkout/page";
 import * as CartContext from "@/context/CartContext";
-import { useRouter, useParams } from "next/navigation";
 import type { Lang } from "@/types";
 import { CartProvider } from "@/context/CartContext";
 

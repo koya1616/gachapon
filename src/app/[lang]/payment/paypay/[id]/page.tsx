@@ -17,12 +17,12 @@ export default async function UserPayPayPage({
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
-    redirect(`/${l}/login`);
+    return redirect(`/${l}/login`);
   }
 
   const shipment = await findShipmentByMerchantPaymentIdAndUserId(id, userToken.id);
   if (!shipment) {
-    redirect(`/${l}/account`);
+    return redirect(`/${l}/account`);
   }
 
   const paymentDetails = await paypayGetCodePaymentDetails(id);
