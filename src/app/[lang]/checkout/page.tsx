@@ -54,8 +54,9 @@ const CheckoutPage = () => {
         alert("Failed to process PayPay payment. Please try again.");
         setIsLoading(false);
       }
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
