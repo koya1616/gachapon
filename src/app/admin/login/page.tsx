@@ -29,6 +29,9 @@ const Login = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-4" action={formAction}>
             <div>
+              <label htmlFor="code" className="hidden text-sm font-medium text-gray-700">
+                パスワード
+              </label>
               <div className="mt-1">
                 <input
                   id="code"
@@ -36,6 +39,7 @@ const Login = () => {
                   type="password"
                   autoComplete="current-code"
                   required
+                  data-testid="code-input"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
