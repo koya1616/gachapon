@@ -132,7 +132,7 @@ export const CartView = ({
   );
 };
 
-const useCart = (lang: Lang, onClose: () => void) => {
+const useCart = (lang: Lang, onClose: () => void): CartLogic => {
   const router = useRouter();
 
   const handleCheckout = useCallback(() => {
