@@ -23,14 +23,7 @@ const CartItem = memo(
       <div className="flex items-center justify-between border-b pb-4">
         <div className="flex items-center">
           <div className="w-16 h-16 relative mr-4">
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={64}
-              height={64}
-              className="object-cover rounded"
-              loading="lazy"
-            />
+            <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
           </div>
           <div>
             <h3 className="font-medium">{item.name}</h3>
