@@ -1,8 +1,9 @@
 import type { Product } from "@/types";
-import { memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const CartItem = memo(
   ({
@@ -22,7 +23,14 @@ const CartItem = memo(
       <div className="flex items-center justify-between border-b pb-4">
         <div className="flex items-center">
           <div className="w-16 h-16 relative mr-4">
-            <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
+            <Image
+              src={item.image}
+              alt={item.name}
+              width={64}
+              height={64}
+              className="object-cover rounded"
+              loading="lazy"
+            />
           </div>
           <div>
             <h3 className="font-medium">{item.name}</h3>
@@ -135,10 +143,10 @@ export const CartView = ({
 const useCart = (lang: Lang, onClose: () => void) => {
   const router = useRouter();
 
-  const handleCheckout = () => {
+  const handleCheckout = useCallback(() => {
     onClose();
     router.push(`/${lang}/checkout`);
-  };
+  }, [lang, onClose, router]);
 
   return { handleCheckout };
 };
@@ -153,22 +161,28 @@ interface CartProps {
   onClearCart: () => void;
   lang: Lang;
 }
-const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, lang }: CartProps) => {
-  const { handleCheckout } = useCart(lang, onClose);
+const Cart = memo(
+  ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, lang }: CartProps) => {
+    const { handleCheckout } = useCart(lang, onClose);
 
-  return (
-    <CartView
-      isOpen={isOpen}
-      cart={cart}
-      totalPrice={totalPrice}
-      onClose={onClose}
-      onUpdateQuantity={onUpdateQuantity}
-      onRemoveItem={onRemoveItem}
-      onClearCart={onClearCart}
-      handleCheckout={handleCheckout}
-      lang={lang}
-    />
-  );
-};
+    const cartView = useMemo(() => {
+      return (
+        <CartView
+          isOpen={isOpen}
+          cart={cart}
+          totalPrice={totalPrice}
+          onClose={onClose}
+          onUpdateQuantity={onUpdateQuantity}
+          onRemoveItem={onRemoveItem}
+          onClearCart={onClearCart}
+          handleCheckout={handleCheckout}
+          lang={lang}
+        />
+      );
+    }, [isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, handleCheckout, lang]);
+
+    return cartView;
+  },
+);
 
 export default Cart;
