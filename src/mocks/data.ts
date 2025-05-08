@@ -1,5 +1,5 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Product, PaymentProduct, Shipment } from "@/types";
+import type { Product, PaymentProduct, Shipment, Order } from "@/types";
 
 export const mockProducts: Product[] = [
   {
@@ -100,3 +100,20 @@ export const argLang = {
   options: ["ja", "en", "zh"],
   defaultValue: "ja",
 };
+
+export const createOrder = (
+  shipped_at: string | null = null,
+  delivered_at: string | null = null,
+  cancelled_at: string | null = null,
+  payment_failed_at: string | null = null,
+): Order => ({
+  user_id: 1,
+  merchant_payment_id: "test_payment_id",
+  paypay_payment_id: 1,
+  address: "東京都渋谷区神南1-1-1",
+  created_at: "2023-01-01T00:00:00.000Z",
+  shipped_at,
+  delivered_at,
+  cancelled_at,
+  payment_failed_at,
+});
