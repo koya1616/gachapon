@@ -6,12 +6,12 @@ import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 
-const ProductCard = memo(({ product, lang }: { product: Product; lang: Lang }) => {
-  const { add_to_cart, cart } = useCart();
+interface ProductCardLogic {
+  add_to_cart: (product: Product) => void;
+  isMaxQuantity: boolean;
+}
 
-  const currentInCart = cart.find((item) => item.id === product.id)?.quantity || 0;
-  const isMaxQuantity = currentInCart >= product.stock_quantity;
-
+export const ProductCardView = ({ product, lang, add_to_cart, isMaxQuantity }: ProductCardLogic & ProductCardProps) => {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="relative pt-[100%]">
@@ -33,6 +33,20 @@ const ProductCard = memo(({ product, lang }: { product: Product; lang: Lang }) =
       </div>
     </div>
   );
+};
+
+const useProduct = (product: Product): ProductCardLogic => {
+  const { add_to_cart, cart } = useCart();
+
+  const currentInCart = cart.find((item) => item.id === product.id)?.quantity || 0;
+  const isMaxQuantity = currentInCart >= product.stock_quantity;
+
+  return { add_to_cart, isMaxQuantity };
+};
+
+type ProductCardProps = { product: Product; lang: Lang };
+const ProductCard = memo(({ product, lang }: ProductCardProps) => {
+  return <ProductCardView product={product} lang={lang} {...useProduct(product)} />;
 });
 
 export default ProductCard;
