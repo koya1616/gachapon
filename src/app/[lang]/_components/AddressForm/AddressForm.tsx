@@ -102,24 +102,26 @@ const AddressFormView = ({
         />
 
         {!isFetching && (
-          <div className="flex justify-between">
-            <button
-              type="button"
-              onClick={handleClear}
-              className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
-            >
-              {t(l).form.clear}
-            </button>
+          <div className={`flex ${isLoading ? "justify-end" : "justify-between"}`}>
             {isLoading ? (
               <Loading />
             ) : (
-              <button
-                type="submit"
-                className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
-                disabled={isLoading}
-              >
-                {isLoading ? "Loading..." : <span>{t(l).form.register}</span>}
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
+                >
+                  {t(l).form.clear}
+                </button>
+                <button
+                  type="submit"
+                  className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                  disabled={isLoading}
+                >
+                  {t(l).form.register}
+                </button>
+              </>
             )}
           </div>
         )}
