@@ -5,8 +5,7 @@ import { useTranslation as t } from "@/lib/translations";
 import type { Address, Lang } from "@/types";
 import { COUNTRY_LIST } from "@/const/country";
 import Loading from "@/components/Loading";
-
-const Skeleton = () => <div className="h-10 bg-gray-200 rounded animate-pulse" />;
+import Skeleton from "@/components/Skeleton";
 
 const FormField = ({
   id,
@@ -26,7 +25,7 @@ const FormField = ({
       {label}
     </label>
     {isLoading ? (
-      <Skeleton />
+      <Skeleton h={10} />
     ) : (
       <input id={id} type="text" name={id} value={value} onChange={onChange} className="w-full p-2 border rounded" />
     )}
@@ -60,7 +59,7 @@ const AddressFormView = ({
             {t(l).form.country_select}
           </label>
           {isFetching ? (
-            <Skeleton />
+            <Skeleton h={10} />
           ) : (
             <select
               id="country"
