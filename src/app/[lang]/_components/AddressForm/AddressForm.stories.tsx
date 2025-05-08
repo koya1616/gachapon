@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { AddressFormView } from "./AddressForm";
 import { mockAddressFormData, mockEmptyAddressFormData } from "@/mocks/data";
+import { withActions } from "@storybook/addon-actions/decorator";
 
 const meta = {
   title: "Components/AddressForm",
   component: AddressFormView,
   tags: ["autodocs"],
+  decorators: [withActions],
+  parameters: {
+    actions: {
+      handles: ["click button"],
+    },
+  },
 } satisfies Meta<typeof AddressFormView>;
 
 export default meta;
