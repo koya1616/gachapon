@@ -4,8 +4,132 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
 import type { Address, Lang } from "@/types";
 import { COUNTRY_LIST } from "@/const/country";
+import Loading from "@/components/Loading";
 
-const AddressForm = ({ lang }: { lang: Lang }) => {
+const Skeleton = () => <div className="h-10 bg-gray-200 rounded animate-pulse" />;
+
+const FormField = ({
+  id,
+  label,
+  value,
+  onChange,
+  isLoading,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isLoading: boolean;
+}) => (
+  <div className="mb-4">
+    <label htmlFor={id} className="block text-gray-700 mb-2">
+      {label}
+    </label>
+    {isLoading ? (
+      <Skeleton />
+    ) : (
+      <input id={id} type="text" name={id} value={value} onChange={onChange} className="w-full p-2 border rounded" />
+    )}
+  </div>
+);
+
+interface AddressFormLogic {
+  l: Lang;
+  formData: Address;
+  isLoading: boolean;
+  isFetching: boolean;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleClear: () => void;
+}
+
+const AddressFormView = ({
+  l,
+  formData,
+  isLoading,
+  isFetching,
+  handleChange,
+  handleSubmit,
+  handleClear,
+}: AddressFormLogic) => {
+  return (
+    <div className="max-w-2xl mx-auto">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-6">
+          <label htmlFor="country" className="block text-gray-700 mb-2">
+            {t(l).form.country_select}
+          </label>
+          {isFetching ? (
+            <Skeleton />
+          ) : (
+            <select
+              id="country"
+              value={formData.country}
+              onChange={handleChange}
+              name="country"
+              className="w-full p-2 border rounded"
+            >
+              {COUNTRY_LIST.map((country) => (
+                <option key={country.key} value={country.key}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
+        <FormField
+          id="name"
+          label={t(l).form.recipient_name}
+          value={formData.name}
+          onChange={handleChange}
+          isLoading={isFetching}
+        />
+
+        <FormField
+          id="postal_code"
+          label={t(l).form.postal_code}
+          value={formData.postal_code}
+          onChange={handleChange}
+          isLoading={isFetching}
+        />
+
+        <FormField
+          id="address"
+          label={t(l).form.address}
+          value={formData.address}
+          onChange={handleChange}
+          isLoading={isFetching}
+        />
+
+        {!isFetching && (
+          <div className="flex justify-between">
+            <button
+              type="button"
+              onClick={handleClear}
+              className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
+            >
+              {t(l).form.clear}
+            </button>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <button
+                type="submit"
+                className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : <span>{t(l).form.register}</span>}
+              </button>
+            )}
+          </div>
+        )}
+      </form>
+    </div>
+  );
+};
+
+const useAddressForm = (lang: Lang): AddressFormLogic => {
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
   const initialFormData = useMemo<Address>(
@@ -91,107 +215,19 @@ const AddressForm = ({ lang }: { lang: Lang }) => {
     }));
   }, []);
 
-  return (
-    <div className="max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-6">
-          <label htmlFor="country" className="block text-gray-700 mb-2">
-            {t(l).form.country_select}
-          </label>
-          {isFetching ? (
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          ) : (
-            <select
-              id="country"
-              value={formData.country}
-              onChange={handleChange}
-              name="country"
-              className="w-full p-2 border rounded"
-            >
-              {COUNTRY_LIST.map((country) => (
-                <option key={country.key} value={country.key}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
+  return {
+    l,
+    formData,
+    isLoading,
+    isFetching,
+    handleChange,
+    handleSubmit,
+    handleClear,
+  };
+};
 
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 mb-2">
-            {t(l).form.recipient_name}
-          </label>
-          {isFetching ? (
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          ) : (
-            <input
-              id="name"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="postal_code" className="block text-gray-700 mb-2">
-            {t(l).form.postal_code}
-          </label>
-          {isFetching ? (
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          ) : (
-            <input
-              id="postal_code"
-              type="text"
-              name="postal_code"
-              value={formData.postal_code}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="address" className="block text-gray-700 mb-2">
-            {t(l).form.address}
-          </label>
-          {isFetching ? (
-            <div className="h-10 bg-gray-200 rounded animate-pulse" />
-          ) : (
-            <input
-              id="address"
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            />
-          )}
-        </div>
-
-        {!isFetching && (
-          <div className="flex justify-between">
-            <button
-              type="button"
-              onClick={handleClear}
-              className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
-            >
-              {t(l).form.clear}
-            </button>
-            <button
-              type="submit"
-              className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : <span>{t(l).form.register}</span>}
-            </button>
-          </div>
-        )}
-      </form>
-    </div>
-  );
+const AddressForm = ({ lang }: { lang: Lang }) => {
+  return <AddressFormView {...useAddressForm(lang)} />;
 };
 
 export default AddressForm;
