@@ -8,13 +8,13 @@ const meta: Meta<typeof Products> = {
   component: Products,
   tags: ["autodocs"],
   argTypes: {
-    lang: argLang,
     products: {
       control: "object",
     },
   },
   parameters: {
     context: "cart",
+    layout: "fullscreen",
   },
 };
 
@@ -24,14 +24,14 @@ type Story = StoryObj<typeof Products>;
 export const NoProducts: Story = {
   args: {
     products: [],
-    lang: "ja" as Lang,
+    lang: "ja",
   },
 };
 
 export const WithProducts: Story = {
   args: {
     products: mockProducts,
-    lang: "ja" as Lang,
+    lang: "ja",
   },
   parameters: {
     viewport: {
