@@ -42,7 +42,7 @@ interface AddressFormLogic {
   handleClear: () => void;
 }
 
-const AddressFormView = ({
+export const AddressFormView = ({
   l,
   formData,
   isLoading,

@@ -1,5 +1,23 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Product, PaymentProduct, Shipment, Order } from "@/types";
+import type { Product, PaymentProduct, Shipment, Order, Address } from "@/types";
+
+export const mockAddressFormData: Address = {
+  id: 1,
+  user_id: 1,
+  name: "John Doe",
+  country: "JP",
+  postal_code: "123-4567",
+  address: "Tokyo, Japan",
+};
+
+export const mockEmptyAddressFormData: Address = {
+  id: 0,
+  user_id: 0,
+  name: "",
+  country: "",
+  postal_code: "",
+  address: "",
+};
 
 export const mockProducts: Product[] = [
   {
