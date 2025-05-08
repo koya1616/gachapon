@@ -23,6 +23,7 @@ const meta: Meta<typeof ProductCard> = {
   component: ProductCard,
   parameters: {
     layout: "centered",
+    context: "cart",
   },
   tags: ["autodocs"],
   argTypes: {

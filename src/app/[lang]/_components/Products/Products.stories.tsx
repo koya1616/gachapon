@@ -59,6 +59,9 @@ const meta: Meta<typeof Products> = {
       control: "object",
     },
   },
+  parameters: {
+    context: "cart",
+  },
 };
 
 export default meta;
