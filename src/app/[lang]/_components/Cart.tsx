@@ -22,7 +22,7 @@ interface CartItemProps {
   lang: Lang;
 }
 
-const CartItem = memo(function CartItem({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) {
+const CartItem = memo(({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) => {
   const isMaxQuantity = item.quantity >= item.stock_quantity;
 
   return (
