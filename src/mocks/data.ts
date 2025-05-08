@@ -1,0 +1,102 @@
+import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
+import type { Product, PaymentProduct, Shipment } from "@/types";
+
+export const mockProducts: Product[] = [
+  {
+    id: 1,
+    name: "ガチャポン - ドラゴンシリーズ",
+    price: 500,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    stock_quantity: 100,
+  },
+  {
+    id: 2,
+    name: "ガチャポン - 猫フィギュア",
+    price: 400,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    stock_quantity: 50,
+  },
+  {
+    id: 3,
+    name: "ガチャポン - 恐竜コレクション",
+    price: 600,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    stock_quantity: 30,
+  },
+  {
+    id: 4,
+    name: "ガチャポン - 食品サンプル",
+    price: 300,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    stock_quantity: 0,
+  },
+  {
+    id: 5,
+    name: "ガチャポン - スポーツカー",
+    price: 800,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    stock_quantity: 2,
+  },
+];
+
+export const mockPaymentProducts: PaymentProduct[] = [
+  {
+    id: 1,
+    name: "ガチャポン - ドラゴンシリーズ",
+    price: 500,
+    image: "https://placehold.co/300x300",
+    quantity: 2,
+    product_id: 1,
+    paypay_payment_id: 1,
+  },
+  {
+    id: 2,
+    name: "ガチャポン - 猫フィギュア",
+    price: 400,
+    image: "https://placehold.co/300x300",
+    quantity: 1,
+    product_id: 2,
+    paypay_payment_id: 1,
+  },
+];
+
+export const createPaymentDetails = (
+  status: PaypayGetCodePaymentDetailsStatus = "COMPLETED",
+  amount = 1400,
+  requestedAt = 1630000000,
+  acceptedAt = 1640001000,
+): PaypayGetCodePaymentDetailsResponse => ({
+  data: {
+    status,
+    amount: { amount },
+    requestedAt,
+    acceptedAt,
+  },
+});
+
+export const createShipment = (
+  shipped_at: number | null = 1620010000,
+  delivered_at: number | null = null,
+  cancelled_at: number | null = null,
+  payment_failed_at: number | null = null,
+): Shipment => ({
+  id: 1,
+  paypay_payment_id: 1,
+  address: "東京都渋谷区神南1-1-1",
+  created_at: 1620000000,
+  shipped_at,
+  delivered_at,
+  cancelled_at,
+  payment_failed_at,
+});
+
+export const argLang = {
+  control: { type: "select" as const },
+  options: ["ja", "en", "zh"],
+  defaultValue: "ja",
+};

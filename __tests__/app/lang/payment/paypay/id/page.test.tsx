@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { generateToken } from "@/lib/jwt";
 import type { PaypayGetCodePaymentDetailsResponse } from "@/lib/paypay";
+import { mockPaymentProducts } from "@/mocks/data";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),
@@ -71,10 +72,6 @@ describe("UserPayPayPage", () => {
     cancelled_at: null,
     payment_failed_at: null,
   };
-
-  const mockPaymentProducts: PaymentProduct[] = [
-    { id: 1, name: "商品1", price: 1000, image: "image1.jpg", quantity: 2, product_id: 1, paypay_payment_id: 1 },
-  ];
 
   const mockPaymentDetails: PaypayGetCodePaymentDetailsResponse = {
     data: {

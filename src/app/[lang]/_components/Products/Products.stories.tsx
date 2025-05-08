@@ -2,6 +2,7 @@ import { withActions } from "@storybook/addon-actions/decorator";
 import type { Meta, StoryObj } from "@storybook/react";
 import Products from "./Products";
 import type { Product, Lang } from "@/types";
+import { argLang } from "@/mocks/data";
 
 const sampleProducts: Product[] = [
   {
@@ -51,11 +52,7 @@ const meta: Meta<typeof Products> = {
   component: Products,
   tags: ["autodocs"],
   argTypes: {
-    lang: {
-      control: "select",
-      options: ["en", "ja", "zh"],
-      defaultValue: "ja",
-    },
+    lang: argLang,
     products: {
       control: "object",
     },
