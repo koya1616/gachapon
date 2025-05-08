@@ -6,7 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 
-const ProductCard = memo(function ProductCard({ product, lang }: { product: Product; lang: Lang }) {
+const ProductCard = memo(({ product, lang }: { product: Product; lang: Lang }) => {
   const { add_to_cart, cart } = useCart();
 
   const currentInCart = cart.find((item) => item.id === product.id)?.quantity || 0;
