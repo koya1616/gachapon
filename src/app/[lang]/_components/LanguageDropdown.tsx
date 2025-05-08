@@ -5,7 +5,35 @@ import { useRouter, usePathname } from "next/navigation";
 import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
 
-const LanguageDropdown = ({ lang }: { lang: Lang }) => {
+interface LanguageDropdownLogic {
+  lang: Lang;
+  dropdownOptions: React.ReactNode;
+  dropdownIcon: React.ReactNode;
+  toggleDropdown: () => void;
+}
+
+export const LanguageDropdownView = ({
+  lang,
+  dropdownOptions,
+  dropdownIcon,
+  toggleDropdown,
+}: LanguageDropdownLogic) => {
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={toggleDropdown}
+        className="flex items-center justify-between w-20 px-3 py-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
+      >
+        {lang.toUpperCase()}
+        {dropdownIcon}
+      </button>
+      {dropdownOptions}
+    </div>
+  );
+};
+
+const useLanguageDropdown = (lang: Lang): LanguageDropdownLogic => {
   const router = useRouter();
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -72,20 +100,16 @@ const LanguageDropdown = ({ lang }: { lang: Lang }) => {
     ),
     [isDropdownOpen],
   );
+  return {
+    lang,
+    dropdownOptions,
+    dropdownIcon,
+    toggleDropdown,
+  };
+};
 
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={toggleDropdown}
-        className="flex items-center justify-between w-20 px-3 py-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
-      >
-        {lang.toUpperCase()}
-        {dropdownIcon}
-      </button>
-      {dropdownOptions}
-    </div>
-  );
+const LanguageDropdown = ({ lang }: { lang: Lang }) => {
+  return <LanguageDropdownView {...useLanguageDropdown(lang)} />;
 };
 
 export default React.memo(LanguageDropdown);
