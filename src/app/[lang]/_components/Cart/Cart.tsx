@@ -3,7 +3,6 @@ import { memo, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 const CartItem = memo(
   ({
