@@ -3,14 +3,16 @@
 import { useCallback, useState } from "react";
 import type { Lang } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
+import Loading from "@/components/Loading";
 
 interface LogoutButtonLogic {
+  l: Lang;
   isLoading: boolean;
   handleLogout: () => Promise<void>;
-  translatedLogoutText: string;
 }
 
-export const LogoutButtonView = ({ isLoading, handleLogout, translatedLogoutText }: LogoutButtonLogic) => {
+export const LogoutButtonView = ({ l, isLoading, handleLogout }: LogoutButtonLogic) => {
+  if (isLoading) return <Loading />;
   return (
     <button
       type="button"
@@ -18,7 +20,7 @@ export const LogoutButtonView = ({ isLoading, handleLogout, translatedLogoutText
       onClick={handleLogout}
       disabled={isLoading}
     >
-      {isLoading ? "Loading..." : <span>{translatedLogoutText}</span>}
+      {t(l).account.logout}
     </button>
   );
 };
@@ -34,12 +36,10 @@ const useLogoutButton = (lang: Lang): LogoutButtonLogic => {
     });
   }, [l]);
 
-  const translatedLogoutText = t(l).account.logout;
-
   return {
+    l,
     isLoading,
     handleLogout,
-    translatedLogoutText,
   };
 };
 
