@@ -67,34 +67,6 @@ const meta: Meta<typeof Products> = {
       control: "object",
     },
   },
-  parameters: {
-    viewport: {
-      defaultViewport: "responsive",
-      viewports: {
-        mobile: {
-          name: "Mobile",
-          styles: {
-            width: "375px",
-            height: "667px",
-          },
-        },
-        tablet: {
-          name: "Tablet",
-          styles: {
-            width: "768px",
-            height: "1024px",
-          },
-        },
-        desktop: {
-          name: "Desktop",
-          styles: {
-            width: "1280px",
-            height: "800px",
-          },
-        },
-      },
-    },
-  },
 };
 
 export default meta;
@@ -115,18 +87,6 @@ export const WithProducts: Story = {
   parameters: {
     viewport: {
       defaultViewport: "desktop",
-    },
-  },
-};
-
-export const MobileView: Story = {
-  args: {
-    products: sampleProducts,
-    lang: "ja" as Lang,
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile",
     },
   },
 };
