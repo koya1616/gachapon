@@ -4,74 +4,79 @@ import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
 import { useRouter } from "next/navigation";
 
-interface CartProps {
-  isOpen: boolean;
-  cart: Product[];
-  totalPrice: number;
-  onClose: () => void;
-  onUpdateQuantity: (productId: number, newQuantity: number) => void;
-  onRemoveItem: (productId: number) => void;
-  onClearCart: () => void;
-  lang: Lang;
-}
+const CartItem = memo(
+  ({
+    item,
+    onUpdateQuantity,
+    onRemove,
+    lang,
+  }: {
+    item: Product;
+    onUpdateQuantity: (productId: number, newQuantity: number) => void;
+    onRemove: (productId: number) => void;
+    lang: Lang;
+  }) => {
+    const isMaxQuantity = item.quantity >= item.stock_quantity;
 
-interface CartItemProps {
-  item: Product;
-  onUpdateQuantity: (productId: number, newQuantity: number) => void;
-  onRemove: (productId: number) => void;
-  lang: Lang;
-}
-
-const CartItem = memo(({ item, onUpdateQuantity, onRemove, lang }: CartItemProps) => {
-  const isMaxQuantity = item.quantity >= item.stock_quantity;
-
-  return (
-    <div className="flex items-center justify-between border-b pb-4">
-      <div className="flex items-center">
-        <div className="w-16 h-16 relative mr-4">
-          <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
+    return (
+      <div className="flex items-center justify-between border-b pb-4">
+        <div className="flex items-center">
+          <div className="w-16 h-16 relative mr-4">
+            <img src={item.image} alt={item.name} className="w-full h-full object-cover rounded" />
+          </div>
+          <div>
+            <h3 className="font-medium">{item.name}</h3>
+            <p className="text-blue-700">¥{item.price.toLocaleString()}</p>
+          </div>
         </div>
-        <div>
-          <h3 className="font-medium">{item.name}</h3>
-          <p className="text-blue-700">¥{item.price.toLocaleString()}</p>
+        <div className="flex items-center">
+          <button
+            type="button"
+            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            className="px-2 py-1 border rounded-l cursor-pointer"
+          >
+            -
+          </button>
+          <span className="px-4 py-1 border-t border-b">{item.quantity}</span>
+          <button
+            type="button"
+            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+            disabled={isMaxQuantity}
+            className={`px-2 py-1 border rounded-r ${
+              isMaxQuantity ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "cursor-pointer"
+            }`}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={() => onRemove(item.id)}
+            className="ml-4 text-red-500 hover:text-red-700 cursor-pointer"
+          >
+            {t(lang).cart.remove}
+          </button>
         </div>
       </div>
-      <div className="flex items-center">
-        <button
-          type="button"
-          onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-          className="px-2 py-1 border rounded-l cursor-pointer"
-        >
-          -
-        </button>
-        <span className="px-4 py-1 border-t border-b">{item.quantity}</span>
-        <button
-          type="button"
-          onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-          disabled={isMaxQuantity}
-          className={`px-2 py-1 border rounded-r ${
-            isMaxQuantity ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "cursor-pointer"
-          }`}
-        >
-          +
-        </button>
-        <button
-          type="button"
-          onClick={() => onRemove(item.id)}
-          className="ml-4 text-red-500 hover:text-red-700 cursor-pointer"
-        >
-          {t(lang).cart.remove}
-        </button>
-      </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
-const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, lang }: CartProps) => {
+interface CartLogic {
+  handleCheckout: () => void;
+}
+
+export const CartView = ({
+  handleCheckout,
+  isOpen,
+  cart,
+  totalPrice,
+  onClose,
+  onUpdateQuantity,
+  onRemoveItem,
+  onClearCart,
+  lang,
+}: CartProps & CartLogic) => {
   if (!isOpen) return null;
-
-  const router = useRouter();
-
   return (
     <div className="fixed inset-0 bg-gray-200 bg-opacity-50 z-20 flex justify-center items-start pt-20 pointer-events-auto">
       <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto">
@@ -114,10 +119,7 @@ const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveIte
                 <button
                   type="button"
                   className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors cursor-pointer"
-                  onClick={() => {
-                    onClose();
-                    router.push(`/${lang}/checkout`);
-                  }}
+                  onClick={handleCheckout}
                 >
                   {t(lang).cart.checkout}
                 </button>
@@ -127,6 +129,45 @@ const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveIte
         )}
       </div>
     </div>
+  );
+};
+
+const useCart = (lang: Lang, onClose: () => void) => {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    onClose();
+    router.push(`/${lang}/checkout`);
+  };
+
+  return { handleCheckout };
+};
+
+interface CartProps {
+  isOpen: boolean;
+  cart: Product[];
+  totalPrice: number;
+  onClose: () => void;
+  onUpdateQuantity: (productId: number, newQuantity: number) => void;
+  onRemoveItem: (productId: number) => void;
+  onClearCart: () => void;
+  lang: Lang;
+}
+const Cart = ({ isOpen, cart, totalPrice, onClose, onUpdateQuantity, onRemoveItem, onClearCart, lang }: CartProps) => {
+  const { handleCheckout } = useCart(lang, onClose);
+
+  return (
+    <CartView
+      isOpen={isOpen}
+      cart={cart}
+      totalPrice={totalPrice}
+      onClose={onClose}
+      onUpdateQuantity={onUpdateQuantity}
+      onRemoveItem={onRemoveItem}
+      onClearCart={onClearCart}
+      handleCheckout={handleCheckout}
+      lang={lang}
+    />
   );
 };
 
