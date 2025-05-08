@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { CartProvider } from "@/context/CartContext";
 import ProductCard from "./ProductCard";
 import type { Product, Lang } from "@/types";
 
@@ -36,15 +35,11 @@ const meta: Meta<typeof ProductCard> = {
     },
   },
   decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: "300px" }}>
-          <CartProvider>
-            <Story />
-          </CartProvider>
-        </div>
-      );
-    },
+    (Story) => (
+      <div style={{ width: "300px" }}>
+        <Story />
+      </div>
+    ),
   ],
 };
 

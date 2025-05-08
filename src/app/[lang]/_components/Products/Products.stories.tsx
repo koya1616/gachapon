@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Products from "./Products";
 import type { Product, Lang } from "@/types";
-import { CartProvider } from "@/context/CartContext";
 
 const sampleProducts: Product[] = [
   {
@@ -49,13 +48,6 @@ const sampleProducts: Product[] = [
 const meta: Meta<typeof Products> = {
   title: "Components/Products",
   component: Products,
-  decorators: [
-    (Story) => (
-      <CartProvider>
-        <Story />
-      </CartProvider>
-    ),
-  ],
   tags: ["autodocs"],
   argTypes: {
     lang: {
