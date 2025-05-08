@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import ProductCard from "./ProductCard";
 import type { Product, Lang } from "@/types";
+import { withActions } from "@storybook/addon-actions/decorator";
 
 const sampleProduct: Product = {
   id: 1,
@@ -22,8 +23,13 @@ const meta: Meta<typeof ProductCard> = {
   title: "Components/ProductCard",
   component: ProductCard,
   parameters: {
-    layout: "centered",
     context: "cart",
+    actions: {
+      handles: ["click button"],
+    },
+    viewport: {
+      defaultViewport: "mobile1",
+    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -35,13 +41,7 @@ const meta: Meta<typeof ProductCard> = {
       options: ["en", "ja", "zh"],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ width: "300px" }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withActions],
 };
 
 export default meta;
