@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Order from "./Order";
-import { argLang, createPaymentDetails, createShipment, mockPaymentProducts } from "@/mocks/data";
+import { createPaymentDetails, createShipment, mockPaymentProducts } from "@/mocks/data";
 
 const meta: Meta<typeof Order> = {
   title: "Components/Order",
@@ -8,9 +8,6 @@ const meta: Meta<typeof Order> = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
-  },
-  argTypes: {
-    lang: argLang,
   },
 };
 

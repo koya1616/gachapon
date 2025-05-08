@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import OrderStatusBadge from "./OrderStatusBadge";
-import { argLang, createOrder } from "@/mocks/data";
+import { createOrder } from "@/mocks/data";
 
 const meta = {
   title: "Components/OrderStatusBadge",
@@ -9,9 +9,6 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {
-    lang: argLang,
-  },
 } satisfies Meta<typeof OrderStatusBadge>;
 
 export default meta;

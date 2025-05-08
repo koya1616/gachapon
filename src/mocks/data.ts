@@ -125,12 +125,6 @@ export const createShipment = (
   payment_failed_at,
 });
 
-export const argLang = {
-  control: { type: "select" as const },
-  options: ["ja", "en", "zh"],
-  defaultValue: "ja",
-};
-
 export const createOrder = (
   shipped_at: string | null = null,
   delivered_at: string | null = null,

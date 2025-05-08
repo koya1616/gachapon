@@ -1,4 +1,4 @@
-import type { Order } from "@/types";
+import type { Lang, Order } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
 
 const getShipmentStatus = (shipment: Order): StatusType => {
@@ -18,7 +18,7 @@ const statusStyles: Record<StatusType, string> = {
   cancelled: "bg-gray-100 text-gray-800",
 };
 
-const OrderStatusBadge = ({ order, lang }: { order: Order; lang: string }) => {
+const OrderStatusBadge = ({ order, lang }: { order: Order; lang: Lang }) => {
   const status = getShipmentStatus(order) as StatusType;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 

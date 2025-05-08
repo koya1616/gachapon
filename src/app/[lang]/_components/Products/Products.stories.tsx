@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Products from "./Products";
 import type { Lang } from "@/types";
-import { argLang, mockProducts } from "@/mocks/data";
+import { mockProducts } from "@/mocks/data";
 
 const meta: Meta<typeof Products> = {
   title: "Components/Products",
