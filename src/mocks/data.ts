@@ -1,6 +1,18 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
 import type { Product, PaymentProduct, Shipment, Order, Address } from "@/types";
 
+export const mockCartContext = {
+  cart: [],
+  isCartOpen: false,
+  totalPrice: 0,
+  add_to_cart: (product: Product) => console.log("add_to_cart", product),
+  removeFromCart: (productId: number) => console.log("removeFromCart", productId),
+  updateQuantity: (productId: number, quantity: number) => console.log("updateQuantity", productId, quantity),
+  clear_cart: () => console.log("clear_cart"),
+  toggleCart: () => console.log("toggleCart"),
+  closeCart: () => console.log("closeCart"),
+};
+
 export const mockAddressFormData: Address = {
   id: 1,
   user_id: 1,

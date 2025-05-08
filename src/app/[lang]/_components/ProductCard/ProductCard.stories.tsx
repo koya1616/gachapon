@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import ProductCard from "./ProductCard";
 import type { Product, Lang } from "@/types";
-import { withActions } from "@storybook/addon-actions/decorator";
 import { argLang, mockProducts } from "@/mocks/data";
 
 const meta: Meta<typeof ProductCard> = {
@@ -18,12 +17,8 @@ const meta: Meta<typeof ProductCard> = {
   },
   tags: ["autodocs"],
   argTypes: {
-    product: {
-      control: "object",
-    },
     lang: argLang,
   },
-  decorators: [withActions],
 };
 
 export default meta;

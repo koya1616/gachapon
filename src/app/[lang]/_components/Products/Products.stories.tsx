@@ -1,4 +1,3 @@
-import { withActions } from "@storybook/addon-actions/decorator";
 import type { Meta, StoryObj } from "@storybook/react";
 import Products from "./Products";
 import type { Product, Lang } from "@/types";
@@ -59,11 +58,7 @@ const meta: Meta<typeof Products> = {
   },
   parameters: {
     context: "cart",
-    actions: {
-      handles: ["click button"],
-    },
   },
-  decorators: [withActions],
 };
 
 export default meta;

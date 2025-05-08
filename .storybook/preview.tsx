@@ -1,20 +1,9 @@
 import React from "react";
 import type { Preview } from "@storybook/react";
 import "../src/app/globals.css";
-import type { Product } from "../src/types";
 import { CartContext } from "../src/context/CartContext";
-
-const mockCartContext = {
-  cart: [],
-  isCartOpen: false,
-  totalPrice: 0,
-  add_to_cart: (product: Product) => console.log("add_to_cart", product),
-  removeFromCart: (productId: number) => console.log("removeFromCart", productId),
-  updateQuantity: (productId: number, quantity: number) => console.log("updateQuantity", productId, quantity),
-  clear_cart: () => console.log("clear_cart"),
-  toggleCart: () => console.log("toggleCart"),
-  closeCart: () => console.log("closeCart"),
-};
+import { withActions } from "@storybook/addon-actions/decorator";
+import { mockCartContext } from "../src/mocks/data";
 
 const preview: Preview = {
   parameters: {
@@ -24,8 +13,12 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    actions: {
+      handles: ["click button"],
+    },
   },
   decorators: [
+    withActions,
     (Story, { parameters }) => {
       const { context }: { context?: "cart" } = parameters;
       if (context === "cart") {
