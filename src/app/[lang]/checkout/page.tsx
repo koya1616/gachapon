@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
@@ -8,57 +8,27 @@ import Link from "next/link";
 import AddressForm from "@/app/[lang]/_components/AddressForm";
 import { PAYPAY_QR_CODE_CREATE, PAYPAY_TYPE } from "@/const/header";
 import type { PaypayQRCodeCreateRequest } from "@/lib/paypay";
-import type { ApiResponse } from "@/types";
+import type { ApiResponse, Lang, Product } from "@/types";
 
-const CheckoutPage = () => {
-  const router = useRouter();
-  const params = useParams();
-  const lang = params.lang as string;
-  const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
+interface CheckoutPageLogic {
+  l: Lang;
+  cart: Product[];
+  totalPrice: number;
+  paymentMethod: "credit" | "paypay" | null;
+  isLoading: boolean;
+  handlePaymentMethodChange: (method: "credit" | "paypay") => void;
+  handlePayment: () => Promise<void>;
+}
 
-  const { cart, totalPrice, clear_cart } = useCart();
-  const [paymentMethod, setPaymentMethod] = useState<"credit" | "paypay" | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handlePayment = async () => {
-    if (!paymentMethod) return;
-
-    setIsLoading(true);
-
-    if (paymentMethod === "paypay") {
-      try {
-        const body: PaypayQRCodeCreateRequest = {
-          merchantPaymentId: `PAYPAY_${Date.now()}_${crypto.randomUUID().split("-")[0]}`,
-          orderItems: cart.map((item) => ({
-            name: item.name,
-            quantity: item.quantity,
-            productId: String(item.id),
-            unitPrice: { amount: item.price, currency: "JPY" },
-          })),
-        };
-        const response = await fetch("/api/paypay", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", [PAYPAY_TYPE]: PAYPAY_QR_CODE_CREATE },
-          body: JSON.stringify(body),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to create PayPay payment");
-        }
-
-        const { data }: ApiResponse<{ url: string }> = await response.json();
-
-        clear_cart();
-        router.push(data.url);
-      } catch (error) {
-        alert("Failed to process PayPay payment. Please try again.");
-        setIsLoading(false);
-      }
-    } else {
-      setIsLoading(false);
-    }
-  };
-
+export const CheckoutPageView = ({
+  l,
+  cart,
+  totalPrice,
+  paymentMethod,
+  isLoading,
+  handlePaymentMethodChange,
+  handlePayment,
+}: CheckoutPageLogic) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <h1 className="text-2xl font-bold mb-6">{t(l).checkout.title}</h1>
@@ -106,7 +76,7 @@ const CheckoutPage = () => {
         <div className="space-x-4 space-y-4">
           <button
             type="button"
-            onClick={() => setPaymentMethod("credit")}
+            onClick={() => handlePaymentMethodChange("credit")}
             className={`w-[240] p-4 border rounded-lg cursor-pointer ${paymentMethod === "credit" ? "border-blue-500 bg-blue-50" : "border-gray-200"}`}
           >
             <div className="flex items-center">
@@ -135,7 +105,7 @@ const CheckoutPage = () => {
 
           <button
             type="button"
-            onClick={() => setPaymentMethod("paypay")}
+            onClick={() => handlePaymentMethodChange("paypay")}
             className={`w-[240] p-4 border rounded-lg cursor-pointer ${paymentMethod === "paypay" ? "border-blue-500 bg-blue-50" : "border-gray-200"}`}
           >
             <div className="flex items-center">
@@ -190,7 +160,7 @@ const CheckoutPage = () => {
 
       <div className="flex justify-between">
         <Link
-          href={`/${lang}`}
+          href={`/${l}`}
           className="px-6 py-3 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
         >
           {t(l).checkout.continue}
@@ -207,6 +177,74 @@ const CheckoutPage = () => {
       </div>
     </div>
   );
+};
+
+const useCheckoutPage = (): CheckoutPageLogic => {
+  const router = useRouter();
+  const params = useParams();
+  const lang = params.lang as string;
+  const l = lang === "en" ? "en" : lang === "zh" ? "zh" : ("ja" as Lang);
+
+  const { cart, totalPrice, clear_cart } = useCart();
+  const [paymentMethod, setPaymentMethod] = useState<"credit" | "paypay" | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePaymentMethodChange = useCallback((method: "credit" | "paypay") => {
+    setPaymentMethod(method);
+  }, []);
+
+  const handlePayment = useCallback(async () => {
+    if (!paymentMethod) return;
+
+    setIsLoading(true);
+
+    if (paymentMethod === "paypay") {
+      try {
+        const body: PaypayQRCodeCreateRequest = {
+          merchantPaymentId: `PAYPAY_${Date.now()}_${crypto.randomUUID().split("-")[0]}`,
+          orderItems: cart.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+            productId: String(item.id),
+            unitPrice: { amount: item.price, currency: "JPY" },
+          })),
+        };
+        const response = await fetch("/api/paypay", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", [PAYPAY_TYPE]: PAYPAY_QR_CODE_CREATE },
+          body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create PayPay payment");
+        }
+
+        const { data }: ApiResponse<{ url: string }> = await response.json();
+
+        clear_cart();
+        router.push(data.url);
+      } catch (error) {
+        alert("Failed to process PayPay payment. Please try again.");
+        setIsLoading(false);
+      }
+    } else {
+      setIsLoading(false);
+    }
+  }, [paymentMethod, cart, clear_cart, router]);
+
+  return {
+    l,
+    cart,
+    totalPrice,
+    paymentMethod,
+    isLoading,
+    handlePaymentMethodChange,
+    handlePayment,
+  };
+};
+
+const CheckoutPage = () => {
+  return <CheckoutPageView {...useCheckoutPage()} />;
 };
 
 export default CheckoutPage;
