@@ -1,13 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LotteryStatus, type Product } from "@/types";
 import Loading from "@/components/Loading";
 import type { CreateLotteryEventApiRequestBody } from "@/app/api/lottery/create/route";
 
-const CreateLotteryPage = () => {
+interface CreateLotteryLogic {
+  formData: {
+    name: string;
+    description: string;
+    startAt: string;
+    endAt: string;
+    resultAt: string;
+    paymentDeadlineAt: string;
+    status: LotteryStatus;
+  };
+  products: Product[];
+  selectedProducts: Array<{ id: string; productId: number; quantity: number }>;
+  loading: boolean;
+  productLoading: boolean;
+  error: string | null;
+  success: boolean;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  handleDateInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAddProduct: () => void;
+  handleRemoveProduct: (index: number) => void;
+  handleProductChange: (index: number, field: string, value: number) => void;
+  handleSubmit: (e: React.FormEvent) => Promise<void>;
+}
+
+const useCreateLottery = (): CreateLotteryLogic => {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<Array<{ id: string; productId: number; quantity: number }>>(
@@ -18,9 +42,9 @@ const CreateLotteryPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const formatDateForInput = (date: Date): string => {
+  const formatDateForInput = useCallback((date: Date): string => {
     return date.toISOString().slice(0, 16);
-  };
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,129 +56,171 @@ const CreateLotteryPage = () => {
     status: LotteryStatus.DRAFT,
   });
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     setProductLoading(true);
     const response = await fetch("/api/product");
     const { data: products }: { data: Product[] } = await response.json();
     setProducts(products);
     setProductLoading(false);
-  };
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: name === "status" ? Number.parseInt(value) : value,
-    });
-  };
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
-  const handleDateInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: name === "status" ? Number.parseInt(value) : value,
+      }));
+    },
+    [],
+  );
+
+  const handleDateInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
+    }));
+  }, []);
+
+  const handleAddProduct = useCallback(() => {
+    setSelectedProducts((prev) => [...prev, { id: crypto.randomUUID(), productId: 0, quantity: 1 }]);
+  }, []);
+
+  const handleRemoveProduct = useCallback((index: number) => {
+    setSelectedProducts((prev) => {
+      const updatedProducts = [...prev];
+      updatedProducts.splice(index, 1);
+      return updatedProducts;
     });
-  };
+  }, []);
 
-  const handleAddProduct = () => {
-    setSelectedProducts([...selectedProducts, { id: crypto.randomUUID(), productId: 0, quantity: 1 }]);
-  };
-
-  const handleRemoveProduct = (index: number) => {
-    const updatedProducts = [...selectedProducts];
-    updatedProducts.splice(index, 1);
-    setSelectedProducts(updatedProducts);
-  };
-
-  const handleProductChange = (index: number, field: string, value: number) => {
-    const updatedProducts = [...selectedProducts];
-    updatedProducts[index] = {
-      ...updatedProducts[index],
-      [field]: value,
-    };
-    setSelectedProducts(updatedProducts);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      if (!formData.name.trim()) {
-        throw new Error("抽選名を入力してください");
-      }
-
-      const startDate = new Date(formData.startAt);
-      const endDate = new Date(formData.endAt);
-      const resultDate = new Date(formData.resultAt);
-      const paymentDeadlineDate = new Date(formData.paymentDeadlineAt);
-
-      if (startDate >= endDate) {
-        throw new Error("開始日時は終了日時より前である必要があります");
-      }
-
-      if (endDate >= resultDate) {
-        throw new Error("終了日時は結果発表日時より前である必要があります");
-      }
-
-      if (resultDate >= paymentDeadlineDate) {
-        throw new Error("結果発表日時は支払期限より前である必要があります");
-      }
-
-      if (selectedProducts.length === 0) {
-        throw new Error("少なくとも1つの商品を選択してください");
-      }
-
-      for (const product of selectedProducts) {
-        if (product.productId === 0) {
-          throw new Error("すべての商品を選択してください");
-        }
-        if (product.quantity <= 0) {
-          throw new Error("商品の数量は1以上である必要があります");
-        }
-      }
-
-      const body: CreateLotteryEventApiRequestBody = {
-        ...formData,
-        startAt: new Date(formData.startAt).getTime(),
-        endAt: new Date(formData.endAt).getTime(),
-        resultAt: new Date(formData.resultAt).getTime(),
-        paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
-        products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
+  const handleProductChange = useCallback((index: number, field: string, value: number) => {
+    setSelectedProducts((prev) => {
+      const updatedProducts = [...prev];
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        [field]: value,
       };
-      const response = await fetch("/api/lottery/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      return updatedProducts;
+    });
+  }, []);
 
-      if (response.status === 401) {
-        router.push("/admin/login");
-        return;
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+      setError(null);
+
+      try {
+        if (!formData.name.trim()) {
+          throw new Error("抽選名を入力してください");
+        }
+
+        const startDate = new Date(formData.startAt);
+        const endDate = new Date(formData.endAt);
+        const resultDate = new Date(formData.resultAt);
+        const paymentDeadlineDate = new Date(formData.paymentDeadlineAt);
+
+        if (startDate >= endDate) {
+          throw new Error("開始日時は終了日時より前である必要があります");
+        }
+
+        if (endDate >= resultDate) {
+          throw new Error("終了日時は結果発表日時より前である必要があります");
+        }
+
+        if (resultDate >= paymentDeadlineDate) {
+          throw new Error("結果発表日時は支払期限より前である必要があります");
+        }
+
+        if (selectedProducts.length === 0) {
+          throw new Error("少なくとも1つの商品を選択してください");
+        }
+
+        for (const product of selectedProducts) {
+          if (product.productId === 0) {
+            throw new Error("すべての商品を選択してください");
+          }
+          if (product.quantity <= 0) {
+            throw new Error("商品の数量は1以上である必要があります");
+          }
+        }
+
+        const body: CreateLotteryEventApiRequestBody = {
+          ...formData,
+          startAt: new Date(formData.startAt).getTime(),
+          endAt: new Date(formData.endAt).getTime(),
+          resultAt: new Date(formData.resultAt).getTime(),
+          paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
+          products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
+        };
+        const response = await fetch("/api/lottery/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+
+        if (response.status === 401) {
+          router.push("/admin/login");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("抽選の作成に失敗しました");
+        }
+
+        setSuccess(true);
+        setTimeout(() => {
+          router.push("/admin/lotteries");
+        }, 2000);
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
       }
+    },
+    [formData, selectedProducts, router],
+  );
 
-      if (!response.ok) {
-        throw new Error("抽選の作成に失敗しました");
-      }
-
-      setSuccess(true);
-      setTimeout(() => {
-        router.push("/admin/lotteries");
-      }, 2000);
-    } catch (error) {
-      setError((error as Error).message);
-    } finally {
-      setLoading(false);
-    }
+  return {
+    formData,
+    products,
+    selectedProducts,
+    loading,
+    productLoading,
+    error,
+    success,
+    handleInputChange,
+    handleDateInputChange,
+    handleAddProduct,
+    handleRemoveProduct,
+    handleProductChange,
+    handleSubmit,
   };
+};
 
+export const CreateLotteryView = ({
+  formData,
+  products,
+  selectedProducts,
+  loading,
+  productLoading,
+  error,
+  success,
+  handleInputChange,
+  handleDateInputChange,
+  handleAddProduct,
+  handleRemoveProduct,
+  handleProductChange,
+  handleSubmit,
+}: CreateLotteryLogic) => {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="md:flex md:items-center md:justify-between mb-6">
@@ -476,6 +542,11 @@ const CreateLotteryPage = () => {
       </form>
     </div>
   );
+};
+
+const CreateLotteryPage = () => {
+  const logic = useCreateLottery();
+  return <CreateLotteryView {...logic} />;
 };
 
 export default CreateLotteryPage;
