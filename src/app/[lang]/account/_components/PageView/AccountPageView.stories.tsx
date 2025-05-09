@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import AccountPageView from "./AccountPageView";
 
 const meta = {
-  title: "Components/Account/Page",
+  title: "Pages/Account",
   component: AccountPageView,
   parameters: {
     layout: "fullscreen",

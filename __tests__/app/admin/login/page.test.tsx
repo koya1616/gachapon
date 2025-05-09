@@ -93,8 +93,6 @@ describe("管理者ログインページ", () => {
     mockUseActionStatePending();
     render(<Login />);
 
-    const loginButton = screen.getByRole("button");
-    expect(loginButton.textContent).toBe("ログイン中...");
-    expect(loginButton.getAttribute("disabled")).toBe("");
+    expect(screen.getByTestId("loading")).toBeDefined();
   });
 });

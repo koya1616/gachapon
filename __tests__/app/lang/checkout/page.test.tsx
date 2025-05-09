@@ -136,7 +136,7 @@ describe("CheckoutPageコンポーネント", () => {
     const payButton = screen.getByRole("button", { name: "決済する" });
     await user.click(payButton);
 
-    expect(screen.getByText("処理中")).toBeDefined();
+    expect(screen.getByTestId("loading")).toBeDefined();
 
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(

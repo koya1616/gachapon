@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import React from "react";
 import type { LoginLogic } from "../../page";
 
@@ -30,15 +31,16 @@ const LoginView = ({ state, formAction, isPending }: LoginLogic) => {
               </div>
             )}
 
-            <div>
+            {isPending ? (
+              <Loading />
+            ) : (
               <button
                 type="submit"
-                disabled={isPending}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
               >
-                {isPending ? "ログイン中..." : "ログイン"}
+                ログイン
               </button>
-            </div>
+            )}
           </form>
         </div>
       </div>
