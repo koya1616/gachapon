@@ -10,11 +10,11 @@ import { getPaypayPaymentsByUserId } from "@/lib/db";
 import { formatDate } from "@/lib/date";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 
-export default async function AccountPage({
+const AccountPage = async ({
   params,
 }: {
   params: Promise<{ lang: string }>;
-}) {
+}) => {
   const { lang } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
@@ -88,4 +88,6 @@ export default async function AccountPage({
       </div>
     </div>
   );
-}
+};
+
+export default AccountPage;
