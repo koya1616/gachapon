@@ -1,72 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { type LotteryEvent, LotteryStatus } from "@/types";
 import { formatDate } from "@/lib/date";
 import Loading from "@/components/Loading";
 
-const LotteriesPage = () => {
-  const [lotteries, setLotteries] = useState<LotteryEvent[]>([]);
-  const [loading, setLoading] = useState(true);
+interface LotteriesPageLogic {
+  lotteries: LotteryEvent[];
+  loading: boolean;
+  getStatusBadge: (status: number) => React.ReactNode;
+}
 
-  useEffect(() => {
-    fetchLotteries();
-  }, []);
-
-  const fetchLotteries = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/lottery");
-      if (response.status === 401) {
-        window.location.href = "/admin/login";
-        return;
-      }
-
-      const { data: lotteryEvents }: { data: LotteryEvent[] } = await response.json();
-      setLotteries(lotteryEvents);
-    } catch (error) {
-      setLotteries([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getStatusBadge = (status: number) => {
-    switch (status) {
-      case LotteryStatus.DRAFT:
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-            下書き
-          </span>
-        );
-      case LotteryStatus.ACTIVE:
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-            実施中
-          </span>
-        );
-      case LotteryStatus.FINISHED:
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            終了
-          </span>
-        );
-      case LotteryStatus.CANCELLED:
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-            キャンセル
-          </span>
-        );
-      default:
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-            不明
-          </span>
-        );
-    }
-  };
-
+export const LotteriesPageView = ({ lotteries, loading, getStatusBadge }: LotteriesPageLogic) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="md:flex md:items-center md:justify-between mb-6">
@@ -194,6 +140,78 @@ const LotteriesPage = () => {
       )}
     </div>
   );
+};
+
+const useLotteriesPage = (): LotteriesPageLogic => {
+  const [lotteries, setLotteries] = useState<LotteryEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchLotteries = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/lottery");
+      if (response.status === 401) {
+        window.location.href = "/admin/login";
+        return;
+      }
+
+      const { data: lotteryEvents }: { data: LotteryEvent[] } = await response.json();
+      setLotteries(lotteryEvents);
+    } catch (error) {
+      setLotteries([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLotteries();
+  }, [fetchLotteries]);
+
+  const getStatusBadge = useCallback((status: number) => {
+    switch (status) {
+      case LotteryStatus.DRAFT:
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            下書き
+          </span>
+        );
+      case LotteryStatus.ACTIVE:
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            実施中
+          </span>
+        );
+      case LotteryStatus.FINISHED:
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            終了
+          </span>
+        );
+      case LotteryStatus.CANCELLED:
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+            キャンセル
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            不明
+          </span>
+        );
+    }
+  }, []);
+
+  return {
+    lotteries,
+    loading,
+    getStatusBadge,
+  };
+};
+
+const LotteriesPage = () => {
+  return <LotteriesPageView {...useLotteriesPage()} />;
 };
 
 export default LotteriesPage;
