@@ -4,11 +4,11 @@ import { useTranslation as t } from "@/lib/translations";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage({
+const LoginPage = async ({
   params,
 }: {
   params: Promise<{ lang: string }>;
-}) {
+}) => {
   const { lang } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
   const isShow = true;
@@ -109,4 +109,6 @@ export default async function LoginPage({
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;
