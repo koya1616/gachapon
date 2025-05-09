@@ -6,11 +6,11 @@ import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
 import ShipmentStatusActions from "./_components/ShipmentStatusActions";
 
-export default async function PayPayPage({
+const PayPayPage = async ({
   params,
 }: {
   params: Promise<{ id: string }>;
-}) {
+}) => {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
@@ -50,4 +50,6 @@ export default async function PayPayPage({
       </div>
     </div>
   );
-}
+};
+
+export default PayPayPage;
