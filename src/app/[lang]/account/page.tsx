@@ -9,15 +9,14 @@ import { redirect } from "next/navigation";
 import { getPaypayPaymentsByUserId } from "@/lib/db";
 import { formatDate } from "@/lib/date";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
+import type { Lang, Order } from "@/types";
 
-const AccountPage = async ({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}) => {
-  const { lang } = await params;
-  const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
+interface AccountPageLogic {
+  l: Lang;
+  orders: Order[];
+}
 
+const useAccountPageLogic = async (l: Lang): Promise<AccountPageLogic> => {
   const cookieStore = await cookies();
   const userToken = verifyToken(cookieStore.get(USER_TOKEN)?.value || "");
   if (!userToken) {
@@ -26,6 +25,10 @@ const AccountPage = async ({
 
   const orders = await getPaypayPaymentsByUserId(userToken.id);
 
+  return { l, orders };
+};
+
+export const AccountPageView = ({ l, orders }: AccountPageLogic) => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <h1 className="text-3xl font-semibold mb-4">{t(l).account.title}</h1>
@@ -88,6 +91,17 @@ const AccountPage = async ({
       </div>
     </div>
   );
+};
+
+const AccountPage = async ({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) => {
+  const { lang } = await params;
+  const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
+  const logic = await useAccountPageLogic(l);
+  return <AccountPageView {...logic} />;
 };
 
 export default AccountPage;
