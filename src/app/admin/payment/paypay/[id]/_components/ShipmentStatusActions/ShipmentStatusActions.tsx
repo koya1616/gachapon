@@ -5,6 +5,7 @@ import type { Shipment } from "@/types";
 import { useRouter } from "next/navigation";
 import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import type { UpdateShipmentStatusRequest } from "@/app/api/shipment/status/route";
+import Loading from "@/components/Loading";
 
 type StatusConfig = {
   type: ShipmentStatus;
@@ -30,7 +31,6 @@ const StatusButton = ({ config, isLoading, onUpdateStatus }: StatusButtonProps) 
       disabled={isLoading}
       className={`px-3 py-2 ${bgColor} text-white rounded-md ${hoverColor} ${disabledColor} flex items-center cursor-pointer ${isLoading ? "opacity-70" : ""}`}
     >
-      {isLoading ? <div className="mr-2 animate-spin">⏳</div> : null}
       {label}
     </button>
   );
@@ -86,6 +86,9 @@ export const ShipmentStatusActionsView = ({
   statusConfigs,
   updateStatus,
 }: ShipmentStatusActionsLogic) => {
+  if (isLoading) return <Loading />;
+  const showButtons = showShipped || showDelivered || showPaymentFailed || showCancelled;
+  if (!showButtons) return null;
   return (
     <div className="mt-4 bg-white shadow-md rounded-lg p-6">
       <h3 className="text-lg font-semibold mb-3">ステータスを更新</h3>

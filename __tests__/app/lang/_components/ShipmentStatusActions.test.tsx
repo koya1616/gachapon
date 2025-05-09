@@ -149,13 +149,8 @@ describe("ShipmentStatusActionsコンポーネント", () => {
 
     await user.click(screen.getByText("発送済みにする"));
 
-    for (const loading of screen.getAllByText("⏳")) {
-      expect(loading).toBeDefined();
-    }
-
-    for (const button of screen.getAllByRole("button")) {
-      expect(button.getAttribute("disabled")).toBe("");
-    }
+    expect(screen.getByTestId("loading")).toBeDefined();
+    expect(screen.queryAllByRole("button").length).toBe(0);
 
     await waitFor(() => {
       expect(mockRouter.refresh).toHaveBeenCalled();
