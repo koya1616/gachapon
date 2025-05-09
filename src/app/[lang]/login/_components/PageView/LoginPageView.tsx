@@ -27,7 +27,7 @@ const LoginPageView = ({ l, isShow }: LoginPageLogic) => {
             </button>
           )}
 
-          <a href="/api/auth/google">
+          <a href="/api/auth/google" className="block">
             <button
               type="button"
               className="flex items-center justify-center w-full py-3 px-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-lg transition duration-300 shadow-sm cursor-pointer"

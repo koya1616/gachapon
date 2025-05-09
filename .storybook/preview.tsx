@@ -1,5 +1,4 @@
 import type { Preview } from "@storybook/react";
-import React from "react";
 import "../src/app/globals.css";
 import { withActions } from "@storybook/addon-actions/decorator";
 import { CartContext } from "../src/context/CartContext";
