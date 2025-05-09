@@ -18,7 +18,7 @@ describe("Loadingコンポーネント", () => {
 
     const outerDiv = container.querySelector("div");
     expect(outerDiv).toBeDefined();
-    expect(outerDiv?.className).toEqual("text-center py-10");
+    expect(outerDiv?.className).toEqual("text-center py-1");
 
     const spinner = outerDiv?.querySelector("div");
     expect(spinner).toBeDefined();

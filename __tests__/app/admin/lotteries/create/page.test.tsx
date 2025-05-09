@@ -383,7 +383,6 @@ describe("抽選イベント作成ページ", () => {
     const saveButton = screen.getByText("保存する");
     fireEvent.click(saveButton);
 
-    expect(screen.getByText("保存中...")).toBeDefined();
-    expect(saveButton.getAttribute("disabled")).toBe("");
+    expect(screen.getByTestId("loading")).toBeDefined();
   });
 });

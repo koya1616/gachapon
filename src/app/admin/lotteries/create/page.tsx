@@ -520,23 +520,24 @@ export const CreateLotteryView = ({
 
         <div className="pt-5">
           <div className="flex justify-end">
-            <Link
-              href="/admin/lotteries"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              キャンセル
-            </Link>
-            <button
-              type="submit"
-              disabled={loading}
-              className={`ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${
-                loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
-              }`}
-            >
-              {loading ? "保存中..." : "保存する"}
-            </button>
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                <Link
+                  href="/admin/lotteries"
+                  className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  キャンセル
+                </Link>
+                <button
+                  type="submit"
+                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                >
+                  保存する
+                </button>
+              </>
+            )}
           </div>
         </div>
       </form>
