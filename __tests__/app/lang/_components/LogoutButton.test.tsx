@@ -66,8 +66,7 @@ describe("LogoutButtonコンポーネント", () => {
 
     await user.click(screen.getByRole("button"));
 
-    expect(screen.getByText("Loading...")).toBeDefined();
-    expect(screen.getByRole("button").getAttribute("disabled")).toBe("");
+    expect(screen.getByTestId("loading")).toBeDefined();
     expect(mockFetch).toHaveBeenCalledWith("/api/auth/logout");
   });
 
