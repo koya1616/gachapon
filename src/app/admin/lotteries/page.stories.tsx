@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LotteriesPageView } from "./page";
 import { mockLotteryEvents } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
+import Badge from "@/components/Badge";
 
 const meta = {
   title: "Admin/Lotteries/List",
@@ -18,35 +19,15 @@ type Story = StoryObj<typeof meta>;
 const getStatusBadge = (status: number) => {
   switch (status) {
     case LotteryStatus.DRAFT:
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-          下書き
-        </span>
-      );
+      return <Badge text="下書き" color="gray" />;
     case LotteryStatus.ACTIVE:
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-          実施中
-        </span>
-      );
+      return <Badge text="実施中" color="green" />;
     case LotteryStatus.FINISHED:
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-          終了
-        </span>
-      );
+      return <Badge text="終了" color="blue" />;
     case LotteryStatus.CANCELLED:
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-          キャンセル
-        </span>
-      );
+      return <Badge text="キャンセル" color="red" />;
     default:
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-          不明
-        </span>
-      );
+      return <Badge text="不明" color="gray" />;
   }
 };
 
