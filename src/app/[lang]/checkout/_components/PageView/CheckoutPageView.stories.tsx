@@ -1,14 +1,14 @@
 import { mockProducts } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
-import CheckoutPageView from "./_components/PageView";
+import CheckoutPageView from "./CheckoutPageView";
 
 const meta = {
   title: "Pages/Checkout",
   component: CheckoutPageView,
-  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },
+  tags: ["autodocs"],
 } satisfies Meta<typeof CheckoutPageView>;
 
 export default meta;
@@ -58,7 +58,7 @@ export const EmptyCart: Story = {
 export const LoadingState: Story = {
   args: {
     ...Default.args,
-    paymentMethod: "paypay",
+    paymentMethod: "credit",
     isLoading: true,
   },
 };
