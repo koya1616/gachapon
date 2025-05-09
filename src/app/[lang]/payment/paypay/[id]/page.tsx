@@ -6,11 +6,11 @@ import { paypayGetCodePaymentDetails } from "@/lib/paypay";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function UserPayPayPage({
+const UserPayPayPage = async ({
   params,
 }: {
   params: Promise<{ lang: string; id: string }>;
-}) {
+}) => {
   const { lang, id } = await params;
   const l = lang === "en" ? "en" : lang === "zh" ? "zh" : "ja";
 
@@ -33,4 +33,6 @@ export default async function UserPayPayPage({
       <Order paymentDetails={paymentDetails} shipment={shipment} paymentProducts={paymentProducts} lang={l} />
     </div>
   );
-}
+};
+
+export default UserPayPayPage;
