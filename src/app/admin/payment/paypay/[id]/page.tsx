@@ -4,7 +4,7 @@ import { type PaypayGetCodePaymentDetailsResponse, paypayGetCodePaymentDetails }
 import type { PaymentProduct, Shipment } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import PayPayPageView from "./_components/PageView/PayPayPageView";
+import PayPayPageView from "./_components/PageView";
 
 export interface PayPayPageLogic {
   id: string;
