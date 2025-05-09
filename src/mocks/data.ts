@@ -1,5 +1,53 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
 import type { Product, PaymentProduct, Shipment, Order, Address } from "@/types";
+import { LotteryStatus, type LotteryEvent } from "@/types";
+
+export const mockLotteryEvents: LotteryEvent[] = [
+  {
+    id: 1,
+    name: "春のパン祭り",
+    description: "2025年春の限定パンコレクション抽選会",
+    start_at: new Date("2025-05-01T00:00:00").getTime(),
+    end_at: new Date("2025-05-15T23:59:59").getTime(),
+    result_at: new Date("2025-05-20T12:00:00").getTime(),
+    payment_deadline_at: new Date("2025-05-27T23:59:59").getTime(),
+    created_at: new Date("2025-04-15T10:00:00").getTime(),
+    status: LotteryStatus.ACTIVE,
+  },
+  {
+    id: 2,
+    name: "夏のガチャフェスタ",
+    description: "夏限定のガチャポンコレクション",
+    start_at: new Date("2025-07-01T00:00:00").getTime(),
+    end_at: new Date("2025-07-31T23:59:59").getTime(),
+    result_at: new Date("2025-08-05T12:00:00").getTime(),
+    payment_deadline_at: new Date("2025-08-12T23:59:59").getTime(),
+    created_at: new Date("2025-06-15T09:30:00").getTime(),
+    status: LotteryStatus.DRAFT,
+  },
+  {
+    id: 3,
+    name: "秋の特別抽選会",
+    description: "秋の新商品発売記念抽選会",
+    start_at: new Date("2025-04-01T00:00:00").getTime(),
+    end_at: new Date("2025-04-30T23:59:59").getTime(),
+    result_at: new Date("2025-05-05T12:00:00").getTime(),
+    payment_deadline_at: new Date("2025-05-12T23:59:59").getTime(),
+    created_at: new Date("2025-03-15T14:20:00").getTime(),
+    status: LotteryStatus.FINISHED,
+  },
+  {
+    id: 4,
+    name: "冬のスペシャルコレクション",
+    description: "冬季限定レアアイテム抽選会",
+    start_at: new Date("2024-12-01T00:00:00").getTime(),
+    end_at: new Date("2024-12-25T23:59:59").getTime(),
+    result_at: new Date("2024-12-28T12:00:00").getTime(),
+    payment_deadline_at: new Date("2025-01-10T23:59:59").getTime(),
+    created_at: new Date("2024-11-15T11:00:00").getTime(),
+    status: LotteryStatus.CANCELLED,
+  },
+];
 
 export const mockCartContext = {
   cart: [],
