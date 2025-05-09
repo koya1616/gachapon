@@ -67,15 +67,65 @@ const statusConfigs: Record<ShipmentStatus, StatusConfig> = {
   },
 };
 
-const ShipmentStatusActions = ({ shipment }: { shipment: Shipment }) => {
+interface ShipmentStatusActionsLogic {
+  isLoading: boolean;
+  showShipped: boolean;
+  showDelivered: boolean;
+  showPaymentFailed: boolean;
+  showCancelled: boolean;
+  statusConfigs: Record<ShipmentStatus, StatusConfig>;
+  updateStatus: (status: ShipmentStatus) => Promise<void>;
+}
+
+export const ShipmentStatusActionsView = ({
+  isLoading,
+  showShipped,
+  showDelivered,
+  showPaymentFailed,
+  showCancelled,
+  statusConfigs,
+  updateStatus,
+}: ShipmentStatusActionsLogic) => {
+  return (
+    <div className="mt-4 bg-white shadow-md rounded-lg p-6">
+      <h3 className="text-lg font-semibold mb-3">ステータスを更新</h3>
+
+      <div className="flex flex-wrap gap-4">
+        {showShipped && (
+          <StatusButton config={statusConfigs.shipped} isLoading={isLoading} onUpdateStatus={updateStatus} />
+        )}
+
+        {showDelivered && (
+          <StatusButton config={statusConfigs.delivered} isLoading={isLoading} onUpdateStatus={updateStatus} />
+        )}
+
+        {showPaymentFailed && (
+          <StatusButton config={statusConfigs.payment_failed} isLoading={isLoading} onUpdateStatus={updateStatus} />
+        )}
+
+        {showCancelled && (
+          <StatusButton config={statusConfigs.cancelled} isLoading={isLoading} onUpdateStatus={updateStatus} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const useShipmentStatusActions = (shipment: Shipment): ShipmentStatusActionsLogic => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const { cancelled_at, payment_failed_at, shipped_at, delivered_at } = shipment;
-  const showShipped = !cancelled_at && !payment_failed_at && !shipped_at;
-  const showDelivered = shipped_at && !cancelled_at && !payment_failed_at && !delivered_at;
-  const showPaymentFailed = !cancelled_at && !payment_failed_at && !shipped_at && !delivered_at;
-  const showCancelled = !cancelled_at && !shipped_at && !delivered_at;
+
+  const hasCancelled = !!cancelled_at;
+  const hasPaymentFailed = !!payment_failed_at;
+  const hasShipped = !!shipped_at;
+  const hasDelivered = !!delivered_at;
+
+  const showShipped = !hasCancelled && !hasPaymentFailed && !hasShipped;
+  const showDelivered = hasShipped && !hasCancelled && !hasPaymentFailed && !hasDelivered;
+  const showPaymentFailed = !hasCancelled && !hasPaymentFailed && !hasShipped && !hasDelivered;
+  const showCancelled = !hasCancelled && !hasShipped && !hasDelivered;
 
   const updateStatus = async (status: ShipmentStatus) => {
     setIsLoading(true);
@@ -101,29 +151,19 @@ const ShipmentStatusActions = ({ shipment }: { shipment: Shipment }) => {
       });
   };
 
-  return (
-    <div className="mt-4 bg-white shadow-md rounded-lg p-6">
-      <h3 className="text-lg font-semibold mb-3">ステータスを更新</h3>
+  return {
+    isLoading,
+    showShipped,
+    showDelivered,
+    showPaymentFailed,
+    showCancelled,
+    statusConfigs,
+    updateStatus,
+  };
+};
 
-      <div className="flex flex-wrap gap-4">
-        {showShipped && (
-          <StatusButton config={statusConfigs.shipped} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
-
-        {showDelivered && (
-          <StatusButton config={statusConfigs.delivered} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
-
-        {showPaymentFailed && (
-          <StatusButton config={statusConfigs.payment_failed} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
-
-        {showCancelled && (
-          <StatusButton config={statusConfigs.cancelled} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
-      </div>
-    </div>
-  );
+const ShipmentStatusActions = ({ shipment }: { shipment: Shipment }) => {
+  return <ShipmentStatusActionsView {...useShipmentStatusActions(shipment)} />;
 };
 
 export default ShipmentStatusActions;
