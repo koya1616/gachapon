@@ -4,21 +4,17 @@ import { ADMIN_CODE } from "@/const/cookies";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
+import type { Order } from "@/types";
 
-const Payment = async () => {
-  const cookieStore = await cookies();
-  const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
-  if (adminToken !== process.env.ADMIN_CODE) {
-    redirect("/admin/login");
-  }
+interface PaymentLogic {
+  orders: Order[];
+}
 
-  const orders = await getPaypayPayments();
-
+const PaymentView = ({ orders }: PaymentLogic) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">決済履歴</h1>
 
-      {/* PC/タブレット向けテーブル表示 - md以上のサイズで表示 */}
       <div className="hidden md:block bg-white shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -136,6 +132,25 @@ const Payment = async () => {
       </div>
     </div>
   );
+};
+
+const usePaymentLogic = async () => {
+  const orders = await getPaypayPayments();
+
+  return { orders };
+};
+
+const Payment = async () => {
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
+
+  if (adminToken !== process.env.ADMIN_CODE) {
+    return redirect("/admin/login");
+  }
+
+  const logic = await usePaymentLogic();
+
+  return <PaymentView {...logic} />;
 };
 
 export default Payment;
