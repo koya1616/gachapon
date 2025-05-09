@@ -1,6 +1,6 @@
 import { mockProducts } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
-import { CheckoutPageView } from "./page";
+import CheckoutPageView from "./_components/PageView";
 
 const meta = {
   title: "Pages/Checkout",
