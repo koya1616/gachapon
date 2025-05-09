@@ -3,7 +3,7 @@ const Badge = ({
   color,
 }: {
   text: string;
-  color: "green" | "red" | "blue" | "gray";
+  color: "green" | "red" | "blue" | "gray" | "yellow";
 }) => {
   return (
     <span
