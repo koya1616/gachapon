@@ -2,10 +2,10 @@ import Badge from "@/components/Badge";
 import { mockLotteryEvents } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
-import LotteriesPageView from "./_components/PageView";
+import LotteriesPageView from ".";
 
 const meta = {
-  title: "Admin/Lotteries/List",
+  title: "Admin/Lotteries",
   component: LotteriesPageView,
   tags: ["autodocs"],
   parameters: {
