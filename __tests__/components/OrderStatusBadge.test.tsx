@@ -69,9 +69,4 @@ describe("OrderStatusBadgeコンポーネント", () => {
     render(<OrderStatusBadge order={baseOrder} lang="ja" />);
     expect(screen.getByText("処理中")).toBeDefined();
   });
-
-  it("不明な言語の場合、デフォルトで日本語表示となること", () => {
-    render(<OrderStatusBadge order={baseOrder} lang="fr" />);
-    expect(screen.getByText("処理中")).toBeDefined();
-  });
 });

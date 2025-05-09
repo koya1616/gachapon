@@ -3,7 +3,7 @@ import { USER_TOKEN } from "@/const/cookies";
 import { verifyToken } from "@/lib/jwt";
 import { redirect } from "next/navigation";
 import { getPaypayPaymentsByUserId } from "@/lib/db";
-import AccountPageView from "./_components/AccountPageView";
+import AccountPageView from "./_components/PageView";
 
 const useAccountPageLogic = async (userId: number) => {
   const orders = await getPaypayPaymentsByUserId(userId);
