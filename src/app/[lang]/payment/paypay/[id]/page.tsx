@@ -1,10 +1,31 @@
-import Order from "@/components/Order";
 import { USER_TOKEN } from "@/const/cookies";
 import { findShipmentByMerchantPaymentIdAndUserId, getPaymentProductsByPaypayPaymentId } from "@/lib/db";
 import { verifyToken } from "@/lib/jwt";
 import { paypayGetCodePaymentDetails } from "@/lib/paypay";
+import type { PaypayGetCodePaymentDetailsResponse } from "@/lib/paypay";
+import type { Lang, PaymentProduct, Shipment } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import UserPayPayPageView from "./_components/PageView";
+
+export interface UserPayPayPageLogic {
+  paymentDetails: PaypayGetCodePaymentDetailsResponse | null;
+  shipment: Shipment | null;
+  paymentProducts: PaymentProduct[];
+  l: Lang;
+}
+
+const useUserPayPayPage = async (l: Lang, id: string, shipment: Shipment): Promise<UserPayPayPageLogic> => {
+  const paymentDetails = await paypayGetCodePaymentDetails(id);
+  const paymentProducts = await getPaymentProductsByPaypayPaymentId(shipment.paypay_payment_id);
+
+  return {
+    paymentDetails,
+    shipment,
+    paymentProducts,
+    l,
+  };
+};
 
 const UserPayPayPage = async ({
   params,
@@ -25,14 +46,8 @@ const UserPayPayPage = async ({
     return redirect(`/${l}/account`);
   }
 
-  const paymentDetails = await paypayGetCodePaymentDetails(id);
-  const paymentProducts = await getPaymentProductsByPaypayPaymentId(shipment.paypay_payment_id);
-
-  return (
-    <div className="max-w-4xl mx-auto p-6">
-      <Order paymentDetails={paymentDetails} shipment={shipment} paymentProducts={paymentProducts} lang={l} />
-    </div>
-  );
+  const logic = await useUserPayPayPage(l, id, shipment);
+  return <UserPayPayPageView {...logic} />;
 };
 
 export default UserPayPayPage;
