@@ -1,10 +1,7 @@
 "use client";
 
 import Badge from "@/components/Badge";
-import Loading from "@/components/Loading";
-import { formatDate } from "@/lib/date";
 import { type LotteryEvent, LotteryStatus } from "@/types";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import LotteriesPageView from "./_components/PageView";
 
