@@ -2,7 +2,7 @@ import Badge from "@/components/Badge";
 import { mockLotteryEvents } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
-import { LotteriesPageView } from "./page";
+import LotteriesPageView from "./_components/PageView";
 
 const meta = {
   title: "Admin/Lotteries/List",
