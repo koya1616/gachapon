@@ -1,7 +1,7 @@
+import { ADMIN_CODE } from "@/const/cookies";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { cookies } from "next/headers";
-import { ADMIN_CODE } from "@/const/cookies";
 
 export async function POST(request: NextRequest) {
   const ENV_ADMIN_CODE = process.env.ADMIN_CODE;

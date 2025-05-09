@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { GET } from "@/app/api/deploy/route";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { ADMIN_CODE } from "@/const/cookies";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 process.env.VERCEL_API_TOKEN = "test-vercel-token";
 process.env.VERCEL_PROJECT_ID = "test-project-id";

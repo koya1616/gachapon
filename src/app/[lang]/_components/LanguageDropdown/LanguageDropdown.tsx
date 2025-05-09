@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
+import type { Lang } from "@/types";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState, useCallback, useMemo } from "react";
 
 interface LanguageDropdownLogic {
   lang: Lang;

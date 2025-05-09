@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
 import Loading from "@/components/Loading";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Loadingコンポーネント", () => {
   beforeEach(() => {

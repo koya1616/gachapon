@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Cart from "@/app/[lang]/_components/Cart";
 import type { Product } from "@/types";
 import type { Lang } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockRouter = {
   push: vi.fn(),

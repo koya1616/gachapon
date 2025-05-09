@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import type { Lang } from "@/types";
-import { useTranslation as t } from "@/lib/translations";
 import Loading from "@/components/Loading";
+import { useTranslation as t } from "@/lib/translations";
+import type { Lang } from "@/types";
+import { useCallback, useState } from "react";
 
 interface LogoutButtonLogic {
   l: Lang;

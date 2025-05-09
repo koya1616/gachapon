@@ -1,6 +1,6 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Product, PaymentProduct, Shipment, Order, Address } from "@/types";
-import { LotteryStatus, type LotteryEvent } from "@/types";
+import type { Address, Order, PaymentProduct, Product, Shipment } from "@/types";
+import { type LotteryEvent, LotteryStatus } from "@/types";
 
 export const mockLotteryEvents: LotteryEvent[] = [
   {

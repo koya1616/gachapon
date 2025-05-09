@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import Header from "@/app/[lang]/_components/Header";
 import { CartProvider } from "@/context/CartContext";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import "../globals.css";
-import { LANGS } from "@/const/language";
 import Footer from "@/app/[lang]/_components/Footer";
+import { LANGS } from "@/const/language";
 
 export const metadata: Metadata = {
   title: "gachapon",

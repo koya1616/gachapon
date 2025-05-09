@@ -1,7 +1,7 @@
 import { createProducts, findProductById, getProducts, updateProductById } from "@/lib/db";
-import { describe, it, expect, beforeAll, beforeEach } from "vitest";
-import { ProductFactory } from "../../../factory/product";
 import type { Product } from "@/types";
+import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { ProductFactory } from "../../../factory/product";
 
 let product: ProductFactory;
 

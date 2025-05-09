@@ -1,6 +1,6 @@
+import { createOrder } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import PaymentView from "./PaymentView";
-import { createOrder } from "@/mocks/data";
 
 const meta: Meta<typeof PaymentView> = {
   title: "Admin/Payment/Page",

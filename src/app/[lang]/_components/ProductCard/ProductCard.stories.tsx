@@ -1,6 +1,6 @@
+import { mockProducts } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ProductCardView } from "./ProductCard";
-import { mockProducts } from "@/mocks/data";
 
 const meta = {
   title: "Components/ProductCard",

@@ -1,10 +1,10 @@
-import { formatDate } from "@/lib/date";
-import OrderStatusBadge from "@/components/OrderStatusBadge";
-import type { Lang, Order } from "@/types";
-import Link from "next/link";
 import AddressForm from "@/app/[lang]/_components/AddressForm";
 import LogoutButton from "@/app/[lang]/account/_components/LogoutButton";
+import OrderStatusBadge from "@/components/OrderStatusBadge";
+import { formatDate } from "@/lib/date";
 import { useTranslation as t } from "@/lib/translations";
+import type { Lang, Order } from "@/types";
+import Link from "next/link";
 
 interface AccountPageLogic {
   orders: Order[];

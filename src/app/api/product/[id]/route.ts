@@ -1,9 +1,9 @@
+import { ADMIN_CODE } from "@/const/cookies";
 import { findProductById, updateProductById } from "@/lib/db";
+import type { Product } from "@/types";
+import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { ADMIN_CODE } from "@/const/cookies";
-import type { Product } from "@/types";
 
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();

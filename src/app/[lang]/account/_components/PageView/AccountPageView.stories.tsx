@@ -1,6 +1,6 @@
+import { createOrder } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import AccountPageView from "./AccountPageView";
-import { createOrder } from "@/mocks/data";
 
 const meta = {
   title: "Components/Account/Page",

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { useTranslation as t } from "@/lib/translations";
-import type { Address, Lang } from "@/types";
-import { COUNTRY_LIST } from "@/const/country";
 import Loading from "@/components/Loading";
 import Skeleton from "@/components/Skeleton";
+import { COUNTRY_LIST } from "@/const/country";
+import { useTranslation as t } from "@/lib/translations";
+import type { Address, Lang } from "@/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const FormField = ({
   id,

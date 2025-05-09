@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { LotteriesPageView } from "./page";
+import Badge from "@/components/Badge";
 import { mockLotteryEvents } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
-import Badge from "@/components/Badge";
+import type { Meta, StoryObj } from "@storybook/react";
+import { LotteriesPageView } from "./page";
 
 const meta = {
   title: "Admin/Lotteries/List",

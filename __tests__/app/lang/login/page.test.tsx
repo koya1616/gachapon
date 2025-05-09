@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
 import LoginPage from "@/app/[lang]/login/page";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { USER_TOKEN } from "@/const/cookies";
 import { generateToken } from "@/lib/jwt";
+import { cleanup, render, screen } from "@testing-library/react";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),

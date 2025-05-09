@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import type { Shipment } from "@/types";
-import { useRouter } from "next/navigation";
-import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import type { UpdateShipmentStatusRequest } from "@/app/api/shipment/status/route";
 import Loading from "@/components/Loading";
+import type { ShipmentStatus } from "@/lib/db/shipments/query";
+import type { Shipment } from "@/types";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type StatusConfig = {
   type: ShipmentStatus;

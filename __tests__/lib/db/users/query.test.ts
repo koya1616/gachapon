@@ -1,5 +1,5 @@
 import { createUser, findUserByEmail } from "@/lib/db";
-import { describe, it, expect, beforeAll } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { UserFactory } from "../../../factory/user";
 
 describe("Usersテーブルに関するテスト", () => {

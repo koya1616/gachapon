@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import type { Product } from "@/types";
-import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
+import type { Product } from "@/types";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ProductDetail = () => {
   const params = useParams();

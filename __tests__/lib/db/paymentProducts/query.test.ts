@@ -3,9 +3,9 @@ import {
   findPaymentProductByPaypayPaymentIdAndProductId,
   getPaymentProductsByPaypayPaymentId,
 } from "@/lib/db";
-import { UserFactory } from "../../../factory/user";
-import { beforeAll, describe, expect, it } from "vitest";
 import type { PaymentProduct } from "@/types";
+import { beforeAll, describe, expect, it } from "vitest";
+import { UserFactory } from "../../../factory/user";
 
 let user: UserFactory;
 

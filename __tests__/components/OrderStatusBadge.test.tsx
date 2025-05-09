@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 import type { Order } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("OrderStatusBadgeコンポーネント", () => {
   const baseOrder: Order = {

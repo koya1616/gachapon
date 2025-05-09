@@ -1,9 +1,9 @@
+import { ADMIN_CODE } from "@/const/cookies";
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
+import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { ADMIN_CODE } from "@/const/cookies";
 
 export async function POST(request: NextRequest) {
   try {

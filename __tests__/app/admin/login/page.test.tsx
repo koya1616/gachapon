@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import Login from "@/app/admin/login/page";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as React from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("react", async () => {
   const actual = await vi.importActual<typeof import("react")>("react");

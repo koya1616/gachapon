@@ -2,7 +2,7 @@
 
 import type { Product } from "@/types";
 import { useRouter } from "next/navigation";
-import { useState, useCallback, useMemo, memo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 
 type UploadResult = {
   key: string;

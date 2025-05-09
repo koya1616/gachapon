@@ -1,7 +1,7 @@
-import { getLotteryEvents } from "@/lib/db";
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { ADMIN_CODE } from "@/const/cookies";
+import { getLotteryEvents } from "@/lib/db";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   const cookieStore = await cookies();

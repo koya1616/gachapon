@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeAll, afterAll, beforeEach, afterEach } from "vitest";
 import { GET } from "@/app/api/auth/google/route";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { USER_TOKEN } from "@/const/cookies";
 import { generateToken } from "@/lib/jwt";
-import { NextResponse } from "next/server";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 process.env.GOOGLE_CLIENT_ID = "test_client_id";
 process.env.GOOGLE_AUTH_REDIRECT_URI = "http://localhost:3000/api/auth/google/callback";

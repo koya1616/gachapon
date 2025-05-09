@@ -1,10 +1,10 @@
 "use client";
 
-import { memo } from "react";
-import type { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
+import type { Product } from "@/types";
 import type { Lang } from "@/types";
+import { memo } from "react";
 
 interface ProductCardLogic {
   add_to_cart: (product: Product) => void;

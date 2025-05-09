@@ -1,7 +1,7 @@
+import { mockProducts } from "@/mocks/data";
+import { LotteryStatus } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import { CreateLotteryView } from "./page";
-import { LotteryStatus } from "@/types";
-import { mockProducts } from "@/mocks/data";
 
 const meta = {
   title: "Admin/Lotteries/Create",

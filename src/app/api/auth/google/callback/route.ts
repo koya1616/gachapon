@@ -1,9 +1,9 @@
-import { cookies } from "next/headers";
+import { USER_TOKEN } from "@/const/cookies";
 import { createUser, findUserByEmail } from "@/lib/db";
 import { generateToken } from "@/lib/jwt";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
-import { USER_TOKEN } from "@/const/cookies";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code") || "";

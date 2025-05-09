@@ -1,6 +1,6 @@
 import { createLotteryEventWithTransaction, executeTransaction, getLotteryEvents } from "@/lib/db";
-import { describe, expect, it } from "vitest";
 import type { LotteryEvent } from "@/types";
+import { describe, expect, it } from "vitest";
 
 type LotteryEventKeys = keyof LotteryEvent;
 const typeKeys: LotteryEventKeys[] = [

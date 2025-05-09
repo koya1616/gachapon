@@ -1,6 +1,6 @@
+import { mockAddressFormData, mockEmptyAddressFormData } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AddressFormView } from "./AddressForm";
-import { mockAddressFormData, mockEmptyAddressFormData } from "@/mocks/data";
 
 const meta = {
   title: "Components/AddressForm",

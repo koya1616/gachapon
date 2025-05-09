@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { Shipment } from "@/types";
-import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import ShipmentStatusActions from "@/app/admin/payment/paypay/[id]/_components/ShipmentStatusActions";
+import type { ShipmentStatus } from "@/lib/db/shipments/query";
+import type { Shipment } from "@/types";
 
 const mockRouter = {
   refresh: vi.fn(),

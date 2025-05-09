@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeAll, beforeEach, afterEach } from "vitest";
 import { GET, PUT } from "@/app/api/product/[id]/route";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { ADMIN_CODE } from "@/const/cookies";
 import { findProductById, updateProductById } from "@/lib/db";
-import { NextRequest } from "next/server";
 import type { Product } from "@/types";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),

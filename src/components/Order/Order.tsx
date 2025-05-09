@@ -1,7 +1,7 @@
 import { formatDate } from "@/lib/date";
 import type { PaypayGetCodePaymentDetailsResponse } from "@/lib/paypay";
-import type { Lang, PaymentProduct, Shipment } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
+import type { Lang, PaymentProduct, Shipment } from "@/types";
 
 const statusColors: Record<string, string> = {
   CREATED: "bg-blue-100 text-blue-800",

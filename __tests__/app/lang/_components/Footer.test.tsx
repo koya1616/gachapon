@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
 import Footer from "@/app/[lang]/_components/Footer";
+import { cleanup, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe("Footerコンポーネント", () => {
   beforeEach(() => {

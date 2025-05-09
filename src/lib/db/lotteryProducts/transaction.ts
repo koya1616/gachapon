@@ -1,6 +1,6 @@
+import type { LotteryProduct } from "@/types";
 import type { Client } from "pg";
 import { executeQueryWithClient } from "..";
-import type { LotteryProduct } from "@/types";
 
 export const createLotteryProductsWithTransaction = async (
   client: Client,

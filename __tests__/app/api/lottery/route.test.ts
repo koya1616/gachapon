@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeAll } from "vitest";
 import { GET } from "@/app/api/lottery/route";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { ADMIN_CODE } from "@/const/cookies";
 import { findLotteryEventById, getLotteryEvents } from "@/lib/db";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
 
 vi.mock("next/headers", () => ({

@@ -1,6 +1,6 @@
+import { LANGS } from "@/const/language";
 import type { Meta, StoryObj } from "@storybook/react";
 import { LanguageDropdownView } from "./LanguageDropdown";
-import { LANGS } from "@/const/language";
 
 const meta = {
   title: "Components/LanguageDropdown",

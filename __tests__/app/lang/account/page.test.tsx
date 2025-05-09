@@ -1,13 +1,13 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
 import AccountPage from "@/app/[lang]/account/page";
-import * as db from "@/lib/db";
-import type { Lang, Order } from "@/types";
-import { redirect } from "next/navigation";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { USER_TOKEN } from "@/const/cookies";
-import { cookies } from "next/headers";
+import * as db from "@/lib/db";
 import { generateToken } from "@/lib/jwt";
+import type { Lang, Order } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),

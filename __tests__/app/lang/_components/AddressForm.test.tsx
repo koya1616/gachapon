@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import AddressForm from "@/app/[lang]/_components/AddressForm";
-import type { Address } from "@/types";
 import { COUNTRY_LIST } from "@/const/country";
+import type { Address } from "@/types";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 global.fetch = vi.fn();
 

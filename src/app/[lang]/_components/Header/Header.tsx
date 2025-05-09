@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useCallback } from "react";
-import Image from "next/image";
 import Cart from "@/app/[lang]/_components/Cart";
 import LanguageDropdown from "@/app/[lang]/_components/LanguageDropdown";
 import { useCart } from "@/context/CartContext";
 import type { Lang, Product } from "@/types";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import React, { useCallback } from "react";
 
 const AccountIcon = React.memo(() => (
   <svg

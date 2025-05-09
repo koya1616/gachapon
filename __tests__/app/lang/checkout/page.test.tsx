@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import CheckoutPage from "@/app/[lang]/checkout/page";
 import * as CartContext from "@/context/CartContext";
-import type { Lang } from "@/types";
 import { CartProvider } from "@/context/CartContext";
+import type { Lang } from "@/types";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockRouter = {
   push: vi.fn(),

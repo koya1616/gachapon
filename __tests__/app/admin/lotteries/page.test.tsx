@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import LotteriesPage from "@/app/admin/lotteries/page";
-import { type LotteryEvent, LotteryStatus } from "@/types";
 import { formatDate } from "@/lib/date";
+import { type LotteryEvent, LotteryStatus } from "@/types";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const originalFetch = global.fetch;
 

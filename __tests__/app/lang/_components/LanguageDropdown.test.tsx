@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import LanguageDropdown from "@/app/[lang]/_components/LanguageDropdown";
-import type { Lang } from "@/types";
 import { LANGS } from "@/const/language";
+import type { Lang } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockRouter = {
   push: vi.fn(),

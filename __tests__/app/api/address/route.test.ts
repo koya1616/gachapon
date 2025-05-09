@@ -1,12 +1,12 @@
-import { describe, it, expect, vi, beforeAll } from "vitest";
 import { GET, POST } from "@/app/api/address/route";
-import { cookies } from "next/headers";
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import { UserFactory } from "../../../factory/user";
-import { generateToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
-import { NextRequest } from "next/server";
 import { findAddressByUserId } from "@/lib/db";
+import { generateToken } from "@/lib/jwt";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { UserFactory } from "../../../factory/user";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),

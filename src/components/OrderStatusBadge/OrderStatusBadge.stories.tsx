@@ -1,6 +1,6 @@
+import { createOrder } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import OrderStatusBadge from "./OrderStatusBadge";
-import { createOrder } from "@/mocks/data";
 
 const meta = {
   title: "Components/OrderStatusBadge",

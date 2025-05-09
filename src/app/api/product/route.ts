@@ -1,9 +1,9 @@
+import { ADMIN_CODE } from "@/const/cookies";
 import { createProducts, getProducts } from "@/lib/db";
+import type { Product } from "@/types";
+import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { ADMIN_CODE } from "@/const/cookies";
-import type { Product } from "@/types";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();

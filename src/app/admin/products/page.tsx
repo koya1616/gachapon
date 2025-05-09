@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import type { Product } from "@/types";
 import Loading from "@/components/Loading";
+import type { Product } from "@/types";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>([]);

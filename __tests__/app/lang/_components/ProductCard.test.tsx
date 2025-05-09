@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import ProductCard from "@/app/[lang]/_components/ProductCard";
-import type { Product } from "@/types";
 import * as CartContext from "@/context/CartContext";
+import type { Product } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // モックのカート状態
 const mockCartContext = {

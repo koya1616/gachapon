@@ -1,8 +1,8 @@
+import { createLotteryProductsWithTransaction, executeTransaction } from "@/lib/db";
 import type { LotteryProduct } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
 import { ProductFactory } from "../../../factory/product";
-import { createLotteryProductsWithTransaction, executeTransaction } from "@/lib/db";
 
 let lotteryEvent: LotteryEventFactory;
 let product: ProductFactory;

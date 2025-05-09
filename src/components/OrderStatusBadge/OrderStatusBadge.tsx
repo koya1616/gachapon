@@ -1,5 +1,5 @@
-import type { Lang, Order } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
+import type { Lang, Order } from "@/types";
 import Badge from "../Badge";
 
 const getShipmentStatus = (shipment: Order): StatusType => {

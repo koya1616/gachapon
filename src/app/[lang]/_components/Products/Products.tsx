@@ -1,8 +1,8 @@
-import type { Product } from "@/types";
 import ProductCard from "@/app/[lang]/_components/ProductCard";
-import Link from "next/link";
-import type { Lang } from "@/types";
 import { useTranslation as t } from "@/lib/translations";
+import type { Product } from "@/types";
+import type { Lang } from "@/types";
+import Link from "next/link";
 
 const Products = ({ products, lang }: { products: Product[]; lang: Lang }) => {
   return (

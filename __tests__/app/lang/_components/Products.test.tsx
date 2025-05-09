@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
 import Products from "@/app/[lang]/_components/Products";
-import type { Product, Lang } from "@/types";
+import type { Lang, Product } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/app/[lang]/_components/ProductCard", () => ({
   default: ({ product, lang }: { product: Product; lang: Lang }) => (

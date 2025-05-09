@@ -1,6 +1,6 @@
+import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ShipmentStatusActionsView } from "./ShipmentStatusActions";
-import type { ShipmentStatus } from "@/lib/db/shipments/query";
 
 const statusConfigs: Record<
   ShipmentStatus,

@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import ProductDetail from "@/app/admin/products/[id]/page";
 import type { Product } from "@/types";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({
   useParams: vi.fn().mockReturnValue({ id: "1" }),

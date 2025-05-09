@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/jwt";
 import { USER_TOKEN } from "@/const/cookies";
 import { findPaypayPaymentByMerchantPaymentId } from "@/lib/db";
+import { verifyToken } from "@/lib/jwt";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies();

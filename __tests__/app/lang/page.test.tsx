@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
 import ProductsPage from "@/app/[lang]/page";
+import { CartProvider } from "@/context/CartContext";
 import * as db from "@/lib/db";
 import type { Lang, Product } from "@/types";
-import { CartProvider } from "@/context/CartContext";
+import { cleanup, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/db", () => ({
   getProducts: vi.fn(),

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
-import { type LotteryEvent, LotteryStatus } from "@/types";
-import { formatDate } from "@/lib/date";
-import Loading from "@/components/Loading";
 import Badge from "@/components/Badge";
+import Loading from "@/components/Loading";
+import { formatDate } from "@/lib/date";
+import { type LotteryEvent, LotteryStatus } from "@/types";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
 interface LotteriesPageLogic {
   lotteries: LotteryEvent[];

@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { cleanup, render } from "@testing-library/react";
 import Badge from "@/components/Badge";
+import { cleanup, render } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Badgeコンポーネント", () => {
   beforeEach(() => {

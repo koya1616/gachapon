@@ -1,8 +1,8 @@
-import type { Product } from "@/types";
-import { memo, useCallback, useMemo } from "react";
 import { useTranslation as t } from "@/lib/translations";
+import type { Product } from "@/types";
 import type { Lang } from "@/types";
 import { useRouter } from "next/navigation";
+import { memo, useCallback, useMemo } from "react";
 
 const CartItem = memo(
   ({

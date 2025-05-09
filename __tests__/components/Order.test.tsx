@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
 import Order from "@/components/Order";
-import type { Lang, PaymentProduct, Shipment } from "@/types";
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
+import type { Lang, PaymentProduct, Shipment } from "@/types";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.stubEnv("TZ", "UTC");
 
