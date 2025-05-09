@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
 
-export default async function Payment() {
+const Payment = async () => {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
@@ -136,4 +136,6 @@ export default async function Payment() {
       </div>
     </div>
   );
-}
+};
+
+export default Payment;
