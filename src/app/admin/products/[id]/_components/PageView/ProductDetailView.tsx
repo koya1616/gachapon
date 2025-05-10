@@ -117,17 +117,7 @@ const ProductDetailView = ({
 
             <div className="flex items-center justify-between">
               <Button label="キャンセル" onClick={() => setIsEditing(false)} color="gray" />
-              <button
-                type="submit"
-                disabled={updateStatus.loading}
-                className={`py-2 px-4 rounded-md font-medium text-white ${
-                  updateStatus.loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-blue-500 hover:bg-blue-600 cursor-pointer"
-                }`}
-              >
-                {updateStatus.loading ? "更新中..." : "更新する"}
-              </button>
+              {updateStatus.loading ? <Loading /> : <Button label="更新する" type="submit" />}
             </div>
           </form>
         </div>
