@@ -39,14 +39,3 @@ export const WithItems: Story = {
     totalPrice: mockProducts.slice(0, 3).reduce((sum, product) => sum + product.price, 0),
   },
 };
-
-export const WithManyItems: Story = {
-  args: {
-    ...WithItems.args,
-    cart: mockProducts.map((product) => ({
-      ...product,
-      quantity: Math.floor(Math.random() * 3) + 1,
-    })),
-    totalPrice: mockProducts.reduce((sum, product) => sum + product.price * (Math.floor(Math.random() * 3) + 1), 0),
-  },
-};
