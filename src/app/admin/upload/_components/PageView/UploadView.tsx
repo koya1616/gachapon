@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import { memo } from "react";
 import type { UploadLogic } from "../../page";
@@ -96,16 +97,7 @@ const UploadView = memo(
 
               {formError && <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">{formError}</div>}
 
-              {isSubmitting ? (
-                <Loading />
-              ) : (
-                <button
-                  type="submit"
-                  className="w-full py-2 px-4 rounded-md font-medium text-white bg-blue-500 hover:bg-blue-600"
-                >
-                  送信する
-                </button>
-              )}
+              {isSubmitting ? <Loading /> : <Button type="submit" label="送信する" />}
             </form>
           </>
         )}
