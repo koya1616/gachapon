@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { memo } from "react";
 import type { UploadLogic } from "../../page";
 
@@ -13,7 +14,6 @@ const UploadView = memo(
     formData,
     formError,
     isSubmitting,
-    submitButtonClassName,
     handleProductChange,
     handleCreateProductSubmit,
   }: UploadLogic) => {
@@ -34,9 +34,13 @@ const UploadView = memo(
                 />
               </div>
 
-              <button type="submit" disabled={uploading || !file} className={fileButtonClassName}>
-                {uploading ? "アップロード中..." : "アップロード"}
-              </button>
+              {uploading ? (
+                <Loading />
+              ) : (
+                <button type="submit" disabled={!file} className={fileButtonClassName}>
+                  アップロード
+                </button>
+              )}
             </form>
 
             {fileError && <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-md">{fileError}</div>}
@@ -92,11 +96,16 @@ const UploadView = memo(
 
               {formError && <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">{formError}</div>}
 
-              <div className="flex items-center justify-between">
-                <button type="submit" disabled={isSubmitting} className={submitButtonClassName}>
-                  {isSubmitting ? "送信中..." : "送信する"}
+              {isSubmitting ? (
+                <Loading />
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 rounded-md font-medium text-white bg-blue-500 hover:bg-blue-600"
+                >
+                  送信する
                 </button>
-              </div>
+              )}
             </form>
           </>
         )}

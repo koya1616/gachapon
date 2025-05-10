@@ -21,7 +21,6 @@ export interface UploadLogic {
   formData: Omit<Product, "id" | "quantity">;
   formError: string | null;
   isSubmitting: boolean;
-  submitButtonClassName: string;
   handleProductChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   handleCreateProductSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
@@ -144,14 +143,6 @@ const useUpload = (): UploadLogic => {
     [formData, router],
   );
 
-  const submitButtonClassName = useMemo(
-    () =>
-      `w-full py-2 px-4 rounded-md font-medium text-white ${
-        isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-      }`,
-    [isSubmitting],
-  );
-
   return {
     uploadResult,
     handleUploadSuccess,
@@ -164,7 +155,6 @@ const useUpload = (): UploadLogic => {
     formData,
     formError,
     isSubmitting,
-    submitButtonClassName,
     handleProductChange,
     handleCreateProductSubmit,
   };
