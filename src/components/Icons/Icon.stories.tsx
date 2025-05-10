@@ -10,7 +10,7 @@ import {
   PayPayIcon,
 } from "./index";
 
-const IconDisplay = () => {
+const Icons = () => {
   return (
     <div className="grid grid-cols-3 gap-8 md:grid-cols-4 lg:grid-cols-8">
       <MenuIcon className="h-6 w-6" />
@@ -27,9 +27,9 @@ const IconDisplay = () => {
 
 const meta = {
   title: "Components/Icons",
-  component: IconDisplay,
+  component: Icons,
   tags: ["autodocs"],
-} satisfies Meta<typeof IconDisplay>;
+} satisfies Meta<typeof Icons>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
