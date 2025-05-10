@@ -15,60 +15,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const dropdownOptions = (
-  <div className="absolute top-full left-0 mt-1 w-20 bg-white border border-neutral-200 rounded-md shadow-lg z-10">
-    {LANGS.map((langOption) => (
-      <Button
-        key={langOption}
-        label={langOption.toUpperCase()}
-        color={"en" === langOption ? "blue" : "gray"}
-        width="w-full"
-        variant={"en" === langOption ? "tonal" : "text"}
-      />
-    ))}
-  </div>
-);
-
-const dropdownIcon = (
-  <svg
-    className="w-4 h-4 ml-1 transition-transform duration-200"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <title>Dropdown arrow</title>
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-);
-
 export const Default: Story = {
   args: {
+    isDropdownOpen: false,
     lang: "en",
-    dropdownOptions: null,
-    dropdownIcon,
+    handleLanguageChange: () => console.log("Changed language"),
     toggleDropdown: () => console.log("Toggled dropdown"),
   },
 };
 
 export const OpenDropdown: Story = {
   args: {
+    isDropdownOpen: true,
     lang: "en",
-    dropdownOptions,
-    dropdownIcon: (
-      <svg
-        className="w-4 h-4 ml-1 transition-transform duration-200 transform rotate-180"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <title>Dropdown arrow</title>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
-    ),
+    handleLanguageChange: () => console.log("Changed language"),
     toggleDropdown: () => console.log("Toggled dropdown"),
   },
 };

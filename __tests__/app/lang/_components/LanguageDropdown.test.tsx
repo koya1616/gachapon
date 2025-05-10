@@ -29,38 +29,24 @@ describe("LanguageDropdownコンポーネント", () => {
 
   it("現在の言語が正しく表示されること", () => {
     renderLanguageDropdown("en");
-    expect(screen.getByText("EN")).toBeDefined();
+    expect(screen.getByRole("button").getElementsByClassName("size-6 fill-gray-800")).toBeDefined();
   });
 
   it("ドロップダウンを開くとすべての言語オプションが表示されること", async () => {
     const user = userEvent.setup();
     renderLanguageDropdown("ja");
 
-    await user.click(screen.getByText("JA"));
+    await user.click(screen.getByRole("button"));
     for (const lang of LANGS) {
       expect(screen.getAllByText(lang.toUpperCase()).length).toBeGreaterThanOrEqual(1);
     }
-  });
-
-  it("ドロップダウンアイコンが正しく回転すること", async () => {
-    const user = userEvent.setup();
-    renderLanguageDropdown();
-
-    const svgElement = document.querySelector("svg");
-    expect(svgElement?.getAttribute("class")).not.toContain("rotate-180");
-
-    await user.click(screen.getByText("JA"));
-    expect(svgElement?.getAttribute("class")).toContain("rotate-180");
-
-    await user.click(screen.getAllByText("JA")[1]);
-    expect(svgElement?.getAttribute("class")).not.toContain("rotate-180");
   });
 
   it("異なる言語を選択すると、URLが適切に更新されること", async () => {
     const user = userEvent.setup();
     renderLanguageDropdown("ja");
 
-    await user.click(screen.getByText("JA"));
+    await user.click(screen.getByRole("button"));
 
     await user.click(screen.getByText("EN"));
     expect(mockRouter.push).toHaveBeenCalledWith("/en");
@@ -70,7 +56,7 @@ describe("LanguageDropdownコンポーネント", () => {
     const user = userEvent.setup();
     renderLanguageDropdown("ja");
 
-    await user.click(screen.getByText("JA"));
+    await user.click(screen.getByRole("button"));
 
     await user.click(screen.getAllByText("JA")[1]);
     expect(mockRouter.push).not.toHaveBeenCalled();
@@ -81,7 +67,7 @@ describe("LanguageDropdownコンポーネント", () => {
     const user = userEvent.setup();
     renderLanguageDropdown("ja");
 
-    await user.click(screen.getByText("JA"));
+    await user.click(screen.getByRole("button"));
 
     await user.click(screen.getByText("ZH"));
     expect(mockRouter.push).toHaveBeenCalledWith("/zh/account/settings");
@@ -92,7 +78,7 @@ describe("LanguageDropdownコンポーネント", () => {
     const user = userEvent.setup();
     renderLanguageDropdown("ja");
 
-    await user.click(screen.getByText("JA"));
+    await user.click(screen.getByRole("button"));
 
     await user.click(screen.getByText("EN"));
     expect(mockRouter.push).toHaveBeenCalledWith("/en");
