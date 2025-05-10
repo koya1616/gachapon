@@ -231,6 +231,7 @@ const CreateLotteryView = ({
           <div className="mb-6 rounded-md bg-red-50 p-4">
             <div className="flex">
               <div className="flex-shrink-0">
+                {/* TODO: Alertのコンポーネントを作成する */}
                 <svg
                   className="h-5 w-5 text-red-400"
                   xmlns="http://www.w3.org/2000/svg"
