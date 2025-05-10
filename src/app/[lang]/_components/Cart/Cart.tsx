@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { useTranslation as t } from "@/lib/translations";
 import type { Product } from "@/types";
 import type { Lang } from "@/types";
@@ -108,21 +109,9 @@ export const CartView = ({
                 <span className="font-bold">{t(lang).cart.total}</span>
                 <span className="font-bold text-xl">¥{totalPrice.toLocaleString()}</span>
               </div>
-              <div className="flex space-x-4">
-                <button
-                  type="button"
-                  onClick={onClearCart}
-                  className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-colors cursor-pointer"
-                >
-                  {t(lang).cart.clear_cart}
-                </button>
-                <button
-                  type="button"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors cursor-pointer"
-                  onClick={handleCheckout}
-                >
-                  {t(lang).cart.checkout}
-                </button>
+              <div className="flex justify-between space-x-4">
+                <Button type="button" label={t(lang).cart.clear_cart} onClick={onClearCart} color="gray" />
+                <Button type="button" label={t(lang).cart.checkout} onClick={handleCheckout} color="blue" />
               </div>
             </div>
           </>
