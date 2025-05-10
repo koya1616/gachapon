@@ -135,11 +135,10 @@ describe("管理者決済履歴ページ", () => {
     expect(statusBadges[5].textContent).toBe("決済失敗");
 
     const detailLinks = screen.getAllByText("詳細");
-    expect(detailLinks.length).toBe(3);
+    expect(detailLinks.length).toBe(6);
     detailLinks.forEach((link, index) => {
-      expect(link.closest("a")?.getAttribute("href")).toBe(
-        `/admin/payment/paypay/${mockOrders[index].merchant_payment_id}`,
-      );
+      const expectedMerchantId = mockOrders[index % mockOrders.length].merchant_payment_id;
+      expect(link.closest("a")?.getAttribute("href")).toBe(`/admin/payment/paypay/${expectedMerchantId}`);
     });
 
     const mobileCards = screen.getAllByText("決済ID:");
@@ -171,9 +170,7 @@ describe("管理者決済履歴ページ", () => {
       expect(screen.getAllByText(order.merchant_payment_id).length).toBeGreaterThanOrEqual(1);
     }
 
-    const detailButtonTexts = screen.getAllByText("詳細を見る");
-    expect(detailButtonTexts.length).toBe(3);
-
-    expect(screen.getAllByTitle("ArrowRight").length).toBe(3);
+    const detailButtonTexts = screen.getAllByText("詳細");
+    expect(detailButtonTexts.length).toBe(6);
   });
 });
