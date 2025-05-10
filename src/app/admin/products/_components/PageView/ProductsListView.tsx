@@ -22,14 +22,6 @@ const ProductsListView = ({ products, loading }: ProductsListLogic) => {
           href="/admin/upload"
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <title>Plus</title>
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
-            />
-          </svg>
           商品を追加
         </Link>
       </div>
@@ -69,20 +61,6 @@ const ProductsListView = ({ products, loading }: ProductsListLogic) => {
                       href={`/admin/products/${product.id}`}
                       className="text-blue-500 hover:text-blue-700 flex items-center"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <title>Eye</title>
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
                       詳細
                     </Link>
                   </td>
@@ -132,21 +110,7 @@ const ProductsListView = ({ products, loading }: ProductsListLogic) => {
                 href={`/admin/products/${product.id}`}
                 className="w-full flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-1"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <title>Eye</title>
-                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                  <path
-                    fillRule="evenodd"
-                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                商品詳細を見る
+                詳細
               </Link>
             </div>
           ))

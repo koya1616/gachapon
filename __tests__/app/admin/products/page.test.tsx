@@ -87,7 +87,7 @@ describe("商品管理ページ", () => {
     expect(screen.getByText("0")).toBeDefined();
 
     const detailLinks = screen.getAllByText("詳細");
-    expect(detailLinks.length).toBe(mockProducts.length);
+    expect(detailLinks.length).toBe(mockProducts.length * 2);
   });
 
   it("商品がない場合、適切なメッセージが表示されること", async () => {
