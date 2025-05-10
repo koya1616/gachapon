@@ -2,48 +2,12 @@
 
 import Cart from "@/app/[lang]/_components/Cart";
 import LanguageDropdown from "@/app/[lang]/_components/LanguageDropdown";
+import { AccountIcon, CartIcon } from "@/components/Icons";
 import { useCart } from "@/context/CartContext";
 import type { Lang, Product } from "@/types";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback } from "react";
-
-const AccountIcon = React.memo(() => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    focusable="false"
-    className="icon icon-account w-4 h-4"
-    fill="none"
-    viewBox="0 0 18 19"
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z"
-      fill="currentColor"
-    />
-  </svg>
-));
-
-const CartIcon = React.memo(() => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    aria-hidden="true"
-    data-slot="icon"
-    className="h-4 transition-all ease-in-out hover:scale-110"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-    />
-  </svg>
-));
 
 interface HeaderLogic {
   lang: Lang;
