@@ -72,7 +72,7 @@ describe("ProductCardコンポーネント", () => {
     const button = screen.getByRole("button");
     expect(button.getAttribute("disabled")).toBe("");
     expect(button.textContent).toBe("在庫切れ");
-    expect(button.classList.contains("bg-gray-400")).toBe(true);
+    expect(button.classList.contains("opacity-50")).toBe(true);
     expect(button.classList.contains("cursor-not-allowed")).toBe(true);
   });
 
@@ -87,7 +87,6 @@ describe("ProductCardコンポーネント", () => {
     const button = screen.getByRole("button");
     expect(button.getAttribute("disabled")).toBe(null);
     expect(button.textContent).toBe("カートに追加");
-    expect(button.classList.contains("bg-blue-600")).toBe(true);
-    expect(button.classList.contains("hover:bg-blue-700")).toBe(true);
+    expect(button.classList.contains("cursor-pointer")).toBe(true);
   });
 });

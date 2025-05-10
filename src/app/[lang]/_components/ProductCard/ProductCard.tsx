@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import { useCart } from "@/context/CartContext";
 import { useTranslation as t } from "@/lib/translations";
 import type { Product } from "@/types";
@@ -20,16 +21,13 @@ export const ProductCardView = ({ product, lang, add_to_cart, isMaxQuantity }: P
       <div className="p-3">
         <h3 className="text-gray-900">{product.name}</h3>
         <p className="font-bold text-blue-700 text-right">¥ {product.price.toLocaleString()}</p>
-        <button
-          type="button"
-          onClick={() => add_to_cart(product)}
+        <Button
+          label={isMaxQuantity ? t(lang).product.out_of_stock : t(lang).product.add_to_cart}
           disabled={isMaxQuantity}
-          className={`mt-3 w-full py-2 rounded-md transition-colors duration-300 ${
-            isMaxQuantity ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-          }`}
-        >
-          {isMaxQuantity ? t(lang).product.out_of_stock : t(lang).product.add_to_cart}
-        </button>
+          onClick={() => add_to_cart(product)}
+          width="w-full"
+          color={isMaxQuantity ? "gray" : "blue"}
+        />
       </div>
     </div>
   );
