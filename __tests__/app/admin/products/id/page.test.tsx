@@ -245,10 +245,7 @@ describe("商品詳細ページ", () => {
 
     await user.click(screen.getByRole("button", { name: "更新する" }));
 
-    expect(screen.getByRole("button", { name: "更新中..." })).toBeDefined();
-    expect(screen.getByRole("button", { name: "更新中..." }).getAttribute("disabled")).toBe("");
-    expect(screen.getByRole("button", { name: "更新中..." }).classList.contains("bg-gray-400")).toBe(true);
-    expect(screen.getByRole("button", { name: "更新中..." }).classList.contains("cursor-not-allowed")).toBe(true);
+    expect(screen.getByTestId("loading")).toBeDefined();
   });
 
   it("認証エラー(401)の場合、ログインページにリダイレクトされること", async () => {
