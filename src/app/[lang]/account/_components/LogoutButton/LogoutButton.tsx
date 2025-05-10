@@ -14,7 +14,7 @@ interface LogoutButtonLogic {
 
 export const LogoutButtonView = ({ l, isLoading, handleLogout }: LogoutButtonLogic) => {
   if (isLoading) return <Loading />;
-  return <Button label={t(l).account.logout} onClick={handleLogout} />;
+  return <Button label={t(l).account.logout} onClick={handleLogout} color="red" />;
 };
 
 const useLogoutButton = (lang: Lang): LogoutButtonLogic => {

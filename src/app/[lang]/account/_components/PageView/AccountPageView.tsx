@@ -68,7 +68,7 @@ const AccountPageView = ({ orders, l }: AccountPageLogic & { l: Lang }) => {
         )}
       </div>
 
-      <div className="bg-white shadow rounded-lg p-6 mb-8 text-right">
+      <div className="text-right">
         <LogoutButton lang={l} />
       </div>
     </div>
