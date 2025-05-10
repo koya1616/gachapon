@@ -1,5 +1,5 @@
 import AddressForm from "@/app/[lang]/_components/AddressForm";
-import { PayPayIcon } from "@/components/Icons";
+import { CreditCardIcon, PayPayIcon } from "@/components/Icons";
 import Loading from "@/components/Loading";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang, Product } from "@/types";
@@ -81,18 +81,7 @@ const CheckoutPageView = ({
                 {paymentMethod === "credit" && <div className="w-3 h-3 rounded-full bg-blue-500" />}
               </div>
               <div className="flex items-center">
-                <svg
-                  className="w-8 h-8 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <title id="creditCardTitle">Credit card icon</title>
-                  <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2" />
-                  <path d="M2 10H22" stroke="currentColor" strokeWidth="2" />
-                  <path d="M6 15H12" stroke="currentColor" strokeWidth="2" />
-                </svg>
+                <CreditCardIcon />
                 <span>{t(l).checkout.credit}</span>
               </div>
             </div>
