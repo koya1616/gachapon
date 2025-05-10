@@ -1,5 +1,3 @@
-import { Button } from "@/components/Button";
-import { LANGS } from "@/const/language";
 import type { Meta, StoryObj } from "@storybook/react";
 import { LanguageDropdownView } from "./LanguageDropdown";
 
