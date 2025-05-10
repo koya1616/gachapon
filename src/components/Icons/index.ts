@@ -5,3 +5,4 @@ export * from "./CartIcon";
 export * from "./GoogleIcon";
 export * from "./PayPayIcon";
 export * from "./CreditCardIcon";
+export * from "./LanguageIcon";
