@@ -7,38 +7,28 @@ const statusConfigs: Record<
   {
     type: ShipmentStatus;
     label: string;
-    bgColor: string;
-    hoverColor: string;
-    disabledColor: string;
+    color: "blue" | "gray" | "red" | "green";
   }
 > = {
   shipped: {
     type: "shipped",
     label: "発送済みにする",
-    bgColor: "bg-blue-600",
-    hoverColor: "hover:bg-blue-700",
-    disabledColor: "disabled:bg-blue-300",
+    color: "blue",
   },
   delivered: {
     type: "delivered",
     label: "配達済みにする",
-    bgColor: "bg-green-600",
-    hoverColor: "hover:bg-green-700",
-    disabledColor: "disabled:bg-green-300",
+    color: "green",
   },
   payment_failed: {
     type: "payment_failed",
     label: "決済失敗にする",
-    bgColor: "bg-red-600",
-    hoverColor: "hover:bg-red-700",
-    disabledColor: "disabled:bg-red-300",
+    color: "red",
   },
   cancelled: {
     type: "cancelled",
     label: "キャンセルする",
-    bgColor: "bg-gray-600",
-    hoverColor: "hover:bg-gray-700",
-    disabledColor: "disabled:bg-gray-300",
+    color: "gray",
   },
 };
 

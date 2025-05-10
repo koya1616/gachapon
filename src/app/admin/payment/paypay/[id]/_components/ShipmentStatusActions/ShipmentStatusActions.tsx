@@ -1,6 +1,7 @@
 "use client";
 
 import type { UpdateShipmentStatusRequest } from "@/app/api/shipment/status/route";
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import type { Shipment } from "@/types";
@@ -10,60 +11,40 @@ import { useState } from "react";
 type StatusConfig = {
   type: ShipmentStatus;
   label: string;
-  bgColor: string;
-  hoverColor: string;
-  disabledColor: string;
+  color: "blue" | "gray" | "red" | "green";
 };
 
 type StatusButtonProps = {
   config: StatusConfig;
-  isLoading: boolean;
   onUpdateStatus: (status: ShipmentStatus) => Promise<void>;
 };
 
-const StatusButton = ({ config, isLoading, onUpdateStatus }: StatusButtonProps) => {
-  const { type, label, bgColor, hoverColor, disabledColor } = config;
+const StatusButton = ({ config, onUpdateStatus }: StatusButtonProps) => {
+  const { type, label, color } = config;
 
-  return (
-    <button
-      type="button"
-      onClick={() => onUpdateStatus(type)}
-      disabled={isLoading}
-      className={`px-3 py-2 ${bgColor} text-white rounded-md ${hoverColor} ${disabledColor} flex items-center cursor-pointer ${isLoading ? "opacity-70" : ""}`}
-    >
-      {label}
-    </button>
-  );
+  return <Button label={label} color={color} onClick={() => onUpdateStatus(type)} />;
 };
 
 const statusConfigs: Record<ShipmentStatus, StatusConfig> = {
   shipped: {
     type: "shipped",
     label: "発送済みにする",
-    bgColor: "bg-blue-600",
-    hoverColor: "hover:bg-blue-700",
-    disabledColor: "disabled:bg-blue-300",
+    color: "blue",
   },
   delivered: {
     type: "delivered",
     label: "配達済みにする",
-    bgColor: "bg-green-600",
-    hoverColor: "hover:bg-green-700",
-    disabledColor: "disabled:bg-green-300",
+    color: "green",
   },
   payment_failed: {
     type: "payment_failed",
     label: "決済失敗にする",
-    bgColor: "bg-red-600",
-    hoverColor: "hover:bg-red-700",
-    disabledColor: "disabled:bg-red-300",
+    color: "red",
   },
   cancelled: {
     type: "cancelled",
     label: "キャンセルする",
-    bgColor: "bg-gray-600",
-    hoverColor: "hover:bg-gray-700",
-    disabledColor: "disabled:bg-gray-300",
+    color: "gray",
   },
 };
 
@@ -94,21 +75,13 @@ export const ShipmentStatusActionsView = ({
       <h3 className="text-lg font-semibold mb-3">ステータスを更新</h3>
 
       <div className="flex flex-wrap gap-4">
-        {showShipped && (
-          <StatusButton config={statusConfigs.shipped} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
+        {showShipped && <StatusButton config={statusConfigs.shipped} onUpdateStatus={updateStatus} />}
 
-        {showDelivered && (
-          <StatusButton config={statusConfigs.delivered} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
+        {showDelivered && <StatusButton config={statusConfigs.delivered} onUpdateStatus={updateStatus} />}
 
-        {showPaymentFailed && (
-          <StatusButton config={statusConfigs.payment_failed} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
+        {showPaymentFailed && <StatusButton config={statusConfigs.payment_failed} onUpdateStatus={updateStatus} />}
 
-        {showCancelled && (
-          <StatusButton config={statusConfigs.cancelled} isLoading={isLoading} onUpdateStatus={updateStatus} />
-        )}
+        {showCancelled && <StatusButton config={statusConfigs.cancelled} onUpdateStatus={updateStatus} />}
       </div>
     </div>
   );
