@@ -4,18 +4,29 @@ type ButtonProps = {
   type?: "button" | "submit";
   label: string;
   disabled?: boolean;
+  width?: string;
   onClick?: () => void;
 };
 
+/**
+ * @param variant - variant (flat, tonal, outlined, text)
+ * @param color - color (blue, gray, red, green)
+ * @param type - type (button, submit)
+ * @param label - 表示させるテキスト
+ * @param disabled
+ * @param width - Tailwindをそのまま反映
+ * @param onClick
+ */
 export const Button = ({
   variant = "flat",
   color = "blue",
   type = "button",
   label,
   disabled = false,
+  width,
   onClick,
 }: ButtonProps) => {
-  const baseClass = "w-full py-2 px-4 rounded-md font-medium";
+  const baseClass = "py-2 px-4 rounded-md font-medium";
 
   const colorBaseClasses = {
     blue: {
@@ -65,7 +76,7 @@ export const Button = ({
 
   const disabledClass = disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer";
 
-  const className = `${baseClass} ${getVariantClass()} ${disabledClass}`;
+  const className = `${baseClass} ${getVariantClass()} ${disabledClass} ${width}`;
 
   return (
     <button type={type} onClick={onClick} className={className} disabled={disabled}>

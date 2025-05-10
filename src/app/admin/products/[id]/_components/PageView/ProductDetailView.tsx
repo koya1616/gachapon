@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import Link from "next/link";
 import type { ProductDetailLogicResult } from "../../page";
@@ -125,13 +126,7 @@ const ProductDetailView = ({
             </div>
 
             <div className="flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => setIsEditing(false)}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-md mr-2 cursor-pointer"
-              >
-                キャンセル
-              </button>
+              <Button label="キャンセル" onClick={() => setIsEditing(false)} color="gray" />
               <button
                 type="submit"
                 disabled={updateStatus.loading}

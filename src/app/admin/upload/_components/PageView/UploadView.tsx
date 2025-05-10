@@ -34,7 +34,7 @@ const UploadView = memo(
                 />
               </div>
 
-              {uploading ? <Loading /> : <Button type="submit" label="アップロード" disabled={!file} />}
+              {uploading ? <Loading /> : <Button type="submit" label="アップロード" disabled={!file} width="w-full" />}
             </form>
 
             {fileError && <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-md">{fileError}</div>}
@@ -90,7 +90,7 @@ const UploadView = memo(
 
               {formError && <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">{formError}</div>}
 
-              {isSubmitting ? <Loading /> : <Button type="submit" label="送信する" />}
+              {isSubmitting ? <Loading /> : <Button type="submit" label="送信する" width="w-full" />}
             </form>
           </>
         )}
