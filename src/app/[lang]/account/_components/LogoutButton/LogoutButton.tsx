@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang } from "@/types";
@@ -13,16 +14,7 @@ interface LogoutButtonLogic {
 
 export const LogoutButtonView = ({ l, isLoading, handleLogout }: LogoutButtonLogic) => {
   if (isLoading) return <Loading />;
-  return (
-    <button
-      type="button"
-      className="block w-auto text-left px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer ml-auto md:mt-0 relative"
-      onClick={handleLogout}
-      disabled={isLoading}
-    >
-      {t(l).account.logout}
-    </button>
-  );
+  return <Button label={t(l).account.logout} onClick={handleLogout} />;
 };
 
 const useLogoutButton = (lang: Lang): LogoutButtonLogic => {
