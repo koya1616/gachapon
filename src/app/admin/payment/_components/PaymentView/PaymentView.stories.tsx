@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import PaymentView from "./PaymentView";
 
 const meta: Meta<typeof PaymentView> = {
-  title: "Admin/Payment/Page",
+  title: "Admin/Payment",
   component: PaymentView,
   parameters: {
     layout: "fullscreen",
