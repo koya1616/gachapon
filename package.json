@@ -12,7 +12,8 @@
     "test": "docker compose up -d && TZ=UTC DATABASE_URL=postgresql://postgres:password@localhost:5432/test_db DEBUG=vitest:* vitest",
     "ci": "TZ=UTC DATABASE_URL=postgresql://postgres:password@localhost:5432/test_db vitest",
     "sb": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.806.0",
