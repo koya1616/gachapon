@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { LANGS } from "@/const/language";
 import type { Meta, StoryObj } from "@storybook/react";
 import { LanguageDropdownView } from "./LanguageDropdown";
@@ -17,15 +18,13 @@ type Story = StoryObj<typeof meta>;
 const dropdownOptions = (
   <div className="absolute top-full left-0 mt-1 w-20 bg-white border border-neutral-200 rounded-md shadow-lg z-10">
     {LANGS.map((langOption) => (
-      <button
-        type="button"
+      <Button
         key={langOption}
-        className={`w-full text-left px-3 py-2 text-sm cursor-pointer ${
-          "en" === langOption ? "bg-blue-600 text-white" : "text-black hover:bg-gray-100"
-        }`}
-      >
-        {langOption.toUpperCase()}
-      </button>
+        label={langOption.toUpperCase()}
+        color={"en" === langOption ? "blue" : "gray"}
+        width="w-full"
+        variant={"en" === langOption ? "tonal" : "text"}
+      />
     ))}
   </div>
 );

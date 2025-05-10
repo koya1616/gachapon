@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import { LANGS } from "@/const/language";
 import type { Lang } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
@@ -68,16 +69,14 @@ const useLanguageDropdown = (lang: Lang): LanguageDropdownLogic => {
       isDropdownOpen && (
         <div className="absolute top-full left-0 mt-1 w-20 bg-white border border-neutral-200 rounded-md shadow-lg z-10">
           {LANGS.map((langOption) => (
-            <button
-              type="button"
+            <Button
               key={langOption}
+              label={langOption.toUpperCase()}
               onClick={() => handleLanguageChange(langOption as Lang)}
-              className={`w-full text-left px-3 py-2 text-sm cursor-pointer ${
-                lang === langOption ? "bg-blue-600 text-white" : "text-black hover:bg-gray-100"
-              }`}
-            >
-              {langOption.toUpperCase()}
-            </button>
+              color={lang === langOption ? "blue" : "gray"}
+              width="w-full"
+              variant={lang === langOption ? "tonal" : "text"}
+            />
           ))}
         </div>
       ),
