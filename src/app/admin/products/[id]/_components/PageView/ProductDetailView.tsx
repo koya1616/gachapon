@@ -48,17 +48,7 @@ const ProductDetailView = ({
         <Link href="/admin/products" className="text-blue-500 hover:text-blue-700">
           ← 商品一覧に戻る
         </Link>
-        <div>
-          {!isEditing && (
-            <button
-              type="button"
-              onClick={() => setIsEditing(true)}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md mr-2 cursor-pointer"
-            >
-              編集
-            </button>
-          )}
-        </div>
+        {!isEditing && <Button label="編集" onClick={() => setIsEditing(true)} />}
       </div>
 
       {updateStatus.success && (
