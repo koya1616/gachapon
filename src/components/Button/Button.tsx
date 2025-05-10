@@ -9,11 +9,11 @@ type ButtonProps = {
 };
 
 /**
- * @param variant - variant (flat, tonal, outlined, text)
- * @param color - color (blue, gray, red, green)
- * @param type - type (button, submit)
+ * @param variant - variant (flat, tonal, outlined, text) - default: "flat"
+ * @param color - color (blue, gray, red, green) - default: "blue"
+ * @param type - type (button, submit) - default: "button"
  * @param label - 表示させるテキスト
- * @param disabled
+ * @param disabled - default: false
  * @param width - Tailwindをそのまま反映
  * @param onClick
  */
