@@ -31,31 +31,24 @@ const CartItem = memo(
           </div>
         </div>
         <div className="flex items-center">
-          <button
-            type="button"
-            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-            className="px-2 py-1 border rounded-l cursor-pointer"
-          >
-            -
-          </button>
-          <span className="px-4 py-1 border-t border-b">{item.quantity}</span>
-          <button
-            type="button"
+          <Button label="-" onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} variant="text" color="gray" />
+          <span className="px-4 py-2" data-testid="item-quantity">
+            {item.quantity}
+          </span>
+          <Button
+            label="+"
             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
             disabled={isMaxQuantity}
-            className={`px-2 py-1 border rounded-r ${
-              isMaxQuantity ? "bg-gray-200 text-gray-400 cursor-not-allowed" : "cursor-pointer"
-            }`}
-          >
-            +
-          </button>
-          <button
+            variant="text"
+            color="gray"
+          />
+          <Button
+            label={t(lang).cart.remove}
             type="button"
             onClick={() => onRemove(item.id)}
-            className="ml-4 text-red-500 hover:text-red-700 cursor-pointer"
-          >
-            {t(lang).cart.remove}
-          </button>
+            variant="text"
+            color="red"
+          />
         </div>
       </div>
     );

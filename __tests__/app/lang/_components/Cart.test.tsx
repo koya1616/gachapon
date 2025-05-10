@@ -78,7 +78,7 @@ describe("Cartコンポーネント", () => {
     expect(screen.getByText("商品2")).toBeDefined();
     expect(screen.getByText("¥2,000")).toBeDefined();
 
-    const quantityElements = screen.getAllByText(/\d+/).filter((el) => el.className.includes("border-t"));
+    const quantityElements = screen.getAllByTestId("item-quantity");
     expect(quantityElements[0].textContent).toBe("2");
     expect(quantityElements[1].textContent).toBe("1");
 
@@ -119,7 +119,7 @@ describe("Cartコンポーネント", () => {
 
     const incrementButtons = screen.getAllByText("+");
     expect(incrementButtons[0].getAttribute("disabled")).toBe("");
-    expect(incrementButtons[0].classList.contains("bg-gray-200")).toBe(true);
+    expect(incrementButtons[0].classList.contains("opacity-50")).toBe(true);
     expect(incrementButtons[0].classList.contains("cursor-not-allowed")).toBe(true);
 
     expect(incrementButtons[1].getAttribute("disabled")).toBe(null);

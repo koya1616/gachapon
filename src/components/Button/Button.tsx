@@ -44,11 +44,11 @@ export const Button = ({
       border: "border-gray-700",
     },
     red: {
-      base: "text-red-700",
+      base: "text-red-500",
       bg: "bg-red-500 hover:bg-red-600 text-white",
       tonal: "bg-red-500/20 hover:bg-red-500/30",
       hover: "hover:text-red-800",
-      border: "border-red-700",
+      border: "border-red-500",
     },
     green: {
       base: "text-green-700",
