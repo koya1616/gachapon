@@ -5,20 +5,22 @@ import { CloseIcon, MenuIcon } from "@/components/Icons";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+export interface AdminHeaderLogic {
+  pathname: string;
+  isMenuOpen: boolean;
+  navigationLinks: Array<{ name: string; path: string }>;
+  toggleMenu: () => void;
+  handleMobileNavClick: () => void;
+}
 
-const AdminHeader = () => {
-  const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navigationLinks = [
-    { name: "ダッシュボード", path: "/admin/top" },
-    { name: "商品一覧", path: "/admin/products" },
-    { name: "抽選管理", path: "/admin/lotteries" },
-    { name: "決済管理", path: "/admin/payment" },
-    { name: "アップロード", path: "/admin/upload" },
-  ];
-
+const AdminHeaderView = ({
+  pathname,
+  isMenuOpen,
+  navigationLinks,
+  toggleMenu,
+  handleMobileNavClick,
+}: AdminHeaderLogic) => {
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +59,7 @@ const AdminHeader = () => {
                 type="button"
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
                 aria-expanded="false"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={toggleMenu}
               >
                 <span className="sr-only">メニューを開く</span>
                 <MenuIcon className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`} />
@@ -79,7 +81,7 @@ const AdminHeader = () => {
                   ? "border-blue-500 text-blue-700 bg-blue-50"
                   : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
               }`}
-              onClick={() => setIsMenuOpen(false)}
+              onClick={handleMobileNavClick}
             >
               {link.name}
             </Link>
@@ -88,6 +90,38 @@ const AdminHeader = () => {
       </div>
     </header>
   );
+};
+
+const useAdminHeader = (): AdminHeaderLogic => {
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigationLinks = useMemo(
+    () => [
+      { name: "ダッシュボード", path: "/admin/top" },
+      { name: "商品一覧", path: "/admin/products" },
+      { name: "抽選管理", path: "/admin/lotteries" },
+      { name: "決済管理", path: "/admin/payment" },
+      { name: "アップロード", path: "/admin/upload" },
+    ],
+    [],
+  );
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
+  }, []);
+
+  const handleMobileNavClick = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
+
+  return {
+    pathname,
+    isMenuOpen,
+    navigationLinks,
+    toggleMenu,
+    handleMobileNavClick,
+  };
 };
 
 const isLoginPage = (pathname: string) => {
@@ -105,7 +139,7 @@ const RootLayout = ({
   return (
     <html lang="ja">
       <body className="min-h-screen bg-gray-50">
-        {showHeader && <AdminHeader />}
+        {showHeader && <AdminHeaderView {...useAdminHeader()} />}
         <main>{children}</main>
       </body>
     </html>
