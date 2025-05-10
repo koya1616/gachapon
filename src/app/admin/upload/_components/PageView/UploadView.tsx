@@ -9,7 +9,6 @@ const UploadView = memo(
     file,
     uploading,
     fileError,
-    fileButtonClassName,
     handleFileChange,
     handleFileSubmit,
     formData,
@@ -35,13 +34,7 @@ const UploadView = memo(
                 />
               </div>
 
-              {uploading ? (
-                <Loading />
-              ) : (
-                <button type="submit" disabled={!file} className={fileButtonClassName}>
-                  アップロード
-                </button>
-              )}
+              {uploading ? <Loading /> : <Button type="submit" label="アップロード" disabled={!file} />}
             </form>
 
             {fileError && <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-md">{fileError}</div>}

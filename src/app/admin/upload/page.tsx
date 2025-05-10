@@ -2,7 +2,7 @@
 
 import type { Product } from "@/types";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import UploadView from "./_components/PageView";
 
 type UploadResult = {
@@ -15,7 +15,6 @@ export interface UploadLogic {
   file: File | null;
   uploading: boolean;
   fileError: string | null;
-  fileButtonClassName: string;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFileSubmit: (e: { preventDefault: () => void }) => Promise<void>;
   formData: Omit<Product, "id" | "quantity">;
@@ -100,12 +99,6 @@ const useUpload = (): UploadLogic => {
     [file, handleUploadSuccess],
   );
 
-  const fileButtonClassName = useMemo(
-    () =>
-      `w-full py-2 px-4 rounded-md font-medium text-white ${uploading || !file ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`,
-    [uploading, file],
-  );
-
   const handleProductChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -149,7 +142,6 @@ const useUpload = (): UploadLogic => {
     file,
     uploading,
     fileError,
-    fileButtonClassName,
     handleFileChange,
     handleFileSubmit,
     formData,
