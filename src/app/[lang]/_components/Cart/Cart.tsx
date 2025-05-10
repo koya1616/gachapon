@@ -83,9 +83,7 @@ export const CartView = ({
       <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">{t(lang).cart.title}</h2>
-          <button type="button" onClick={onClose} className="text-gray-500 hover:text-gray-700 cursor-pointer">
-            ✕
-          </button>
+          <Button type="button" label="✕" onClick={onClose} color="gray" variant="text" />
         </div>
 
         {cart.length === 0 ? (
