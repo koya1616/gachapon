@@ -3,11 +3,19 @@ type ButtonProps = {
   color?: "blue" | "gray" | "red" | "green";
   type?: "button" | "submit";
   label: string;
+  disabled?: boolean;
   onClick?: () => void;
 };
 
-export const Button = ({ variant = "flat", color = "blue", type = "button", label, onClick }: ButtonProps) => {
-  const baseClass = "w-full py-2 px-4 rounded-md font-medium cursor-pointer";
+export const Button = ({
+  variant = "flat",
+  color = "blue",
+  type = "button",
+  label,
+  disabled = false,
+  onClick,
+}: ButtonProps) => {
+  const baseClass = "w-full py-2 px-4 rounded-md font-medium";
 
   const colorBaseClasses = {
     blue: {
@@ -55,10 +63,12 @@ export const Button = ({ variant = "flat", color = "blue", type = "button", labe
     }
   };
 
-  const className = `${baseClass} ${getVariantClass()}`;
+  const disabledClass = disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer";
+
+  const className = `${baseClass} ${getVariantClass()} ${disabledClass}`;
 
   return (
-    <button type={type} onClick={onClick} className={className}>
+    <button type={type} onClick={onClick} className={className} disabled={disabled}>
       {label}
     </button>
   );

@@ -21,6 +21,9 @@ const meta = {
       control: { type: "select" },
       options: ["button", "submit"],
     },
+    disabled: {
+      control: { type: "boolean" },
+    },
     label: {
       control: "text",
     },
