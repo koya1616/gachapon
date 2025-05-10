@@ -1,3 +1,4 @@
+import Badge from "@/components/Badge";
 import Loading from "@/components/Loading";
 import Link from "next/link";
 import type { ProductsListLogic } from "../../page";
@@ -58,17 +59,10 @@ const ProductsListView = ({ products, loading }: ProductsListLogic) => {
                   <td className="py-3 px-4 border-b font-medium">{product.name}</td>
                   <td className="py-3 px-4 border-b">¥{product.price.toLocaleString()}</td>
                   <td className="py-3 px-4 border-b">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        product.stock_quantity > 10
-                          ? "bg-green-100 text-green-800"
-                          : product.stock_quantity > 0
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {product.stock_quantity}
-                    </span>
+                    <Badge
+                      text={`${product.stock_quantity}`}
+                      color={product.stock_quantity > 10 ? "green" : product.stock_quantity > 0 ? "yellow" : "red"}
+                    />
                   </td>
                   <td className="py-3 px-4 border-b">
                     <Link
