@@ -2,6 +2,8 @@ import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsSt
 import type { Address, Order, PaymentProduct, Product, Shipment } from "@/types";
 import { type LotteryEvent, LotteryStatus } from "@/types";
 
+export const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
+
 export const mockLotteryEvents: LotteryEvent[] = [
   {
     id: 1,

@@ -1,3 +1,4 @@
+import { mockFile } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import UploadView from "./UploadView";
 
@@ -12,8 +13,6 @@ const meta: Meta<typeof UploadView> = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
 
 const baseProps = {
   file: null,
