@@ -28,7 +28,7 @@ const IconDisplay = () => {
 };
 
 const meta = {
-  title: "Icons/Collection",
+  title: "Icons",
   component: IconDisplay,
   tags: ["autodocs"],
 } satisfies Meta<typeof IconDisplay>;
