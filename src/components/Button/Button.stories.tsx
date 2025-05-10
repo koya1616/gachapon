@@ -24,6 +24,10 @@ const meta = {
     disabled: {
       control: { type: "boolean" },
     },
+    fontSize: {
+      control: { type: "select" },
+      options: ["text-base", "text-lg", "text-xl"],
+    },
     label: {
       control: "text",
     },

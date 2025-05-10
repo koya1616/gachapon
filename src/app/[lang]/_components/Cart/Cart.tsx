@@ -31,7 +31,13 @@ const CartItem = memo(
           </div>
         </div>
         <div className="flex items-center">
-          <Button label="-" onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} variant="text" color="gray" />
+          <Button
+            label="-"
+            onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            variant="text"
+            color="gray"
+            fontSize="text-xl"
+          />
           <span className="px-4 py-2" data-testid="item-quantity">
             {item.quantity}
           </span>
@@ -41,6 +47,7 @@ const CartItem = memo(
             disabled={isMaxQuantity}
             variant="text"
             color="gray"
+            fontSize="text-xl"
           />
           <Button
             label={t(lang).cart.remove}

@@ -5,6 +5,7 @@ type ButtonProps = {
   label: string;
   disabled?: boolean;
   width?: string;
+  fontSize?: "text-base" | "text-lg" | "text-xl";
   onClick?: () => void;
 };
 
@@ -15,6 +16,7 @@ type ButtonProps = {
  * @param label - 表示させるテキスト
  * @param disabled - default: false
  * @param width - Tailwindをそのまま反映
+ * @param fontSize - フォントサイズ (text-base, text-lg, text-xl) - default: "text-base"
  * @param onClick
  */
 export const Button = ({
@@ -24,6 +26,7 @@ export const Button = ({
   label,
   disabled = false,
   width,
+  fontSize = "text-base",
   onClick,
 }: ButtonProps) => {
   const baseClass = "py-2 px-4 rounded-md font-medium";
@@ -76,7 +79,7 @@ export const Button = ({
 
   const disabledClass = disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer";
 
-  const className = `${baseClass} ${getVariantClass()} ${disabledClass} ${width}`;
+  const className = `${baseClass} ${getVariantClass()} ${disabledClass} ${width} ${fontSize}`;
 
   return (
     <button type={type} onClick={onClick} className={className} disabled={disabled}>
