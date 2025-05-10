@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import Skeleton from "@/components/Skeleton";
 import { COUNTRY_LIST } from "@/const/country";
@@ -107,20 +108,8 @@ export const AddressFormView = ({
               <Loading />
             ) : (
               <>
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="bg-gray-300 text-gray-800 px-6 py-2 rounded hover:bg-gray-400 cursor-pointer"
-                >
-                  {t(l).form.clear}
-                </button>
-                <button
-                  type="submit"
-                  className="relative bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer"
-                  disabled={isLoading}
-                >
-                  {t(l).form.register}
-                </button>
+                <Button label={t(l).form.clear} type="button" onClick={handleClear} variant="tonal" color="gray" />
+                <Button label={t(l).form.register} type="submit" disabled={isLoading} />
               </>
             )}
           </div>
