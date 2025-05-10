@@ -16,13 +16,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     l: "ja",
-    isShow: false,
-  },
-};
-
-export const WithoutSocialButtons: Story = {
-  args: {
-    l: "ja",
-    isShow: true,
   },
 };

@@ -8,11 +8,10 @@ import LoginPageView from "./_components/PageView";
 
 export interface LoginPageLogic {
   l: Lang;
-  isShow: boolean;
 }
 
 const useLoginPage = async (l: Lang): Promise<LoginPageLogic> => {
-  return { l, isShow: true };
+  return { l };
 };
 
 const LoginPage = async ({
