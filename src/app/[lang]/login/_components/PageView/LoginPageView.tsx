@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { GoogleIcon } from "@/components/Icons";
 import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
@@ -9,15 +10,12 @@ const LoginPageView = ({ l }: LoginPageLogic) => {
     <div className="flex items-center justify-center min-h-100 w-[95%] mx-auto py-10">
       <div className="w-full max-w-md p-8 bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-gray-100 transition-all hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]">
         <div className="space-y-4">
-          <Link href="/api/auth/google" className="block">
-            <button
-              type="button"
-              className="flex items-center justify-center w-full py-3 px-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-lg transition duration-300 shadow-sm cursor-pointer"
-            >
+          <Button variant="outlined" color="gray" width="w-full">
+            <Link href="/api/auth/google" className="flex items-center justify-center">
               <GoogleIcon />
               {t(l).login.google}
-            </button>
-          </Link>
+            </Link>
+          </Button>
         </div>
 
         <div className="text-center mt-6">
