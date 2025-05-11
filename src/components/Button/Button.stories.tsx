@@ -1,8 +1,62 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
 
-const Buttons = () => {
-  return (
+const meta = {
+  title: "Components/Button",
+  component: Button,
+  tags: ["autodocs"],
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    label: "Button",
+    variant: "flat",
+    color: "blue",
+  },
+  argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["flat", "tonal", "outlined", "text"],
+      description: "ボタンの表示スタイル",
+    },
+    color: {
+      control: { type: "select" },
+      options: ["blue", "gray", "red", "green"],
+      description: "ボタンの色",
+    },
+    label: {
+      control: { type: "text" },
+      description: "ボタンに表示するテキスト",
+    },
+    disabled: {
+      control: { type: "boolean" },
+      description: "無効状態",
+    },
+    width: {
+      control: { type: "text" },
+      description: "ボタンの幅（Tailwind CSSのクラス）",
+    },
+    fontSize: {
+      control: { type: "select" },
+      options: ["text-base", "text-lg", "text-xl"],
+      description: "フォントサイズ",
+    },
+  },
+  parameters: {
+    layout: "centered",
+  },
+};
+
+export const AllVariants: Story = {
+  args: {
+    label: "Button",
+    variant: "flat",
+    color: "blue",
+  },
+  render: () => (
     <div className="space-y-8 max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-sm">
       <section>
         <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Button Variants</h2>
@@ -49,18 +103,5 @@ const Buttons = () => {
         </div>
       </section>
     </div>
-  );
-};
-
-const meta = {
-  title: "Components/Button",
-  component: Buttons,
-  tags: ["autodocs"],
-} satisfies Meta<typeof Buttons>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {},
+  ),
 };
