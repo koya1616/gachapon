@@ -1,4 +1,4 @@
-import { createLotteryProducts } from "@/lib/db";
+import { createLotteryProducts, getLotteryProductsByLotteryId } from "@/lib/db";
 import type { LotteryProduct } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
@@ -35,6 +35,31 @@ describe("LotteryProductsテーブルに関するテスト", () => {
       ]);
       expect(result).toHaveLength(1);
       expect(result[0].id).not.toBeNull();
+      expect(result[0].lottery_event_id).toBe(lotteryEvent.id);
+      expect(result[0].product_id).toBe(product.id);
+      expect(result[0].quantity_available).toBe(10);
+      expect(Object.keys(result[0])).toEqual(expect.arrayContaining(expectedKeys));
+    });
+  });
+
+  describe("getLotteryProductsByLotteryId", () => {
+    beforeAll(async () => {
+      lotteryEvent = await setUpLotteryEvent();
+      product = await setUpProduct();
+    });
+
+    it("抽選商品レコードが取得できること", async () => {
+      const lotteryProducts = await createLotteryProducts([
+        {
+          lottery_event_id: lotteryEvent.id,
+          product_id: product.id,
+          quantity_available: 10,
+        },
+      ]);
+
+      const result = await getLotteryProductsByLotteryId(lotteryEvent.id);
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe(lotteryProducts[0].id);
       expect(result[0].lottery_event_id).toBe(lotteryEvent.id);
       expect(result[0].product_id).toBe(product.id);
       expect(result[0].quantity_available).toBe(10);
