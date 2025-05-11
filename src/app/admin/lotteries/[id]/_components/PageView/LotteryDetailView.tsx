@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
@@ -367,47 +368,12 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
             <p className="text-sm text-gray-500 mt-1">ID: {lottery.id}</p>
           </div>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
-            <Link
-              href="/admin/lotteries"
-              className="flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-                role="img"
-              >
-                <title>戻るアイコン</title>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              戻る
-            </Link>
-            <Link
-              href={`/admin/lotteries/${lottery.id}/edit`}
-              className="flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-                role="img"
-              >
-                <title>編集アイコン</title>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
-              編集
-            </Link>
+            <Button variant="outlined" color="gray">
+              <Link href="/admin/lotteries">戻る</Link>
+            </Button>
+            <Button variant="outlined">
+              <Link href={`/admin/lotteries/${lottery.id}/edit`}>編集</Link>
+            </Button>
           </div>
         </div>
       </div>
