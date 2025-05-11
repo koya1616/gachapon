@@ -20,7 +20,9 @@ const translations = {
       google: "Sign in with Google",
       twitter: "Sign in with Twitter",
       not_have_account: "Don't have an account?",
+      have_account: "Already have an account?",
       sign_up: "Sign Up",
+      login: "Login",
     },
     signup: {
       google: "Sign up with Google",
@@ -112,7 +114,9 @@ const translations = {
       google: "Googleでログイン",
       twitter: "Twitterでログイン",
       not_have_account: "アカウントをお持ちでないですか？",
+      have_account: "アカウントをお持ちですか？",
       sign_up: "新規登録",
+      login: "ログイン",
     },
     signup: {
       google: "Googleで登録",
@@ -204,7 +208,9 @@ const translations = {
       google: "Google登录",
       twitter: "Twitter登录",
       not_have_account: "您没有账户吗？",
+      have_account: "您有账户吗？",
       sign_up: "注册",
+      login: "登录",
     },
     signup: {
       google: "Google注册",

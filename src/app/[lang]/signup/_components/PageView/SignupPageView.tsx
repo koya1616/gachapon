@@ -1,5 +1,6 @@
 import { GoogleIcon } from "@/components/Icons";
 import { useTranslation as t } from "@/lib/translations";
+import Link from "next/link";
 import type { SignupPageLogic } from "../../page";
 
 const SignupPageView = ({ l }: SignupPageLogic) => {
@@ -20,10 +21,10 @@ const SignupPageView = ({ l }: SignupPageLogic) => {
 
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
-            {t(l).login.not_have_account}
-            <a href="/ja/login" className="text-blue-600 hover:text-blue-500 font-medium ml-1">
-              {t(l).login.sign_up}
-            </a>
+            {t(l).login.have_account}
+            <Link href="/ja/login" className="text-blue-600 hover:text-blue-500 font-medium ml-1">
+              {t(l).login.login}
+            </Link>
           </p>
         </div>
       </div>
