@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { GoogleIcon } from "@/components/Icons";
 import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
@@ -8,15 +9,12 @@ const SignupPageView = ({ l }: SignupPageLogic) => {
     <div className="flex items-center justify-center min-h-100 w-[95%] mx-auto">
       <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
         <div className="space-y-4">
-          <Link href="/api/auth/google">
-            <button
-              type="button"
-              className="flex items-center justify-center w-full py-3 px-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-lg transition duration-300 shadow-sm cursor-pointer"
-            >
+          <Button variant="outlined" color="gray" width="w-full">
+            <Link href="/api/auth/google" className="flex items-center justify-center">
               <GoogleIcon />
               {t(l).signup.google}
-            </button>
-          </Link>
+            </Link>
+          </Button>
         </div>
 
         <div className="text-center mt-6">
