@@ -1,6 +1,4 @@
 type ButtonProps = {
-  children?: React.ReactNode;
-  label?: string;
   variant?: "flat" | "tonal" | "outlined" | "text";
   color?: "blue" | "gray" | "red" | "green";
   type?: "button" | "submit";
@@ -8,7 +6,16 @@ type ButtonProps = {
   width?: string;
   fontSize?: "text-base" | "text-lg" | "text-xl";
   onClick?: () => void;
-};
+} & (
+  | {
+      children: React.ReactNode;
+      label?: string;
+    }
+  | {
+      children?: undefined;
+      label: string;
+    }
+);
 
 /**
  * @param variant - variant (flat, tonal, outlined, text) - default: "flat"
