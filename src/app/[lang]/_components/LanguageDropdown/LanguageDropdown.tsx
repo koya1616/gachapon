@@ -25,7 +25,7 @@ export const LanguageDropdownView = ({
       <button
         type="button"
         onClick={toggleDropdown}
-        className="flex items-center justify-between p-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
+        className="flex items-center w-11 h-11 justify-between p-2 text-sm border border-neutral-200 rounded-md bg-white cursor-pointer"
       >
         <LanguageIcon />
       </button>
