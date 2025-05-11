@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import { CloseIcon, MenuIcon } from "@/components/Icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,16 +45,10 @@ const AdminHeaderView = ({
 
           <div className="flex items-center">
             <div className="flex md:hidden ml-4">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-                aria-expanded="false"
-                onClick={toggleMenu}
-              >
-                <span className="sr-only">メニューを開く</span>
+              <Button color="gray" variant="text" onClick={toggleMenu}>
                 <MenuIcon className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`} />
                 <CloseIcon className={`${isMenuOpen ? "block" : "hidden"} h-6 w-6`} />
-              </button>
+              </Button>
             </div>
           </div>
         </div>

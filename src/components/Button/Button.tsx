@@ -1,8 +1,9 @@
 type ButtonProps = {
+  children?: React.ReactNode;
+  label?: string;
   variant?: "flat" | "tonal" | "outlined" | "text";
   color?: "blue" | "gray" | "red" | "green";
   type?: "button" | "submit";
-  label: string;
   disabled?: boolean;
   width?: string;
   fontSize?: "text-base" | "text-lg" | "text-xl";
@@ -20,6 +21,7 @@ type ButtonProps = {
  * @param onClick
  */
 export const Button = ({
+  children,
   variant = "flat",
   color = "blue",
   type = "button",
@@ -83,7 +85,7 @@ export const Button = ({
 
   return (
     <button type={type} onClick={onClick} className={className} disabled={disabled}>
-      {label}
+      {children || label}
     </button>
   );
 };
