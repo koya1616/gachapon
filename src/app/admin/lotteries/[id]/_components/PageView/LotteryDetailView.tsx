@@ -21,18 +21,6 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
         <p className="text-red-600">{error}</p>
         <div className="mt-4">
           <Link href="/admin/lotteries" className="text-blue-600 hover:underline flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-              role="img"
-            >
-              <title>戻るアイコン</title>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
             抽選一覧に戻る
           </Link>
         </div>
@@ -43,40 +31,9 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
   if (!lottery) {
     return (
       <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-        <div className="text-gray-400 mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 mx-auto"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            role="img"
-          >
-            <title>情報なしアイコン</title>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1}
-              d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </div>
         <h2 className="text-xl font-medium text-gray-700">抽選情報が見つかりませんでした。</h2>
         <div className="mt-4">
           <Link href="/admin/lotteries" className="text-blue-600 hover:underline inline-flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-              role="img"
-            >
-              <title>戻るアイコン</title>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
             抽選一覧に戻る
           </Link>
         </div>
