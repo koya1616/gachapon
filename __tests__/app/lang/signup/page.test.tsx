@@ -46,7 +46,7 @@ describe("SignupPage", () => {
     const googleAuthLink = screen.getByRole("link", { name: "Googleで登録" });
     expect(googleAuthLink.getAttribute("href")).toBe("/api/auth/google");
 
-    const loginLink = screen.getByRole("link", { name: "新規登録" });
+    const loginLink = screen.getByRole("link", { name: "ログイン" });
     expect(loginLink.getAttribute("href")).toBe("/ja/login");
   });
 
@@ -56,7 +56,7 @@ describe("SignupPage", () => {
     const googleButton = screen.getByRole("button");
     expect(googleButton).toBeDefined();
 
-    const accountText = screen.getByText(/Don't have an account/i);
+    const accountText = screen.getByText(/Already have an account/i);
     expect(accountText).toBeDefined();
   });
 

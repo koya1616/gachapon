@@ -8,7 +8,7 @@ const SignupPageView = ({ l }: SignupPageLogic) => {
     <div className="flex items-center justify-center min-h-100 w-[95%] mx-auto">
       <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
         <div className="space-y-4">
-          <a href="/api/auth/google">
+          <Link href="/api/auth/google">
             <button
               type="button"
               className="flex items-center justify-center w-full py-3 px-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 rounded-lg transition duration-300 shadow-sm cursor-pointer"
@@ -16,7 +16,7 @@ const SignupPageView = ({ l }: SignupPageLogic) => {
               <GoogleIcon />
               {t(l).signup.google}
             </button>
-          </a>
+          </Link>
         </div>
 
         <div className="text-center mt-6">
