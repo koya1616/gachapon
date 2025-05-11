@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { MenuIcon } from "../Icons";
 import { Button } from "./Button";
 
 const meta = {
@@ -59,7 +60,7 @@ export const AllVariants: Story = {
   render: () => (
     <div className="space-y-8 max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-sm">
       <section>
-        <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Button Variants</h2>
+        <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Variants</h2>
         <div className="flex flex-wrap gap-4">
           <Button variant="flat" color="blue" label="Flat" />
           <Button variant="tonal" color="blue" label="Tonal" />
@@ -69,7 +70,7 @@ export const AllVariants: Story = {
       </section>
 
       <section>
-        <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Color Options</h2>
+        <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">Color</h2>
         <div className="flex flex-wrap gap-4">
           <Button variant="flat" color="blue" label="Blue" />
           <Button variant="flat" color="red" label="Red" />
@@ -100,6 +101,15 @@ export const AllVariants: Story = {
           <Button variant="flat" color="blue" label="Default" />
           <Button variant="flat" color="blue" label="Large" fontSize="text-lg" />
           <Button variant="flat" color="blue" label="Extra Large" fontSize="text-xl" />
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-medium text-gray-800 mb-4 pb-2 border-b">With Icon</h2>
+        <div className="flex flex-wrap gap-4">
+          <Button variant="text" color="gray">
+            <MenuIcon />
+          </Button>
         </div>
       </section>
     </div>
