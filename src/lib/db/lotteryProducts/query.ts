@@ -27,7 +27,7 @@ export const createLotteryProducts = async (
   return await executeQuery<LotteryProduct>(query, values);
 };
 
-export const getLotteryProductsByLotteryId = async (lotteryEventId: number): Promise<LotteryProduct[]> => {
+export const getLotteryProductsByLotteryEventId = async (lotteryEventId: number): Promise<LotteryProduct[]> => {
   const query = "SELECT * FROM lottery_products WHERE lottery_event_id = $1";
   const params = [lotteryEventId];
   return executeQuery<LotteryProduct>(query, params);

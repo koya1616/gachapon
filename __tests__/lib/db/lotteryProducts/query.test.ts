@@ -1,4 +1,4 @@
-import { createLotteryProducts, getLotteryProductsByLotteryId } from "@/lib/db";
+import { createLotteryProducts, getLotteryProductsByLotteryEventId } from "@/lib/db";
 import type { LotteryProduct } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
@@ -42,7 +42,7 @@ describe("LotteryProductsテーブルに関するテスト", () => {
     });
   });
 
-  describe("getLotteryProductsByLotteryId", () => {
+  describe("getLotteryProductsByLotteryEventId", () => {
     beforeAll(async () => {
       lotteryEvent = await setUpLotteryEvent();
       product = await setUpProduct();
@@ -57,7 +57,7 @@ describe("LotteryProductsテーブルに関するテスト", () => {
         },
       ]);
 
-      const result = await getLotteryProductsByLotteryId(lotteryEvent.id);
+      const result = await getLotteryProductsByLotteryEventId(lotteryEvent.id);
       expect(result).toHaveLength(1);
       expect(result[0].id).toBe(lotteryProducts[0].id);
       expect(result[0].lottery_event_id).toBe(lotteryEvent.id);
