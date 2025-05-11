@@ -1,4 +1,5 @@
 import AddressForm from "@/app/[lang]/_components/AddressForm";
+import { Button } from "@/components/Button";
 import { CreditCardIcon, PayPayIcon } from "@/components/Icons";
 import Loading from "@/components/Loading";
 import { useTranslation as t } from "@/lib/translations";
@@ -124,14 +125,7 @@ const CheckoutPageView = ({
         {isLoading ? (
           <Loading />
         ) : (
-          <button
-            type="button"
-            onClick={handlePayment}
-            disabled={!paymentMethod || cart.length === 0}
-            className={`px-6 py-3 ${!paymentMethod || cart.length === 0 ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"} text-white rounded-md transition-colors`}
-          >
-            {t(l).checkout.pay}
-          </button>
+          <Button label={t(l).checkout.pay} onClick={handlePayment} disabled={!paymentMethod || cart.length === 0} />
         )}
       </div>
     </div>
