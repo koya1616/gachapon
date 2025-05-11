@@ -37,7 +37,7 @@ describe("GET /api/lottery/[id]", () => {
     mockCookieStore("invalid_token");
 
     const request = new NextRequest("http://localhost:3000/api/lottery/1");
-    const response = await GET(request, { params: { id: "1" } });
+    const response = await GET(request);
 
     expect(response.status).toBe(401);
     const data = await response.json();
@@ -73,7 +73,7 @@ describe("GET /api/lottery/[id]", () => {
     vi.mocked(getLotteryProductsByLotteryEventId).mockResolvedValue(mockLotteryProducts);
 
     const request = new NextRequest("http://localhost:3000/api/lottery/1");
-    const response = await GET(request, { params: { id: "1" } });
+    const response = await GET(request);
 
     expect(response.status).toBe(200);
     const data = await response.json();
@@ -95,7 +95,7 @@ describe("GET /api/lottery/[id]", () => {
     vi.mocked(findLotteryEventById).mockResolvedValue(null);
 
     const request = new NextRequest("http://localhost:3000/api/lottery/999");
-    const response = await GET(request, { params: { id: "999" } });
+    const response = await GET(request);
 
     expect(response.status).toBe(404);
     const data = await response.json();
@@ -110,7 +110,7 @@ describe("GET /api/lottery/[id]", () => {
     vi.mocked(findLotteryEventById).mockRejectedValue(new Error("DB error"));
 
     const request = new NextRequest("http://localhost:3000/api/lottery/1");
-    const response = await GET(request, { params: { id: "1" } });
+    const response = await GET(request);
 
     expect(response.status).toBe(500);
     const data = await response.json();

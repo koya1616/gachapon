@@ -1,9 +1,9 @@
 import { ADMIN_CODE } from "@/const/cookies";
 import { findLotteryEventById, getLotteryProductsByLotteryEventId } from "@/lib/db";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
   const adminToken = cookieStore.get(ADMIN_CODE)?.value || "";
   if (adminToken !== process.env.ADMIN_CODE) {
@@ -11,14 +11,14 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 
   try {
-    const id = Number(params.id);
+    const id = request.nextUrl.pathname.split("/").pop();
 
-    const lottery = await findLotteryEventById(id);
+    const lottery = await findLotteryEventById(Number(id));
     if (!lottery) {
       return NextResponse.json({ message: "Not found", data: null }, { status: 404 });
     }
 
-    const products = await getLotteryProductsByLotteryEventId(id);
+    const products = await getLotteryProductsByLotteryEventId(Number(id));
 
     return NextResponse.json({ message: "OK", data: { lottery, products } }, { status: 200 });
   } catch (error) {
