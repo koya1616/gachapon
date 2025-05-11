@@ -127,26 +127,7 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
   const renderInfoTab = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 transition-all hover:shadow-md">
-        <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            role="img"
-          >
-            <title>基本情報アイコン</title>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          基本情報
-        </h2>
+        <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">基本情報</h2>
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100">
             <span className="text-gray-600 font-medium mb-1 sm:mb-0">ステータス</span>
@@ -176,21 +157,6 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 transition-all hover:shadow-md">
-        <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            role="img"
-          >
-            <title>詳細説明アイコン</title>
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
-          詳細説明
-        </h2>
         <div className="bg-gray-50 p-4 rounded-md">
           <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
             {lottery.description || "説明はありません。"}
@@ -202,26 +168,7 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
 
   const renderProductsTab = () => (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-      <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 mr-2 text-blue-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-          role="img"
-        >
-          <title>商品アイコン</title>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-          />
-        </svg>
-        商品一覧
-      </h2>
+      <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">商品一覧</h2>
       {products && products.length > 0 ? (
         <div className="overflow-x-auto rounded-lg border border-gray-200">
           <table className="min-w-full divide-y divide-gray-200">
@@ -245,35 +192,9 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {product.image ? (
-                      <div className="relative h-16 w-16 rounded-md overflow-hidden">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="object-cover w-full h-full rounded-md transition-transform hover:scale-110"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-16 w-16 bg-gray-100 flex items-center justify-center rounded-md">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-8 text-gray-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          aria-hidden="true"
-                          role="img"
-                        >
-                          <title>画像なしアイコン</title>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1}
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                      </div>
-                    )}
+                    <div className="relative h-16 w-16 rounded-md overflow-hidden">
+                      <img src={product.image} alt={product.name} className="object-cover h-16 w-16 rounded-md" />
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                     ¥{product.price?.toLocaleString()}
@@ -285,23 +206,6 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
         </div>
       ) : (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12 mx-auto text-gray-400 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            role="img"
-          >
-            <title>商品なしアイコン</title>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1}
-              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-            />
-          </svg>
           <p className="text-gray-500 font-medium">商品はありません。</p>
         </div>
       )}
@@ -310,46 +214,8 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
 
   const renderEntriesTab = () => (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-      <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 mr-2 text-blue-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-          role="img"
-        >
-          <title>応募状況アイコン</title>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-        </svg>
-        応募状況
-      </h2>
+      <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">応募状況</h2>
       <div className="text-center py-16 bg-gray-50 rounded-lg">
-        <div className="inline-block p-6 bg-blue-50 rounded-full mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-            role="img"
-          >
-            <title>開発中アイコン</title>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-            />
-          </svg>
-        </div>
         <p className="text-gray-600 font-medium">この機能は現在開発中です。</p>
         <p className="text-gray-500 text-sm mt-2">今後のアップデートでご利用いただけるようになります。</p>
       </div>

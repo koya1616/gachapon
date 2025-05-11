@@ -37,6 +37,16 @@ export const Default: Story = {
   },
 };
 
+export const EmptyProduct: Story = {
+  args: {
+    lottery: mockLotteryEvents[0],
+    products: [],
+    loading: false,
+    error: null,
+    getStatusBadge,
+  },
+};
+
 export const Loading: Story = {
   args: {
     lottery: null,
