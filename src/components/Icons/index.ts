@@ -6,3 +6,8 @@ export * from "./GoogleIcon";
 export * from "./PayPayIcon";
 export * from "./CreditCardIcon";
 export * from "./LanguageIcon";
+export * from "./FacebookIcon";
+export * from "./InstagramIcon";
+export * from "./TikTokIcon";
+export * from "./TwitterIcon";
+export * from "./YouTubeIcon";

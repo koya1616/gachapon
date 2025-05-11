@@ -4,10 +4,15 @@ import {
   CartIcon,
   CloseIcon,
   CreditCardIcon,
+  FacebookIcon,
   GoogleIcon,
+  InstagramIcon,
   LanguageIcon,
   MenuIcon,
   PayPayIcon,
+  TikTokIcon,
+  TwitterIcon,
+  YouTubeIcon,
 } from "./index";
 
 const Icons = () => {
@@ -20,6 +25,11 @@ const Icons = () => {
       <GoogleIcon />
       <CreditCardIcon />
       <LanguageIcon />
+      <FacebookIcon />
+      <InstagramIcon />
+      <TikTokIcon />
+      <TwitterIcon />
+      <YouTubeIcon />
       <PayPayIcon />
     </div>
   );
