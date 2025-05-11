@@ -1,5 +1,5 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Address, Order, PaymentProduct, Product, Shipment } from "@/types";
+import type { Address, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
 import { type LotteryEvent, LotteryStatus } from "@/types";
 
 export const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
@@ -48,6 +48,23 @@ export const mockLotteryEvents: LotteryEvent[] = [
     payment_deadline_at: new Date("2025-01-10T23:59:59").getTime(),
     created_at: new Date("2024-11-15T11:00:00").getTime(),
     status: LotteryStatus.CANCELLED,
+  },
+];
+
+export const LotteryProducts: LotteryProduct[] = [
+  {
+    id: 1,
+    lottery_event_id: 1,
+    product_id: 1,
+    quantity_available: 10,
+    created_at: new Date("2025-04-01T00:00:00").getTime(),
+  },
+  {
+    id: 2,
+    lottery_event_id: 1,
+    product_id: 2,
+    quantity_available: 5,
+    created_at: new Date("2025-04-02T00:00:00").getTime(),
   },
 ];
 
