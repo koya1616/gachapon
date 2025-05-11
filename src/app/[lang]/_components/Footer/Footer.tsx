@@ -1,4 +1,5 @@
 import { FacebookIcon, InstagramIcon, TikTokIcon, TwitterIcon, YouTubeIcon } from "@/components/Icons";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
           </div>
           <ul className="flex flex-wrap justify-center gap-6">
             <li>
-              <a
+              <Link
                 href="https://www.instagram.com/gasyaponpon"
                 className="flex items-center hover:text-blue-400 transition-colors duration-300"
                 target="_blank"
@@ -18,10 +19,10 @@ const Footer = () => {
               >
                 <FacebookIcon />
                 <span className="hidden">Facebook</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://www.instagram.com/gasyaponpon"
                 className="flex items-center hover:text-pink-500 transition-colors duration-300"
                 target="_blank"
@@ -29,10 +30,10 @@ const Footer = () => {
               >
                 <InstagramIcon />
                 <span className="hidden">Instagram</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://www.instagram.com/gasyaponpon"
                 className="flex items-center hover:text-red-500 transition-colors duration-300"
                 target="_blank"
@@ -40,10 +41,10 @@ const Footer = () => {
               >
                 <YouTubeIcon />
                 <span className="hidden">YouTube</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://www.instagram.com/gasyaponpon"
                 className="flex items-center hover:text-teal-400 transition-colors duration-300"
                 target="_blank"
@@ -51,10 +52,10 @@ const Footer = () => {
               >
                 <TikTokIcon />
                 <span className="hidden">TikTok</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="https://www.instagram.com/gasyaponpon"
                 className="flex items-center hover:text-blue-500 transition-colors duration-300"
                 target="_blank"
@@ -62,7 +63,7 @@ const Footer = () => {
               >
                 <TwitterIcon />
                 <span className="hidden">Twitter</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
