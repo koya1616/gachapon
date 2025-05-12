@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/date";
+import { formatDate, formatDateForInput } from "@/lib/date";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("formatDate", () => {
@@ -30,5 +30,17 @@ describe("formatDate", () => {
 
     const formattedDate = formatDate(1672531199000);
     expect(formattedDate).toBe("2022/12/31 23:59:59");
+  });
+});
+
+describe("formatDateForInput", () => {
+  it("正しいフォーマットで日付を返すこと", () => {
+    const formattedDate = formatDateForInput(new Date("2023-01-01T00:00:00Z"));
+    expect(formattedDate).toBe("2023-01-01T00:00");
+  });
+
+  it("無効な日付を渡すと、NaN-NaN-NaNTNaN:NaNを返すこと", () => {
+    const formattedDate = formatDateForInput(new Date("invalid"));
+    expect(formattedDate).toBe("NaN-NaN-NaNTNaN:NaN");
   });
 });
