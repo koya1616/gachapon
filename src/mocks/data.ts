@@ -51,7 +51,7 @@ export const mockLotteryEvents: LotteryEvent[] = [
   },
 ];
 
-export const LotteryProducts: LotteryProduct[] = [
+export const mockLotteryProducts: LotteryProduct[] = [
   {
     id: 1,
     lottery_event_id: 1,

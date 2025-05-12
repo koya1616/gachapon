@@ -1,5 +1,5 @@
 import Badge from "@/components/Badge";
-import { LotteryProducts, mockLotteryEvents, mockProducts } from "@/mocks/data";
+import { mockLotteryEvents, mockProducts } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import LotteryDetailView from "./LotteryDetailView";
