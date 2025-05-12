@@ -32,3 +32,12 @@ export const getLotteryProductsByLotteryEventId = async (lotteryEventId: number)
   const params = [lotteryEventId];
   return executeQuery<LotteryProduct>(query, params);
 };
+
+export const deleteLotteryProductsByLotteryEventIdAndProductId = async (
+  lotteryEventId: number,
+  productId: number,
+): Promise<void> => {
+  const query = "DELETE FROM lottery_products WHERE lottery_event_id = $1 AND product_id = $2";
+  const params = [lotteryEventId, productId];
+  await executeQuery(query, params);
+};

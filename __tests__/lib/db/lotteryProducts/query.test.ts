@@ -1,4 +1,8 @@
-import { createLotteryProducts, getLotteryProductsByLotteryEventId } from "@/lib/db";
+import {
+  createLotteryProducts,
+  deleteLotteryProductsByLotteryEventIdAndProductId,
+  getLotteryProductsByLotteryEventId,
+} from "@/lib/db";
 import type { LotteryProduct } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
@@ -64,6 +68,28 @@ describe("LotteryProductsテーブルに関するテスト", () => {
       expect(result[0].product_id).toBe(product.id);
       expect(result[0].quantity_available).toBe(10);
       expect(Object.keys(result[0])).toEqual(expect.arrayContaining(expectedKeys));
+    });
+  });
+
+  describe("deleteLotteryProductsByLotteryEventIdAndProductId", () => {
+    beforeAll(async () => {
+      lotteryEvent = await setUpLotteryEvent();
+      product = await setUpProduct();
+    });
+
+    it("抽選商品レコードが削除できること", async () => {
+      await createLotteryProducts([
+        {
+          lottery_event_id: lotteryEvent.id,
+          product_id: product.id,
+          quantity_available: 10,
+        },
+      ]);
+
+      await deleteLotteryProductsByLotteryEventIdAndProductId(lotteryEvent.id, product.id);
+
+      const result = await getLotteryProductsByLotteryEventId(lotteryEvent.id);
+      expect(result).toHaveLength(0);
     });
   });
 });

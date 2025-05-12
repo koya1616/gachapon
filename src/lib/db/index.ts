@@ -63,7 +63,11 @@ export {
   createPaypayPayment,
 } from "./paypayPayments/query";
 export { createPaypayPaymentWithTransaction } from "./paypayPayments/transaction";
-export { createLotteryProducts, getLotteryProductsByLotteryEventId } from "./lotteryProducts/query";
+export {
+  createLotteryProducts,
+  getLotteryProductsByLotteryEventId,
+  deleteLotteryProductsByLotteryEventIdAndProductId,
+} from "./lotteryProducts/query";
 export {
   createLotteryProductsWithTransaction,
   updateLotteryProductsWithTransaction,
