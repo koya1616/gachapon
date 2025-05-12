@@ -66,7 +66,7 @@ export { createPaypayPaymentWithTransaction } from "./paypayPayments/transaction
 export { createLotteryProducts, getLotteryProductsByLotteryEventId } from "./lotteryProducts/query";
 export { createLotteryProductsWithTransaction } from "./lotteryProducts/transaction";
 export { createLotteryEventWithTransaction } from "./lotteryEvents/transaction";
-export { getLotteryEvents, createLotteryEvent, findLotteryEventById } from "./lotteryEvents/query";
+export { getLotteryEvents, createLotteryEvent, findLotteryEventById, updateLotteryEvent } from "./lotteryEvents/query";
 export { createPaymentProductsWithTransaction } from "./paymentProducts/transaction";
 export {
   getPaymentProductsByPaypayPaymentId,

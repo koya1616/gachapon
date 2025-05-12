@@ -37,3 +37,57 @@ export const findLotteryEventById = async (id: number): Promise<LotteryEvent | n
   const result = await executeQuery<LotteryEvent>(query, params);
   return result.length > 0 ? result[0] : null;
 };
+
+export const updateLotteryEvent = async (
+  id: number,
+  lotteryEvent: Partial<Omit<LotteryEvent, "id" | "created_at">>,
+): Promise<LotteryEvent | null> => {
+  const updateFields: string[] = [];
+  const values: (string | number | Date | null)[] = [];
+  let paramIndex = 1;
+
+  if (lotteryEvent.name !== undefined) {
+    updateFields.push(`name = $${paramIndex++}`);
+    values.push(lotteryEvent.name);
+  }
+  if (lotteryEvent.description !== undefined) {
+    updateFields.push(`description = $${paramIndex++}`);
+    values.push(lotteryEvent.description);
+  }
+  if (lotteryEvent.start_at !== undefined) {
+    updateFields.push(`start_at = $${paramIndex++}`);
+    values.push(lotteryEvent.start_at);
+  }
+  if (lotteryEvent.end_at !== undefined) {
+    updateFields.push(`end_at = $${paramIndex++}`);
+    values.push(lotteryEvent.end_at);
+  }
+  if (lotteryEvent.result_at !== undefined) {
+    updateFields.push(`result_at = $${paramIndex++}`);
+    values.push(lotteryEvent.result_at);
+  }
+  if (lotteryEvent.payment_deadline_at !== undefined) {
+    updateFields.push(`payment_deadline_at = $${paramIndex++}`);
+    values.push(lotteryEvent.payment_deadline_at);
+  }
+  if (lotteryEvent.status !== undefined) {
+    updateFields.push(`status = $${paramIndex++}`);
+    values.push(lotteryEvent.status);
+  }
+
+  if (updateFields.length === 0) {
+    return findLotteryEventById(id);
+  }
+
+  values.push(id);
+
+  const query = `
+    UPDATE lottery_events
+    SET ${updateFields.join(", ")}
+    WHERE id = $${paramIndex}
+    RETURNING *
+  `;
+
+  const result = await executeQuery<LotteryEvent>(query, values);
+  return result.length > 0 ? result[0] : null;
+};

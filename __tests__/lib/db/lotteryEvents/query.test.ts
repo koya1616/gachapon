@@ -1,4 +1,4 @@
-import { createLotteryEvent, findLotteryEventById, getLotteryEvents } from "@/lib/db";
+import { createLotteryEvent, findLotteryEventById, getLotteryEvents, updateLotteryEvent } from "@/lib/db";
 import type { LotteryEvent } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
@@ -77,6 +77,37 @@ describe("LotteryEventsテーブルに関するテスト", () => {
     it("存在しないIDの場合はnullを返すこと", async () => {
       const result = await findLotteryEventById(999999);
       expect(result).toBeNull();
+    });
+  });
+
+  describe("updateLotteryEvent", () => {
+    let createdLotteryEvent: LotteryEvent;
+
+    beforeAll(async () => {
+      createdLotteryEvent = await setUpLotteryEvent();
+    });
+
+    it("抽選イベントを更新できること", async () => {
+      const updatedLotteryEvent = {
+        name: "新しい名前",
+        description: "新しい説明",
+        start_at: Date.now(),
+        end_at: Date.now() + 86400000,
+        result_at: Date.now() + 172800000,
+        payment_deadline_at: Date.now() + 259200000,
+        status: 2,
+      };
+      const result = await updateLotteryEvent(createdLotteryEvent.id, updatedLotteryEvent);
+      expect(result).not.toBeNull();
+      expect(result?.id).toBe(createdLotteryEvent.id);
+      expect(result?.name).toBe(updatedLotteryEvent.name);
+      expect(result?.description).toBe(updatedLotteryEvent.description);
+      expect(result?.start_at).toBe(String(updatedLotteryEvent.start_at));
+      expect(result?.end_at).toBe(String(updatedLotteryEvent.end_at));
+      expect(result?.result_at).toBe(String(updatedLotteryEvent.result_at));
+      expect(result?.payment_deadline_at).toBe(String(updatedLotteryEvent.payment_deadline_at));
+      expect(result?.status).toBe(updatedLotteryEvent.status);
+      expect(Object.keys(result as LotteryEvent)).toEqual(expect.arrayContaining(typeKeys));
     });
   });
 });
