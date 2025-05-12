@@ -8,7 +8,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import EditLotteryView from "./_components/PageView/EditLotteryView";
 
-// TODO: productを削除するAPIを叩く
 export interface EditLotteryLogic {
   formData: {
     id: number;
