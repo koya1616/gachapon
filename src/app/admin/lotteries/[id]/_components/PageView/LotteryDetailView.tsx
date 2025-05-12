@@ -9,9 +9,8 @@ import { useState } from "react";
 import type { LotteryDetailLogic } from "../../page";
 
 const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }: LotteryDetailLogic) => {
-  type tabType = "基本情報" | "商品一覧" | "応募状況";
-  const tab = ["基本情報", "商品一覧", "応募状況"];
-  const [activeTab, setActiveTab] = useState<tabType>("基本情報");
+  const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("基本情報");
 
   if (loading) {
     return <Loading />;
@@ -44,7 +43,7 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
     );
   }
 
-  const renderTabs = () => <Tab items={tab} activeTab={activeTab} onClick={(name) => setActiveTab(name as tabType)} />;
+  const renderTabs = () => <Tab items={TABS} activeTab={activeTab} onClick={(name) => setActiveTab(name)} />;
 
   const renderInfoTab = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
