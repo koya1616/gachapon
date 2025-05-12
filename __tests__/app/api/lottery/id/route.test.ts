@@ -2,13 +2,16 @@ import { DELETE, GET, PUT, type UpdateLotteryEventApiRequestBody } from "@/app/a
 import { ADMIN_CODE } from "@/const/cookies";
 import {
   deleteLotteryProductsByLotteryEventIdAndProductId,
+  executeTransaction,
   findLotteryEventById,
   getLotteryProductsByLotteryEventId,
   updateLotteryEvent,
+  updateLotteryProductsWithTransaction,
 } from "@/lib/db";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+import type { Client } from "pg";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/headers", () => ({
@@ -20,6 +23,8 @@ vi.mock("@/lib/db", () => ({
   getLotteryProductsByLotteryEventId: vi.fn(),
   updateLotteryEvent: vi.fn(),
   deleteLotteryProductsByLotteryEventIdAndProductId: vi.fn(),
+  executeTransaction: vi.fn(),
+  updateLotteryProductsWithTransaction: vi.fn(),
 }));
 
 const mockCookieStore = (adminToken: string) => {
@@ -137,6 +142,7 @@ describe("PUT /api/lottery/[id]", () => {
       resultAt: now + 172800000,
       paymentDeadlineAt: now + 259200000,
       status: 1,
+      products: [{ productId: 1, quantity: 10 }],
       ...overrides,
     };
   };
@@ -292,10 +298,23 @@ describe("PUT /api/lottery/[id]", () => {
 
     vi.mocked(findLotteryEventById).mockResolvedValue(mockLotteryEvent);
     vi.mocked(updateLotteryEvent).mockResolvedValue(updatedLotteryEvent);
+    vi.mocked(updateLotteryProductsWithTransaction).mockResolvedValue([
+      {
+        product_id: 1,
+        quantity_available: 10,
+        id: 0,
+        lottery_event_id: 0,
+        created_at: 0,
+      },
+    ]);
+    vi.mocked(executeTransaction).mockImplementation(async (callback) => {
+      return await callback({} as unknown as Client);
+    });
 
     const requestBody = {
       name: "更新された抽選名",
       status: 1,
+      products: [{ productId: 1, quantity: 10 }],
     };
 
     const request = createTestRequest(1, requestBody);

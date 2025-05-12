@@ -8,12 +8,17 @@ import type { EditLotteryLogic } from "../../page";
 
 const EditLotteryView = ({
   formData,
+  products,
+  selectedProducts,
   loading,
   error,
   success,
   handleInputChange,
   handleDateInputChange,
   handleSubmit,
+  handleAddProduct,
+  handleRemoveProduct,
+  handleProductChange,
 }: EditLotteryLogic) => {
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
@@ -151,6 +156,67 @@ const EditLotteryView = ({
             <option value={LotteryStatus.FINISHED}>終了</option>
             <option value={LotteryStatus.CANCELLED}>キャンセル</option>
           </select>
+        </div>
+
+        <div className="pt-8">
+          <div>
+            <h3 className="text-lg leading-6 font-medium text-gray-900">抽選商品</h3>
+            <p className="mt-1 text-sm text-gray-500">抽選に含める商品を選択してください。</p>
+          </div>
+
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="mt-6">
+              {selectedProducts.map((product, index) => (
+                <div
+                  key={product.id}
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 p-4 border border-gray-200 rounded-lg"
+                >
+                  <div className="w-full sm:w-1/2">
+                    <label htmlFor={`product-${index}`} className="block text-sm font-medium text-gray-700 mb-1">
+                      商品 <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id={`product-${index}`}
+                      value={product.productId}
+                      onChange={(e) => handleProductChange(index, "productId", Number.parseInt(e.target.value))}
+                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                    >
+                      <option value={0}>商品を選択してください</option>
+                      {products.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} - ¥{p.price.toLocaleString()}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="w-full sm:w-1/4">
+                    <label htmlFor={`quantity-${index}`} className="block text-sm font-medium text-gray-700 mb-1">
+                      数量 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      id={`quantity-${index}`}
+                      value={product.quantity}
+                      onChange={(e) => handleProductChange(index, "quantity", Number.parseInt(e.target.value))}
+                      min="1"
+                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                    />
+                  </div>
+
+                  <div className="w-full sm:w-1/4 flex items-end justify-end mt-4 sm:mt-0">
+                    <Button label="削除" onClick={() => handleRemoveProduct(index)} color="red" variant="tonal" />
+                  </div>
+                </div>
+              ))}
+
+              <div className="text-center">
+                <Button label="商品を追加" onClick={handleAddProduct} color="blue" />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex justify-end">{loading ? <Loading /> : <Button label="更新する" type="submit" />}</div>

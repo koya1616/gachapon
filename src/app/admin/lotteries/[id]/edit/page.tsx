@@ -3,12 +3,12 @@
 import type { UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/route";
 import Badge from "@/components/Badge/Badge";
 import { formatDateForInput } from "@/lib/date";
-import { type LotteryEvent, type LotteryProduct, LotteryStatus } from "@/types";
+import { type LotteryEvent, type LotteryProduct, LotteryStatus, type Product } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import EditLotteryView from "./_components/PageView/EditLotteryView";
 
-// TODO: productを編集する関数とAPIを対応する。productを削除するAPIを叩く
+// TODO: productを削除するAPIを叩く
 export interface EditLotteryLogic {
   formData: {
     id: number;
@@ -20,6 +20,8 @@ export interface EditLotteryLogic {
     paymentDeadlineAt: string;
     status: LotteryStatus;
   };
+  products: Product[];
+  selectedProducts: Array<{ id: string; productId: number; quantity: number }>;
   loading: boolean;
   error: string | null;
   success: boolean;
@@ -27,6 +29,9 @@ export interface EditLotteryLogic {
   handleDateInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
   getStatusBadge: (status: number) => React.ReactNode;
+  handleAddProduct: () => void;
+  handleRemoveProduct: (index: number) => void;
+  handleProductChange: (index: number, field: string, value: number) => void;
 }
 
 const useEditLottery = (): EditLotteryLogic => {
@@ -35,6 +40,10 @@ const useEditLottery = (): EditLotteryLogic => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Array<{ id: string; productId: number; quantity: number }>>(
+    [],
+  );
 
   const [formData, setFormData] = useState({
     id: 0,
@@ -77,6 +86,34 @@ const useEditLottery = (): EditLotteryLogic => {
         paymentDeadlineAt: formatDateForInput(new Date(Number(data.lottery.payment_deadline_at))),
         status: data.lottery.status,
       });
+
+      const productResponse = await fetch("/api/product");
+      if (!productResponse.ok) {
+        throw new Error("商品データの取得に失敗しました。");
+      }
+
+      const { data: allProducts }: { data: Product[] } = await productResponse.json();
+      setProducts(allProducts);
+
+      if (data.products && data.products.length > 0) {
+        const enhancedProducts = data.products.map((lotteryProduct: LotteryProduct) => {
+          const productDetails = allProducts.find((p) => p.id === lotteryProduct.product_id);
+          if (!productDetails) {
+            throw new Error("商品データが見つかりません。");
+          }
+          return { ...productDetails, quantity: lotteryProduct.quantity_available };
+        });
+
+        setSelectedProducts(
+          enhancedProducts.map((product) => ({
+            id: crypto.randomUUID(),
+            productId: product.id,
+            quantity: product.quantity,
+          })),
+        );
+      } else {
+        setSelectedProducts([]);
+      }
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -144,6 +181,10 @@ const useEditLottery = (): EditLotteryLogic => {
           resultAt: new Date(formData.resultAt).getTime(),
           paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
           status: formData.status,
+          products: selectedProducts.map((product) => ({
+            productId: product.productId,
+            quantity: product.quantity,
+          })),
         };
 
         const response = await fetch(`/api/lottery/${params.id}`, {
@@ -170,7 +211,7 @@ const useEditLottery = (): EditLotteryLogic => {
         setLoading(false);
       }
     },
-    [formData, params.id, router],
+    [formData, params.id, router, selectedProducts],
   );
 
   const getStatusBadge = useCallback((status: number) => {
@@ -188,8 +229,33 @@ const useEditLottery = (): EditLotteryLogic => {
     }
   }, []);
 
+  const handleAddProduct = useCallback(() => {
+    setSelectedProducts((prev) => [...prev, { id: crypto.randomUUID(), productId: 0, quantity: 1 }]);
+  }, []);
+
+  const handleRemoveProduct = useCallback((index: number) => {
+    setSelectedProducts((prev) => {
+      const updatedProducts = [...prev];
+      updatedProducts.splice(index, 1);
+      return updatedProducts;
+    });
+  }, []);
+
+  const handleProductChange = useCallback((index: number, field: string, value: number) => {
+    setSelectedProducts((prev) => {
+      const updatedProducts = [...prev];
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        [field]: value,
+      };
+      return updatedProducts;
+    });
+  }, []);
+
   return {
     formData,
+    products,
+    selectedProducts,
     loading,
     error,
     success,
@@ -197,6 +263,9 @@ const useEditLottery = (): EditLotteryLogic => {
     handleDateInputChange,
     handleSubmit,
     getStatusBadge,
+    handleAddProduct,
+    handleRemoveProduct,
+    handleProductChange,
   };
 };
 

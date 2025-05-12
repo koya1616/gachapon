@@ -1,5 +1,6 @@
 import Badge from "@/components/Badge";
 import { formatDateForInput } from "@/lib/date";
+import { mockProducts } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import EditLotteryView from "./EditLotteryView";
@@ -43,6 +44,12 @@ export const Default: Story = {
       paymentDeadlineAt: formatDateForInput(new Date()),
       status: LotteryStatus.DRAFT,
     },
+    products: mockProducts,
+    selectedProducts: mockProducts.map((product) => ({
+      id: String(product.id),
+      productId: product.id,
+      quantity: 1,
+    })),
     loading: false,
     error: null,
     success: false,
@@ -53,6 +60,15 @@ export const Default: Story = {
       console.log("Form submitted");
     },
     getStatusBadge,
+    handleAddProduct: () => {
+      console.log("Add product");
+    },
+    handleRemoveProduct: (index: number) => {
+      console.log("Remove product at index", index);
+    },
+    handleProductChange: (index: number, field: string, value: number) => {
+      console.log(`Product at index ${index} changed: ${field} = ${value}`);
+    },
   },
 };
 

@@ -1,9 +1,11 @@
 import { ADMIN_CODE } from "@/const/cookies";
 import {
   deleteLotteryProductsByLotteryEventIdAndProductId,
+  executeTransaction,
   findLotteryEventById,
   getLotteryProductsByLotteryEventId,
   updateLotteryEvent,
+  updateLotteryProductsWithTransaction,
 } from "@/lib/db";
 import type { LotteryStatus } from "@/types";
 import { cookies } from "next/headers";
@@ -41,6 +43,10 @@ export type UpdateLotteryEventApiRequestBody = {
   resultAt?: number;
   paymentDeadlineAt?: number;
   status?: LotteryStatus;
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
 };
 
 export async function PUT(request: NextRequest) {
@@ -74,6 +80,14 @@ export async function PUT(request: NextRequest) {
     if (!updatedLottery) {
       return NextResponse.json({ message: "Bad request", data: null }, { status: 400 });
     }
+
+    await executeTransaction(async (client) => {
+      const lotteryProductsData = data.products.map((product) => ({
+        product_id: product.productId,
+        quantity_available: product.quantity,
+      }));
+      await updateLotteryProductsWithTransaction(client, Number(id), lotteryProductsData);
+    });
 
     return NextResponse.json({ message: "OK", data: updatedLottery }, { status: 200 });
   } catch (error) {
