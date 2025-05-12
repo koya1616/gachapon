@@ -1,6 +1,6 @@
 "use client";
 
-import type { UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/route";
+import type { DeleteLotteryEventApiRequestBody, UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/route";
 import Badge from "@/components/Badge/Badge";
 import { formatDateForInput } from "@/lib/date";
 import { type LotteryEvent, type LotteryProduct, LotteryStatus, type Product } from "@/types";
@@ -233,13 +233,32 @@ const useEditLottery = (): EditLotteryLogic => {
     setSelectedProducts((prev) => [...prev, { id: crypto.randomUUID(), productId: 0, quantity: 1 }]);
   }, []);
 
-  const handleRemoveProduct = useCallback((index: number) => {
-    setSelectedProducts((prev) => {
-      const updatedProducts = [...prev];
-      updatedProducts.splice(index, 1);
-      return updatedProducts;
-    });
-  }, []);
+  const handleRemoveProduct = useCallback(
+    async (index: number) => {
+      setLoading(true);
+      setError(null);
+      setSuccess(false);
+      const body: DeleteLotteryEventApiRequestBody = {
+        productId: Number(selectedProducts[index].productId),
+      };
+
+      await fetch(`/api/lottery/${params.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      setSelectedProducts((prev) => {
+        const updatedProducts = [...prev];
+        updatedProducts.splice(index, 1);
+        return updatedProducts;
+      });
+      setLoading(false);
+    },
+    [params.id, selectedProducts],
+  );
 
   const handleProductChange = useCallback((index: number, field: string, value: number) => {
     setSelectedProducts((prev) => {
