@@ -1,4 +1,4 @@
-import { PUT, type UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/update/route";
+import { PUT, type UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/route";
 import { ADMIN_CODE } from "@/const/cookies";
 import { findLotteryEventById, updateLotteryEvent } from "@/lib/db";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
@@ -38,7 +38,7 @@ const createTestRequestBody = (overrides = {}): UpdateLotteryEventApiRequestBody
 };
 
 const createTestRequest = (id: number, body: UpdateLotteryEventApiRequestBody) => {
-  return new NextRequest(`http://localhost:3000/api/lottery/${id}/update`, {
+  return new NextRequest(`http://localhost:3000/api/lottery/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const createTestRequest = (id: number, body: UpdateLotteryEventApiRequestBody) =
   });
 };
 
-describe("PUT /api/lottery/[id]/update", () => {
+describe("PUT /api/lottery/[id]", () => {
   beforeAll(() => {
     vi.resetAllMocks();
     process.env.ADMIN_CODE = "test_admin_code";

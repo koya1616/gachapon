@@ -1,6 +1,6 @@
 "use client";
 
-import type { UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/update/route";
+import type { UpdateLotteryEventApiRequestBody } from "@/app/api/lottery/[id]/route";
 import Badge from "@/components/Badge/Badge";
 import { formatDateForInput } from "@/lib/date";
 import { type LotteryEvent, type LotteryProduct, LotteryStatus } from "@/types";
@@ -146,7 +146,7 @@ const useEditLottery = (): EditLotteryLogic => {
           status: formData.status,
         };
 
-        const response = await fetch(`/api/lottery/${params.id}/update`, {
+        const response = await fetch(`/api/lottery/${params.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
