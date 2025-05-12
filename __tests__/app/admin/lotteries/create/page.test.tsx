@@ -208,7 +208,7 @@ describe("抽選イベント作成ページ", () => {
           json: () => Promise.resolve({ data: mockProducts }),
         } as Response);
       }
-      if (url === "/api/lottery/create") {
+      if (url === "/api/lottery") {
         return Promise.resolve({
           ok: true,
           status: 200,
@@ -259,7 +259,7 @@ describe("抽選イベント作成ページ", () => {
           json: () => Promise.resolve({ data: mockProducts }),
         } as Response);
       }
-      if (url === "/api/lottery/create") {
+      if (url === "/api/lottery") {
         return Promise.resolve({
           ok: false,
           status: 500,
@@ -303,7 +303,7 @@ describe("抽選イベント作成ページ", () => {
           json: () => Promise.resolve({ data: mockProducts }),
         } as Response);
       }
-      if (url === "/api/lottery/create") {
+      if (url === "/api/lottery") {
         return Promise.resolve({
           ok: false,
           status: 401,
@@ -347,7 +347,7 @@ describe("抽選イベント作成ページ", () => {
           json: () => Promise.resolve({ data: mockProducts }),
         } as Response);
       }
-      if (url === "/api/lottery/create") {
+      if (url === "/api/lottery") {
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve({

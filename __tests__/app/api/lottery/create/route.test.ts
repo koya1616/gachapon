@@ -1,4 +1,4 @@
-import { type CreateLotteryEventApiRequestBody, POST } from "@/app/api/lottery/create/route";
+import { type CreateLotteryEventApiRequestBody, POST } from "@/app/api/lottery/route";
 import { ADMIN_CODE } from "@/const/cookies";
 import { createLotteryEventWithTransaction, createLotteryProductsWithTransaction, executeTransaction } from "@/lib/db";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
@@ -47,7 +47,7 @@ const createTestRequestBody = (overrides = {}): CreateLotteryEventApiRequestBody
 };
 
 const createTestRequest = (body: CreateLotteryEventApiRequestBody) => {
-  return new NextRequest("http://localhost/api/lottery/create", {
+  return new NextRequest("http://localhost/api/lottery", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const createTestRequest = (body: CreateLotteryEventApiRequestBody) => {
   });
 };
 
-describe("POST /api/lottery/create", () => {
+describe("POST /api/lottery", () => {
   beforeAll(() => {
     vi.resetAllMocks();
     process.env.ADMIN_CODE = "test_admin_code";

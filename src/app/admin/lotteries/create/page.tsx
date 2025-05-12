@@ -1,6 +1,6 @@
 "use client";
 
-import type { CreateLotteryEventApiRequestBody } from "@/app/api/lottery/create/route";
+import type { CreateLotteryEventApiRequestBody } from "@/app/api/lottery/route";
 import { LotteryStatus, type Product } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -158,7 +158,7 @@ const useCreateLottery = (): CreateLotteryLogic => {
           paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
           products: selectedProducts.map(({ productId, quantity }) => ({ productId, quantity })),
         };
-        const response = await fetch("/api/lottery/create", {
+        const response = await fetch("/api/lottery", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
