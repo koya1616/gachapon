@@ -24,8 +24,8 @@ export const Default: Story = {
       endAt: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
       paymentDeadlineAt: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
       status: AuctionStatus.DRAFT,
-      isSealed: false,
-      allowBidRetraction: false,
+      isSealed: true,
+      allowBidRetraction: true,
       needPaymentInfo: true,
       productId: 0,
     },
@@ -91,36 +91,6 @@ export const ActiveStatus: Story = {
     formData: {
       ...WithProductSelected.args.formData,
       status: AuctionStatus.ACTIVE,
-    },
-  },
-};
-
-export const SealedAuction: Story = {
-  args: {
-    ...WithProductSelected.args,
-    formData: {
-      ...WithProductSelected.args.formData,
-      isSealed: true,
-    },
-  },
-};
-
-export const AllowBidRetraction: Story = {
-  args: {
-    ...WithProductSelected.args,
-    formData: {
-      ...WithProductSelected.args.formData,
-      allowBidRetraction: true,
-    },
-  },
-};
-
-export const NoPaymentInfoRequired: Story = {
-  args: {
-    ...WithProductSelected.args,
-    formData: {
-      ...WithProductSelected.args.formData,
-      needPaymentInfo: false,
     },
   },
 };
