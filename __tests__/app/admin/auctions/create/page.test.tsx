@@ -172,7 +172,9 @@ describe("オークション作成ページ", () => {
     fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(screen.getByText("オークションが正常に作成されました")).toBeDefined();
+      expect(
+        screen.getByText("オークションが正常に作成されました。オークション一覧ページにリダイレクトします..."),
+      ).toBeDefined();
     });
 
     await waitFor(
