@@ -6,12 +6,16 @@ import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import LotteryDetailView from "./_components/PageView";
 
+const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
 export interface LotteryDetailLogic {
   lottery: LotteryEvent | null;
   products: Product[];
   loading: boolean;
   error: string | null;
   getStatusBadge: (status: number) => React.ReactNode;
+  tabs: readonly (typeof TABS)[number][];
+  activeTab: (typeof TABS)[number];
+  setActiveTab: (tab: (typeof TABS)[number]) => void;
 }
 
 const useLotteryDetail = (): LotteryDetailLogic => {
@@ -21,6 +25,7 @@ const useLotteryDetail = (): LotteryDetailLogic => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("基本情報");
 
   const fetchLotteryDetail = useCallback(async () => {
     if (!params.id) return;
@@ -95,6 +100,9 @@ const useLotteryDetail = (): LotteryDetailLogic => {
     loading,
     error,
     getStatusBadge,
+    tabs: TABS,
+    activeTab,
+    setActiveTab: (tab: (typeof TABS)[number]) => setActiveTab(tab),
   };
 };
 

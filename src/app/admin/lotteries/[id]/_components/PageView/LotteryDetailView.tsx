@@ -5,13 +5,18 @@ import Loading from "@/components/Loading";
 import Tab from "@/components/Tab";
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
-import { useState } from "react";
 import type { LotteryDetailLogic } from "../../page";
 
-const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }: LotteryDetailLogic) => {
-  const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
-  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("基本情報");
-
+const LotteryDetailView = ({
+  lottery,
+  products,
+  loading,
+  error,
+  getStatusBadge,
+  tabs,
+  activeTab,
+  setActiveTab,
+}: LotteryDetailLogic) => {
   if (loading) {
     return <Loading />;
   }
@@ -43,7 +48,7 @@ const LotteryDetailView = ({ lottery, products, loading, error, getStatusBadge }
     );
   }
 
-  const renderTabs = () => <Tab items={TABS} activeTab={activeTab} onClick={(name) => setActiveTab(name)} />;
+  const renderTabs = () => <Tab items={tabs} activeTab={activeTab} onClick={(name) => setActiveTab(name)} />;
 
   const renderInfoTab = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

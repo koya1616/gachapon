@@ -12,6 +12,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("LotteryDetailViewコンポーネント", () => {
+  const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
   const mockLottery: LotteryEvent = mockLotteryEvents[0];
 
   const getStatusBadge = (status: number) => {
@@ -59,7 +60,16 @@ describe("LotteryDetailViewコンポーネント", () => {
 
   it("Loading状態が正しく表示されること", () => {
     render(
-      <LotteryDetailView lottery={null} products={[]} loading={true} error={null} getStatusBadge={getStatusBadge} />,
+      <LotteryDetailView
+        lottery={null}
+        products={[]}
+        loading={true}
+        error={null}
+        getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[0]}
+        setActiveTab={() => {}}
+      />,
     );
 
     expect(screen.getByTestId("loading")).toBeDefined();
@@ -75,6 +85,9 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={errorMessage}
         getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[0]}
+        setActiveTab={() => {}}
       />,
     );
 
@@ -85,7 +98,16 @@ describe("LotteryDetailViewコンポーネント", () => {
 
   it("抽選情報が見つからない場合のメッセージが表示されること", () => {
     render(
-      <LotteryDetailView lottery={null} products={[]} loading={false} error={null} getStatusBadge={getStatusBadge} />,
+      <LotteryDetailView
+        lottery={null}
+        products={[]}
+        loading={false}
+        error={null}
+        getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[0]}
+        setActiveTab={() => {}}
+      />,
     );
 
     expect(screen.getByText("抽選情報が見つかりませんでした。")).toBeDefined();
@@ -100,6 +122,9 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[0]}
+        setActiveTab={() => {}}
       />,
     );
 
@@ -136,10 +161,13 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[1]}
+        setActiveTab={() => {}}
       />,
     );
 
-    await user.click(screen.getByText("商品一覧"));
+    await user.click(screen.getByRole("button", { name: "商品一覧" }));
 
     expect(screen.getAllByText("商品一覧").length).toBe(2);
     expect(screen.getByText("商品ID")).toBeDefined();
@@ -165,10 +193,13 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[2]}
+        setActiveTab={() => {}}
       />,
     );
 
-    await user.click(screen.getByText("応募状況"));
+    await user.click(screen.getByRole("button", { name: "応募状況" }));
 
     expect(screen.getByText("この機能は現在開発中です。")).toBeDefined();
     expect(screen.getByText("今後のアップデートでご利用いただけるようになります。")).toBeDefined();
@@ -184,10 +215,13 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        tabs={TABS}
+        activeTab={TABS[1]}
+        setActiveTab={() => {}}
       />,
     );
 
-    await user.click(screen.getByText("商品一覧"));
+    await user.click(screen.getByRole("button", { name: "商品一覧" }));
 
     expect(screen.getByText("商品はありません。")).toBeDefined();
   });

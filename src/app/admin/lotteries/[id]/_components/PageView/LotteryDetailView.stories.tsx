@@ -27,52 +27,72 @@ const getStatusBadge = (status: number) => {
   }
 };
 
+const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
+
+const baseArgs = {
+  lottery: mockLotteryEvents[0],
+  products: mockProducts,
+  loading: false,
+  error: null,
+  getStatusBadge,
+  tabs: TABS,
+  setActiveTab: () => {},
+};
+
 export const Default: Story = {
   args: {
-    lottery: mockLotteryEvents[0],
-    products: mockProducts,
-    loading: false,
-    error: null,
-    getStatusBadge,
+    ...baseArgs,
+    activeTab: TABS[0],
   },
 };
 
 export const EmptyProduct: Story = {
   args: {
-    lottery: mockLotteryEvents[0],
+    ...baseArgs,
     products: [],
-    loading: false,
-    error: null,
-    getStatusBadge,
+    activeTab: TABS[1],
+  },
+};
+
+export const Product: Story = {
+  args: {
+    ...baseArgs,
+    activeTab: TABS[1],
+  },
+};
+
+export const EntryStatus: Story = {
+  args: {
+    ...baseArgs,
+    activeTab: TABS[2],
   },
 };
 
 export const Loading: Story = {
   args: {
+    ...baseArgs,
     lottery: null,
     products: [],
     loading: true,
-    error: null,
-    getStatusBadge,
+    activeTab: TABS[0],
   },
 };
 
 export const NotSuccess: Story = {
   args: {
+    ...baseArgs,
     lottery: null,
     products: [],
-    loading: false,
     error: "抽選情報の取得中にエラーが発生しました。",
-    getStatusBadge,
+    activeTab: TABS[0],
   },
 };
 
 export const Empty: Story = {
   args: {
+    ...baseArgs,
     lottery: null,
     products: [],
-    loading: false,
-    error: null,
-    getStatusBadge,
+    activeTab: TABS[0],
   },
 };
