@@ -88,7 +88,7 @@ const CreateAuctionView = ({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-1">
         <div className="space-y-6">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">基本情報</h3>
@@ -192,37 +192,30 @@ const CreateAuctionView = ({
           </div>
         </div>
 
-        <div className="pt-8">
-          <div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">商品選択</h3>
-            <p className="mt-1 text-sm text-gray-500">オークションに含める商品を選択してください。</p>
-          </div>
-
-          <div className="mt-6">
-            {productLoading ? (
-              <Loading />
-            ) : (
-              <div className="sm:col-span-4">
-                <label htmlFor="productId" className="block text-sm font-medium text-gray-700 mb-1">
-                  商品 <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="productId"
-                  name="productId"
-                  value={formData.productId}
-                  onChange={handleProductChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="0">選択してください</option>
-                  {products.map((product) => (
-                    <option key={product.id} value={product.id}>
-                      {product.name} - ¥{product.price.toLocaleString()}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-          </div>
+        <div className="mt-6">
+          {productLoading ? (
+            <Loading />
+          ) : (
+            <div className="sm:col-span-4">
+              <label htmlFor="productId" className="block text-sm font-medium text-gray-700 mb-1">
+                商品 <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="productId"
+                name="productId"
+                value={formData.productId}
+                onChange={handleProductChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="0">選択してください</option>
+                {products.map((product) => (
+                  <option key={product.id} value={product.id}>
+                    {product.name} - ¥{product.price.toLocaleString()}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         <div className="pt-8">
@@ -285,7 +278,7 @@ const CreateAuctionView = ({
                 <label htmlFor="needPaymentInfo" className="font-medium text-gray-700">
                   支払い情報必須
                 </label>
-                <p className="text-gray-500">入札前に支払い情報の登録を必須にします。最初の頃ははOFFにする</p>
+                <p className="text-gray-500">入札前に支払い情報の登録を必須にします。最初の頃はOFFにする</p>
               </div>
             </div>
           </div>
