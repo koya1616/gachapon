@@ -44,124 +44,110 @@ const CreateLotteryView = ({
 
           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
             <div className="sm:col-span-4">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 抽選名 <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                  required
-                  placeholder="春のパン祭り"
-                />
-              </div>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                placeholder="春のパン祭り"
+              />
             </div>
 
             <div className="sm:col-span-6">
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                 説明
               </label>
-              <div className="mt-1">
-                <textarea
-                  id="description"
-                  name="description"
-                  rows={3}
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                />
-              </div>
+              <textarea
+                id="description"
+                name="description"
+                rows={3}
+                value={formData.description}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
               <p className="mt-2 text-sm text-gray-500">抽選の詳細な説明を入力してください。</p>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="startAt" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="startAt" className="block text-sm font-medium text-gray-700 mb-1">
                 開始日時 <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <input
-                  type="datetime-local"
-                  id="startAt"
-                  name="startAt"
-                  value={formData.startAt}
-                  onChange={handleDateInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
+              <input
+                type="datetime-local"
+                id="startAt"
+                name="startAt"
+                value={formData.startAt}
+                onChange={handleDateInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="endAt" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="endAt" className="block text-sm font-medium text-gray-700 mb-1">
                 終了日時 <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <input
-                  type="datetime-local"
-                  id="endAt"
-                  name="endAt"
-                  value={formData.endAt}
-                  onChange={handleDateInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
+              <input
+                type="datetime-local"
+                id="endAt"
+                name="endAt"
+                value={formData.endAt}
+                onChange={handleDateInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="resultAt" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="resultAt" className="block text-sm font-medium text-gray-700 mb-1">
                 結果発表日時 <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <input
-                  type="datetime-local"
-                  id="resultAt"
-                  name="resultAt"
-                  value={formData.resultAt}
-                  onChange={handleDateInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
+              <input
+                type="datetime-local"
+                id="resultAt"
+                name="resultAt"
+                value={formData.resultAt}
+                onChange={handleDateInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="paymentDeadlineAt" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="paymentDeadlineAt" className="block text-sm font-medium text-gray-700 mb-1">
                 支払期限 <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <input
-                  type="datetime-local"
-                  id="paymentDeadlineAt"
-                  name="paymentDeadlineAt"
-                  value={formData.paymentDeadlineAt}
-                  onChange={handleDateInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                  required
-                />
-              </div>
+              <input
+                type="datetime-local"
+                id="paymentDeadlineAt"
+                name="paymentDeadlineAt"
+                value={formData.paymentDeadlineAt}
+                onChange={handleDateInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                 ステータス <span className="text-red-500">*</span>
               </label>
-              <div className="mt-1">
-                <select
-                  id="status"
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                  className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
-                >
-                  <option value={LotteryStatus.DRAFT}>下書き</option>
-                  <option value={LotteryStatus.ACTIVE}>完成</option>
-                </select>
-              </div>
+              <select
+                id="status"
+                name="status"
+                value={formData.status}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={LotteryStatus.DRAFT}>下書き</option>
+                <option value={LotteryStatus.ACTIVE}>完成</option>
+              </select>
             </div>
           </div>
         </div>
@@ -189,7 +175,7 @@ const CreateLotteryView = ({
                       id={`product-${index}`}
                       value={product.productId}
                       onChange={(e) => handleProductChange(index, "productId", Number.parseInt(e.target.value))}
-                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value={0}>商品を選択してください</option>
                       {products.map((p) => (
@@ -210,7 +196,7 @@ const CreateLotteryView = ({
                       value={product.quantity}
                       onChange={(e) => handleProductChange(index, "quantity", Number.parseInt(e.target.value))}
                       min="1"
-                      className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md p-2"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
 
