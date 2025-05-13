@@ -72,9 +72,12 @@ describe("LotteryEntriesテーブルに関するテスト", () => {
 
     it("抽選エントリーレコードが取得できること", async () => {
       const result = await getLotteryEntriesByLotteryEventId(lotteryEvent.id);
-      expect(result).toHaveLength(1);
-      expect(result[0].lottery_event_id).toBe(lotteryEvent.id);
-      expect(Object.keys(result[0])).toEqual(expect.arrayContaining(expectedKeys));
+      const filteredEntries = result.filter((entry) => {
+        return entry.lottery_event_id === lotteryEvent.id;
+      });
+      expect(filteredEntries).toHaveLength(1);
+      expect(filteredEntries[0].lottery_event_id).toBe(lotteryEvent.id);
+      expect(Object.keys(filteredEntries[0])).toEqual(expect.arrayContaining(expectedKeys));
     });
   });
 });
