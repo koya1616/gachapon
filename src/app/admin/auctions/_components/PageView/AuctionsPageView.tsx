@@ -5,10 +5,27 @@ import type { AuctionsPageLogic } from "../../page";
 const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: AuctionsPageLogic) => {
   if (error) {
     return (
-      <div className="p-8">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
-          <strong className="font-bold">エラー: </strong>
-          <span className="block sm:inline">{error}</span>
+      <div className="mb-6 rounded-md bg-red-50 p-4">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            {/* TODO: Alertのコンポーネントを作成する */}
+            <svg
+              className="h-5 w-5 text-red-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">{error}</h3>
+          </div>
         </div>
       </div>
     );
@@ -28,6 +45,7 @@ const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: Auctio
         </div>
       ) : (
         <div className="overflow-x-auto">
+          {/* TODO: テーブルのコンポーネントを作成する */}
           <table className="w-full bg-white shadow rounded-lg">
             <thead className="bg-gray-50">
               <tr>
@@ -46,9 +64,10 @@ const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: Auctio
                   支払期限
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  シークレット
+                  タイプ
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">詳細</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">編集</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -63,11 +82,16 @@ const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: Auctio
                     {formatDate(auction.payment_deadline_at)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {auction.is_sealed ? "封印入札式" : "公開増価式"}
+                    {auction.is_sealed ? "封印入札" : "公開増価"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <a href={`/admin/auctions/${auction.id}`} className="text-blue-600 hover:text-blue-900">
                       詳細
+                    </a>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <a href={`/admin/auctions/${auction.id}/edit`} className="text-blue-600 hover:text-blue-900">
+                      編集
                     </a>
                   </td>
                 </tr>
