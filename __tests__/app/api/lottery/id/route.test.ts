@@ -4,6 +4,7 @@ import {
   deleteLotteryProductsByLotteryEventIdAndProductId,
   executeTransaction,
   findLotteryEventById,
+  getLotteryEntriesByLotteryEventId,
   getLotteryProductsByLotteryEventId,
   updateLotteryEvent,
   updateLotteryProductsWithTransaction,
@@ -25,6 +26,7 @@ vi.mock("@/lib/db", () => ({
   deleteLotteryProductsByLotteryEventIdAndProductId: vi.fn(),
   executeTransaction: vi.fn(),
   updateLotteryProductsWithTransaction: vi.fn(),
+  getLotteryEntriesByLotteryEventId: vi.fn(),
 }));
 
 const mockCookieStore = (adminToken: string) => {
@@ -81,8 +83,20 @@ describe("GET /api/lottery/[id]", () => {
       },
     ];
 
+    const mockLotteryEntries = [
+      {
+        id: 1,
+        lottery_event_id: 1,
+        user_id: 1,
+        lottery_product_id: 1,
+        result: 0,
+        created_at: Date.now(),
+      },
+    ];
+
     vi.mocked(findLotteryEventById).mockResolvedValue(mockLotteryEvent);
     vi.mocked(getLotteryProductsByLotteryEventId).mockResolvedValue(mockLotteryProducts);
+    vi.mocked(getLotteryEntriesByLotteryEventId).mockResolvedValue(mockLotteryEntries);
 
     const request = new NextRequest("http://localhost:3000/api/lottery/1");
     const response = await GET(request);
@@ -94,12 +108,15 @@ describe("GET /api/lottery/[id]", () => {
       data: {
         lottery: mockLotteryEvent,
         products: mockLotteryProducts,
+        entries: mockLotteryEntries,
       },
     });
     expect(findLotteryEventById).toHaveBeenCalledTimes(1);
     expect(findLotteryEventById).toHaveBeenCalledWith(1);
     expect(getLotteryProductsByLotteryEventId).toHaveBeenCalledTimes(1);
     expect(getLotteryProductsByLotteryEventId).toHaveBeenCalledWith(1);
+    expect(getLotteryEntriesByLotteryEventId).toHaveBeenCalledTimes(1);
+    expect(getLotteryEntriesByLotteryEventId).toHaveBeenCalledWith(1);
   });
 
   it("存在しない抽選イベントIDを送信して404を返すこと", async () => {
@@ -115,6 +132,7 @@ describe("GET /api/lottery/[id]", () => {
     expect(findLotteryEventById).toHaveBeenCalledTimes(1);
     expect(findLotteryEventById).toHaveBeenCalledWith(999);
     expect(getLotteryProductsByLotteryEventId).not.toHaveBeenCalled();
+    expect(getLotteryEntriesByLotteryEventId).not.toHaveBeenCalled();
   });
 
   it("例外が発生した場合は500を返すこと", async () => {

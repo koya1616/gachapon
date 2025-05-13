@@ -3,17 +3,19 @@ import {
   deleteLotteryProductsByLotteryEventIdAndProductId,
   executeTransaction,
   findLotteryEventById,
+  getLotteryEntriesByLotteryEventId,
   getLotteryProductsByLotteryEventId,
   updateLotteryEvent,
   updateLotteryProductsWithTransaction,
 } from "@/lib/db";
-import type { ApiResponse, LotteryEvent, LotteryProduct, LotteryStatus } from "@/types";
+import type { LotteryEntry, LotteryEvent, LotteryProduct, LotteryStatus } from "@/types";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 
 export type LotteryEventApiResponse = {
   lottery: LotteryEvent;
   products: LotteryProduct[];
+  entries: LotteryEntry[];
 };
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
@@ -31,10 +33,10 @@ export async function GET(request: NextRequest) {
     }
 
     const products = await getLotteryProductsByLotteryEventId(Number(id));
+    const entries = await getLotteryEntriesByLotteryEventId(Number(id));
 
-    return NextResponse.json({ message: "OK", data: { lottery, products } } as ApiResponse<LotteryEventApiResponse>, {
-      status: 200,
-    });
+    const data: LotteryEventApiResponse = { lottery, products, entries };
+    return NextResponse.json({ message: "OK", data: data }, { status: 200 });
   } catch (error) {
     console.error("ERROR_CODE_0006:", error);
     return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
