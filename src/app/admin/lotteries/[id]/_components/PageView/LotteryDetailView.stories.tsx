@@ -68,6 +68,21 @@ export const EntryStatus: Story = {
   },
 };
 
+export const EmptyEntryStatus: Story = {
+  args: {
+    ...baseArgs,
+    entries: [
+      {
+        id: 1,
+        user_id: 1,
+        product_id: 1,
+        result: 1,
+      },
+    ],
+    activeTab: TABS[2],
+  },
+};
+
 export const Loading: Story = {
   args: {
     ...baseArgs,

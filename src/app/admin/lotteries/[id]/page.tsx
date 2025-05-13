@@ -2,7 +2,7 @@
 
 import type { LotteryEventApiResponse } from "@/app/api/lottery/[id]/route";
 import Badge from "@/components/Badge";
-import { type LotteryEvent, type LotteryProduct, LotteryStatus, type Product } from "@/types";
+import { type LotteryEntry, type LotteryEvent, type LotteryProduct, LotteryStatus, type Product } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import LotteryDetailView from "./_components/PageView";
@@ -11,6 +11,7 @@ const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
 export interface LotteryDetailLogic {
   lottery: LotteryEvent | null;
   products: Product[];
+  entries: { id: number; user_id: number; product_id: number; result: number }[];
   loading: boolean;
   error: string | null;
   getStatusBadge: (status: number) => React.ReactNode;
@@ -27,6 +28,9 @@ const useLotteryDetail = (): LotteryDetailLogic => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<(typeof TABS)[number]>("基本情報");
+  const [lotteryEntries, setLotteryEntries] = useState<
+    { id: number; user_id: number; product_id: number; result: number }[]
+  >([]);
 
   const fetchLotteryDetail = useCallback(async () => {
     if (!params.id) return;
@@ -66,6 +70,19 @@ const useLotteryDetail = (): LotteryDetailLogic => {
         });
 
         setProducts(enhancedProducts);
+
+        if (data.entries && data.entries.length > 0) {
+          setLotteryEntries(
+            data.entries.map((entry: LotteryEntry) => ({
+              id: entry.id,
+              user_id: entry.user_id,
+              product_id: data.products.find((p) => p.id === entry.lottery_product_id)?.product_id || 0,
+              result: entry.result,
+            })),
+          );
+        } else {
+          setLotteryEntries([]);
+        }
       } else {
         setProducts([]);
       }
@@ -98,6 +115,7 @@ const useLotteryDetail = (): LotteryDetailLogic => {
   return {
     lottery,
     products,
+    entries: lotteryEntries,
     loading,
     error,
     getStatusBadge,

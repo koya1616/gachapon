@@ -63,6 +63,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={null}
         products={[]}
+        entries={[]}
         loading={true}
         error={null}
         getStatusBadge={getStatusBadge}
@@ -82,6 +83,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={null}
         products={[]}
+        entries={[]}
         loading={false}
         error={errorMessage}
         getStatusBadge={getStatusBadge}
@@ -101,6 +103,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={null}
         products={[]}
+        entries={[]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
@@ -119,6 +122,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={mockLottery}
         products={mockProducts}
+        entries={[]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
@@ -158,6 +162,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={mockLottery}
         products={mockProducts}
+        entries={[]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
@@ -190,6 +195,14 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={mockLottery}
         products={mockProducts}
+        entries={[
+          {
+            id: 1111,
+            user_id: 2222,
+            product_id: 3333,
+            result: 4444,
+          },
+        ]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
@@ -201,8 +214,14 @@ describe("LotteryDetailViewコンポーネント", () => {
 
     await user.click(screen.getByRole("button", { name: "応募状況" }));
 
-    expect(screen.getByText("この機能は現在開発中です。")).toBeDefined();
-    expect(screen.getByText("今後のアップデートでご利用いただけるようになります。")).toBeDefined();
+    expect(screen.getByText("応募ID")).toBeDefined();
+    expect(screen.getByText("1111")).toBeDefined();
+    expect(screen.getByText("ユーザーID")).toBeDefined();
+    expect(screen.getByText("2222")).toBeDefined();
+    expect(screen.getByText("商品ID")).toBeDefined();
+    expect(screen.getByText("3333")).toBeDefined();
+    expect(screen.getByText("結果")).toBeDefined();
+    expect(screen.getByText("4444")).toBeDefined();
   });
 
   it("商品がない場合のメッセージが表示されること", async () => {
@@ -212,6 +231,7 @@ describe("LotteryDetailViewコンポーネント", () => {
       <LotteryDetailView
         lottery={mockLottery}
         products={[]}
+        entries={[]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
