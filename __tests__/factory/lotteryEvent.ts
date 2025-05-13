@@ -1,6 +1,7 @@
-import { createLotteryEvent, createLotteryProducts } from "@/lib/db";
-import type { LotteryProduct } from "@/types";
+import { createLotteryEntry, createLotteryEvent, createLotteryProducts } from "@/lib/db";
+import type { LotteryEntry, LotteryProduct } from "@/types";
 import { ProductFactory } from "./product";
+import { UserFactory } from "./user";
 
 export class LotteryEventFactory {
   id: number;
@@ -13,6 +14,7 @@ export class LotteryEventFactory {
   status: number;
   created_at: number;
   lotteryProducts: LotteryProduct[] | null;
+  lotteryEntries: LotteryEntry[] | null;
 
   constructor(
     name: string,
@@ -33,6 +35,7 @@ export class LotteryEventFactory {
     this.status = status;
     this.created_at = Date.now();
     this.lotteryProducts = null;
+    this.lotteryEntries = null;
   }
 
   public static async create(
@@ -46,6 +49,9 @@ export class LotteryEventFactory {
     options?: {
       lotteryProducts?: {
         value: Partial<Pick<LotteryProduct, "product_id" | "quantity_available">>[];
+        options?: {
+          withLotteryEntries?: boolean;
+        };
       };
     },
   ): Promise<LotteryEventFactory> {
@@ -80,6 +86,12 @@ export class LotteryEventFactory {
           quantity_available: lotteryProduct.quantity_available || 1,
         })),
       );
+
+      if (options.lotteryProducts.options?.withLotteryEntries) {
+        const user = await UserFactory.create();
+        const lotteryEntry = await createLotteryEntry(factory.id, user.id, factory.lotteryProducts[0].id);
+        factory.lotteryEntries = [lotteryEntry];
+      }
     }
 
     return factory;
