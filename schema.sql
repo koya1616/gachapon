@@ -292,6 +292,35 @@ ALTER TABLE public.products ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: sealed_bids; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sealed_bids (
+    id integer NOT NULL,
+    auction_id integer NOT NULL,
+    user_id integer NOT NULL,
+    amount integer NOT NULL,
+    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
+);
+
+
+ALTER TABLE public.sealed_bids OWNER TO postgres;
+
+--
+-- Name: sealed_bids_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.sealed_bids ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.sealed_bids_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: shipments; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -422,11 +451,27 @@ ALTER TABLE ONLY public.products
 
 
 --
+-- Name: sealed_bids sealed_bids_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sealed_bids
+    ADD CONSTRAINT sealed_bids_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: shipments shipments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.shipments
     ADD CONSTRAINT shipments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sealed_bids unique_auction_user; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sealed_bids
+    ADD CONSTRAINT unique_auction_user UNIQUE (auction_id, user_id);
 
 
 --
@@ -456,6 +501,14 @@ CREATE UNIQUE INDEX paypay_payments_merchant_payment_id_key ON public.paypay_pay
 --
 
 CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
+
+
+--
+-- Name: sealed_bids fk_auction_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sealed_bids
+    ADD CONSTRAINT fk_auction_id FOREIGN KEY (auction_id) REFERENCES public.auctions(id);
 
 
 --
@@ -543,6 +596,14 @@ ALTER TABLE ONLY public.paypay_payments
 --
 
 ALTER TABLE ONLY public.lottery_entries
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: sealed_bids fk_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sealed_bids
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
