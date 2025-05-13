@@ -66,7 +66,8 @@ CREATE TABLE public.auctions (
     is_sealed boolean DEFAULT true NOT NULL,
     allow_bid_retraction boolean DEFAULT true NOT NULL,
     need_payment_info boolean DEFAULT false NOT NULL,
-    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
+    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL,
+    product_id integer NOT NULL
 );
 
 
@@ -564,6 +565,14 @@ ALTER TABLE ONLY public.payment_products
 --
 
 ALTER TABLE ONLY public.lottery_products
+    ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
+-- Name: auctions fk_product_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auctions
     ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.products(id);
 
 
