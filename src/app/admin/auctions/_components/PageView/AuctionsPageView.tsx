@@ -1,5 +1,6 @@
 import Loading from "@/components/Loading";
 import { formatDate } from "@/lib/date";
+import Link from "next/link";
 import type { AuctionsPageLogic } from "../../page";
 
 const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: AuctionsPageLogic) => {
@@ -33,8 +34,18 @@ const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: Auctio
 
   return (
     <div className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">オークション一覧</h1>
+      <div className="md:flex md:items-center md:justify-between mb-6">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">オークション一覧</h2>
+        </div>
+        <div className="mt-4 flex md:mt-0 md:ml-4">
+          <Link
+            href="/admin/auctions/create"
+            className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            新規作成
+          </Link>
+        </div>
       </div>
 
       {isLoading ? (
