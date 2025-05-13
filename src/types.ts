@@ -123,3 +123,10 @@ export type Auction = {
   created_at: number;
   product_id: number;
 };
+
+export enum AuctionStatus {
+  DRAFT = 0,
+  ACTIVE = 1,
+  FINISHED = 2,
+  CANCELLED = 3,
+}

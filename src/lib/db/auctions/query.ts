@@ -22,3 +22,9 @@ export const createAuction = async (auction: Omit<Auction, "id" | "created_at">)
   const auctions = await executeQuery<Auction>(query, params);
   return auctions[0];
 };
+
+export const getAuctions = async (): Promise<Auction[]> => {
+  const query = "SELECT * FROM auctions";
+  const auctions = await executeQuery<Auction>(query);
+  return auctions;
+};
