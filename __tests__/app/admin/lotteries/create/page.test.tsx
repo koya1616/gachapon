@@ -241,7 +241,7 @@ describe("抽選イベント作成ページ", () => {
     fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(screen.getByText("抽選イベントが正常に作成されました")).toBeDefined();
+      expect(screen.getByText("抽選イベントが正常に作成されました。抽選一覧ページにリダイレクトします...")).toBeDefined();
     });
 
     await waitFor(
