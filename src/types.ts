@@ -108,3 +108,18 @@ export enum LotteryEntryResult {
   WIN = 1,
   LOSE = 2,
 }
+
+export type Auction = {
+  id: number;
+  name: string;
+  description: string;
+  start_at: number;
+  end_at: number;
+  payment_deadline_at: number;
+  status: number;
+  is_sealed: boolean;
+  allow_bid_retraction: boolean;
+  need_payment_info: boolean;
+  created_at: number;
+  product_id: number;
+};

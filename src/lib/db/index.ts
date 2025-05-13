@@ -94,3 +94,4 @@ export {
   updateShipmentStatus,
   createShipment,
 } from "./shipments/query";
+export { createAuction } from "./auctions/query";
