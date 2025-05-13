@@ -27,6 +27,19 @@ const getStatusBadge = (status: number) => {
   }
 };
 
+const getEntryResultBadge = (result: number) => {
+  switch (result) {
+    case 0:
+      return <Badge text="抽選中" color="gray" />;
+    case 1:
+      return <Badge text="当選" color="green" />;
+    case 2:
+      return <Badge text="落選" color="red" />;
+    default:
+      return <Badge text="不明" color="gray" />;
+  }
+};
+
 const TABS = ["基本情報", "商品一覧", "応募状況"] as const;
 
 const baseArgs = {
@@ -35,6 +48,7 @@ const baseArgs = {
   loading: false,
   error: null,
   getStatusBadge,
+  getEntryResultBadge,
   tabs: TABS,
   setActiveTab: () => {},
 };

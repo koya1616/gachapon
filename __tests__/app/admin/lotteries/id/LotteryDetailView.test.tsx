@@ -50,6 +50,35 @@ describe("LotteryDetailViewコンポーネント", () => {
     }
   };
 
+  const getEntryResultBadge = (result: number) => {
+    switch (result) {
+      case 0:
+        return (
+          <span data-testid="entry-result-badge" className="bg-gray-100 text-gray-800">
+            抽選中
+          </span>
+        );
+      case 1:
+        return (
+          <span data-testid="entry-result-badge" className="bg-green-100 text-green-800">
+            当選
+          </span>
+        );
+      case 2:
+        return (
+          <span data-testid="entry-result-badge" className="bg-red-100 text-red-800">
+            落選
+          </span>
+        );
+      default:
+        return (
+          <span data-testid="entry-result-badge" className="bg-gray-100 text-gray-800">
+            不明
+          </span>
+        );
+    }
+  };
+
   beforeEach(() => {
     cleanup();
   });
@@ -67,6 +96,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={true}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[0]}
         setActiveTab={() => {}}
@@ -87,6 +117,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={errorMessage}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[0]}
         setActiveTab={() => {}}
@@ -107,6 +138,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[0]}
         setActiveTab={() => {}}
@@ -126,6 +158,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[0]}
         setActiveTab={() => {}}
@@ -166,6 +199,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[1]}
         setActiveTab={() => {}}
@@ -200,12 +234,13 @@ describe("LotteryDetailViewコンポーネント", () => {
             id: 1111,
             user_id: 2222,
             product_id: 3333,
-            result: 4444,
+            result: 0,
           },
         ]}
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[2]}
         setActiveTab={() => {}}
@@ -221,7 +256,7 @@ describe("LotteryDetailViewコンポーネント", () => {
     expect(screen.getByText("商品ID")).toBeDefined();
     expect(screen.getByText("3333")).toBeDefined();
     expect(screen.getByText("結果")).toBeDefined();
-    expect(screen.getByText("4444")).toBeDefined();
+    expect(screen.getByText("抽選中")).toBeDefined();
   });
 
   it("商品がない場合のメッセージが表示されること", async () => {
@@ -235,6 +270,7 @@ describe("LotteryDetailViewコンポーネント", () => {
         loading={false}
         error={null}
         getStatusBadge={getStatusBadge}
+        getEntryResultBadge={getEntryResultBadge}
         tabs={TABS}
         activeTab={TABS[1]}
         setActiveTab={() => {}}

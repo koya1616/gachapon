@@ -15,6 +15,7 @@ export interface LotteryDetailLogic {
   loading: boolean;
   error: string | null;
   getStatusBadge: (status: number) => React.ReactNode;
+  getEntryResultBadge: (result: number) => React.ReactNode;
   tabs: readonly (typeof TABS)[number][];
   activeTab: (typeof TABS)[number];
   setActiveTab: (tab: (typeof TABS)[number]) => void;
@@ -112,6 +113,19 @@ const useLotteryDetail = (): LotteryDetailLogic => {
     }
   }, []);
 
+  const getEntryResultBadge = useCallback((result: number) => {
+    switch (result) {
+      case 0:
+        return <Badge text="抽選中" color="gray" />;
+      case 1:
+        return <Badge text="当選" color="green" />;
+      case 2:
+        return <Badge text="落選" color="red" />;
+      default:
+        return <Badge text="不明" color="gray" />;
+    }
+  }, []);
+
   return {
     lottery,
     products,
@@ -119,6 +133,7 @@ const useLotteryDetail = (): LotteryDetailLogic => {
     loading,
     error,
     getStatusBadge,
+    getEntryResultBadge,
     tabs: TABS,
     activeTab,
     setActiveTab: (tab: (typeof TABS)[number]) => setActiveTab(tab),

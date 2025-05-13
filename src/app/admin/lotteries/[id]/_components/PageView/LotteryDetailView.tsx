@@ -12,6 +12,7 @@ const LotteryDetailView = ({
   loading,
   error,
   getStatusBadge,
+  getEntryResultBadge,
   tabs,
   activeTab,
   setActiveTab,
@@ -168,7 +169,9 @@ const LotteryDetailView = ({
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {entry.product_id}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{entry.result}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {getEntryResultBadge(entry.result)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
