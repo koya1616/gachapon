@@ -22,6 +22,7 @@ const useAdminHeader = (): AdminHeaderLogic => {
       { name: "ダッシュボード", path: "/admin/top" },
       { name: "商品一覧", path: "/admin/products" },
       { name: "抽選管理", path: "/admin/lotteries" },
+      { name: "オークション", path: "/admin/auctions" },
       { name: "決済管理", path: "/admin/payment" },
       { name: "アップロード", path: "/admin/upload" },
     ],
