@@ -1,5 +1,5 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Address, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
+import type { Address, Auction, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
 import { type LotteryEvent, LotteryStatus } from "@/types";
 
 export const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
@@ -208,3 +208,34 @@ export const createOrder = (
   cancelled_at,
   payment_failed_at,
 });
+
+export const mockAuctionData: Auction[] = [
+  {
+    id: 1,
+    name: "プレミアムフィギュアオークション",
+    description: "限定版コレクターズアイテム",
+    start_at: new Date("2025-06-01T00:00:00").getTime(),
+    end_at: new Date("2025-06-15T23:59:59").getTime(),
+    payment_deadline_at: new Date("2025-06-22T23:59:59").getTime(),
+    status: 1,
+    is_sealed: false,
+    allow_bid_retraction: true,
+    need_payment_info: true,
+    created_at: new Date("2025-05-01T10:00:00").getTime(),
+    product_id: 1,
+  },
+  {
+    id: 2,
+    name: "レアカードオークション",
+    description: "希少トレーディングカードのセット",
+    start_at: new Date("2025-07-01T00:00:00").getTime(),
+    end_at: new Date("2025-07-10T23:59:59").getTime(),
+    payment_deadline_at: new Date("2025-07-17T23:59:59").getTime(),
+    status: 0,
+    is_sealed: true,
+    allow_bid_retraction: false,
+    need_payment_info: true,
+    created_at: new Date("2025-06-01T14:30:00").getTime(),
+    product_id: 2,
+  },
+];
