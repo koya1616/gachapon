@@ -52,6 +52,41 @@ ALTER TABLE public.addresses ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
+-- Name: auctions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auctions (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    description text,
+    start_at bigint NOT NULL,
+    end_at bigint NOT NULL,
+    payment_deadline_at bigint NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    is_sealed boolean DEFAULT true NOT NULL,
+    allow_bid_retraction boolean DEFAULT true NOT NULL,
+    need_payment_info boolean DEFAULT false NOT NULL,
+    created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL
+);
+
+
+ALTER TABLE public.auctions OWNER TO postgres;
+
+--
+-- Name: auctions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.auctions ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.auctions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
 -- Name: authentication_codes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -320,6 +355,14 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 ALTER TABLE ONLY public.addresses
     ADD CONSTRAINT addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auctions auctions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auctions
+    ADD CONSTRAINT auctions_pkey PRIMARY KEY (id);
 
 
 --
