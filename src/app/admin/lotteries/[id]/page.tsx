@@ -1,5 +1,6 @@
 "use client";
 
+import type { LotteryEventApiResponse } from "@/app/api/lottery/[id]/route";
 import Badge from "@/components/Badge";
 import { type LotteryEvent, type LotteryProduct, LotteryStatus, type Product } from "@/types";
 import { useParams, useRouter } from "next/navigation";
@@ -45,7 +46,7 @@ const useLotteryDetail = (): LotteryDetailLogic => {
         throw new Error("抽選データの取得に失敗しました。");
       }
 
-      const { data }: { data: { lottery: LotteryEvent; products: LotteryProduct[] } } = await response.json();
+      const { data }: { data: LotteryEventApiResponse } = await response.json();
       setLottery(data.lottery);
 
       if (data.products && data.products.length > 0) {
