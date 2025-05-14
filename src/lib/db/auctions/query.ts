@@ -35,3 +35,27 @@ export const findAuctionById = async (id: number): Promise<Auction | null> => {
   const auctions = await executeQuery<Auction>(query, params);
   return auctions[0] || null;
 };
+
+export const updateAuction = async (auction: Omit<Auction, "created_at">): Promise<Auction> => {
+  const query = `
+    UPDATE auctions
+    SET name = $1, description = $2, start_at = $3, end_at = $4, payment_deadline_at = $5, status = $6, is_sealed = $7, allow_bid_retraction = $8, need_payment_info = $9, product_id = $10
+    WHERE id = $11
+    RETURNING *
+  `;
+  const params = [
+    auction.name,
+    auction.description,
+    auction.start_at,
+    auction.end_at,
+    auction.payment_deadline_at,
+    auction.status,
+    auction.is_sealed,
+    auction.allow_bid_retraction,
+    auction.need_payment_info,
+    auction.product_id,
+    auction.id,
+  ];
+  const auctions = await executeQuery<Auction>(query, params);
+  return auctions[0];
+};

@@ -1,4 +1,4 @@
-import { createAuction, findAuctionById, getAuctions } from "@/lib/db";
+import { createAuction, findAuctionById, getAuctions, updateAuction } from "@/lib/db";
 import type { Auction } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AuctionFactory } from "../../../factory/auction";
@@ -117,6 +117,44 @@ describe("Auctionsテーブルに関するテスト", () => {
       expect(result?.created_at).toBe(auction.created_at);
 
       expect(Object.keys(result ? result : {})).toEqual(expect.arrayContaining(expectedKeys));
+    });
+  });
+
+  describe("updateAuction", () => {
+    beforeAll(async () => {
+      auction = await setUpAuction();
+    });
+
+    it("オークションレコードが更新できること", async () => {
+      const updatedAuction = {
+        ...auction,
+        name: "更新されたオークション",
+        description: "更新された説明",
+        start_at: Date.now(),
+        end_at: Date.now() + 1000 * 60 * 60 * 24,
+        payment_deadline_at: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        status: 2,
+        is_sealed: true,
+        allow_bid_retraction: false,
+        need_payment_info: true,
+      };
+
+      const result = await updateAuction(updatedAuction);
+
+      expect(result.id).toBe(auction.id);
+      expect(result.name).toBe("更新されたオークション");
+      expect(result.description).toBe("更新された説明");
+      expect(result.start_at).not.toBe(auction.start_at);
+      expect(result.end_at).not.toBe(auction.end_at);
+      expect(result.payment_deadline_at).not.toBe(auction.payment_deadline_at);
+      expect(result.status).not.toBe(auction.status);
+      expect(result.is_sealed).toBe(true);
+      expect(result.allow_bid_retraction).toBe(false);
+      expect(result.need_payment_info).toBe(true);
+      expect(result.product_id).toBe(auction.product_id);
+      expect(Number(result.created_at)).toBeGreaterThan(0);
+
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys));
     });
   });
 });
