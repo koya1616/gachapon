@@ -88,7 +88,7 @@ const Footer = () => {
         </div>
 
         <p className="text-gray-500 text-xs sm:text-sm animate-fade-in-delayed">
-          © {new Date().getFullYear()} ガチャポン. All rights reserved.
+          © {new Date().getFullYear()} Gachapon. All rights reserved.
         </p>
       </div>
     </footer>

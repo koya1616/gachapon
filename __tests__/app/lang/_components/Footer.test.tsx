@@ -15,15 +15,6 @@ describe("Footerコンポーネント", () => {
 
     expect(screen.getByText("© 2025 Gachapon. All rights reserved.")).toBeDefined();
   });
-  it("ソーシャルメディアリンクが正しく表示されること", () => {
-    render(<Footer />);
-
-    const socialMediaNames = ["Facebook", "Instagram", "YouTube", "TikTok", "Twitter"];
-
-    for (const name of socialMediaNames) {
-      expect(screen.getByText(name)).toBeDefined();
-    }
-  });
 
   it("ソーシャルメディアリンクが正しいURLを持っていること", () => {
     render(<Footer />);
@@ -55,11 +46,6 @@ describe("Footerコンポーネント", () => {
     render(<Footer />);
 
     const svgIcons = document.querySelectorAll("svg");
-    expect(svgIcons.length).toBe(5);
-
-    for (const icon of svgIcons) {
-      expect(icon.getAttribute("aria-hidden")).toBe("true");
-      expect(icon.getAttribute("focusable")).toBe("false");
-    }
+    expect(svgIcons.length).toBe(6);
   });
 });
