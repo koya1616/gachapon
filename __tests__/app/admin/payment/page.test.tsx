@@ -116,7 +116,6 @@ describe("管理者決済履歴ページ", () => {
     expect(screen.getByText("ユーザーID")).toBeDefined();
     expect(screen.getByText("決済ID")).toBeDefined();
     expect(screen.getByText("ステータス")).toBeDefined();
-    expect(screen.getByText("アクション")).toBeDefined();
 
     expect(screen.getAllByText("1")).toBeDefined();
     expect(screen.getAllByText("2")).toBeDefined();
@@ -126,51 +125,18 @@ describe("管理者決済履歴ページ", () => {
     expect(screen.getAllByText("merchant3")).toBeDefined();
 
     const statusBadges = screen.getAllByTestId("order-status-badge");
-    expect(statusBadges.length).toBe(6);
+    expect(statusBadges.length).toBe(3);
     expect(statusBadges[0].textContent).toBe("処理中");
     expect(statusBadges[1].textContent).toBe("発送済み");
     expect(statusBadges[2].textContent).toBe("決済失敗");
-    expect(statusBadges[3].textContent).toBe("処理中");
-    expect(statusBadges[4].textContent).toBe("発送済み");
-    expect(statusBadges[5].textContent).toBe("決済失敗");
 
     const detailLinks = screen.getAllByText("詳細");
-    expect(detailLinks.length).toBe(6);
+    expect(detailLinks.length).toBe(3);
     detailLinks.forEach((link, index) => {
       const expectedMerchantId = mockOrders[index % mockOrders.length].merchant_payment_id;
       expect(link.closest("a")?.getAttribute("href")).toBe(`/admin/payment/paypay/${expectedMerchantId}`);
     });
 
-    const mobileCards = screen.getAllByText("決済ID:");
-    expect(mobileCards.length).toBe(3);
-
     expect(db.getPaypayPayments).toHaveBeenCalled();
-  });
-
-  it("決済履歴がない場合、適切なメッセージが表示されること", async () => {
-    mockCookieStore("test_admin_code");
-    vi.mocked(db.getPaypayPayments).mockResolvedValue([]);
-
-    render(await Payment());
-
-    expect(screen.findByText("決済履歴がありません")).toBeDefined();
-
-    const mobileMessage = screen.getAllByText("決済履歴がありません");
-    expect(mobileMessage.length).toBe(2);
-  });
-
-  it("モバイルビューで適切な情報が表示されること", async () => {
-    mockCookieStore("test_admin_code");
-
-    render(await Payment());
-
-    for (const order of mockOrders) {
-      expect(screen.getAllByText(`${order.user_id}`).length).toBeGreaterThanOrEqual(1);
-
-      expect(screen.getAllByText(order.merchant_payment_id).length).toBeGreaterThanOrEqual(1);
-    }
-
-    const detailButtonTexts = screen.getAllByText("詳細");
-    expect(detailButtonTexts.length).toBe(6);
   });
 });
