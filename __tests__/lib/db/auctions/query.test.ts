@@ -1,4 +1,4 @@
-import { createAuction, getAuctions } from "@/lib/db";
+import { createAuction, findAuctionById, getAuctions } from "@/lib/db";
 import type { Auction } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AuctionFactory } from "../../../factory/auction";
@@ -88,6 +88,33 @@ describe("Auctionsテーブルに関するテスト", () => {
       expect(Number(result?.created_at)).toBeGreaterThan(0);
       expect(result?.created_at).toBe(auction.created_at);
       expect(result?.id).toBe(auction.id);
+
+      expect(Object.keys(result ? result : {})).toEqual(expect.arrayContaining(expectedKeys));
+    });
+  });
+
+  describe("findAuctionById", () => {
+    beforeAll(async () => {
+      auction = await setUpAuction();
+    });
+
+    it("オークションレコードがIDで取得できること", async () => {
+      const result = await findAuctionById(auction.id);
+
+      expect(result).not.toBeNull();
+      expect(result?.id).toBe(auction.id);
+      expect(result?.name).toBe(auction.name);
+      expect(result?.description).toBe(auction.description);
+      expect(result?.start_at).toBe(auction.start_at);
+      expect(result?.end_at).toBe(auction.end_at);
+      expect(result?.payment_deadline_at).toBe(auction.payment_deadline_at);
+      expect(result?.status).toBe(auction.status);
+      expect(result?.is_sealed).toBe(auction.is_sealed);
+      expect(result?.allow_bid_retraction).toBe(auction.allow_bid_retraction);
+      expect(result?.need_payment_info).toBe(auction.need_payment_info);
+      expect(result?.product_id).toBe(auction.product_id);
+      expect(Number(result?.created_at)).toBeGreaterThan(0);
+      expect(result?.created_at).toBe(auction.created_at);
 
       expect(Object.keys(result ? result : {})).toEqual(expect.arrayContaining(expectedKeys));
     });

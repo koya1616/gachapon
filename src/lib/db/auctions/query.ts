@@ -28,3 +28,10 @@ export const getAuctions = async (): Promise<Auction[]> => {
   const auctions = await executeQuery<Auction>(query);
   return auctions;
 };
+
+export const findAuctionById = async (id: number): Promise<Auction | null> => {
+  const query = "SELECT * FROM auctions WHERE id = $1";
+  const params = [id];
+  const auctions = await executeQuery<Auction>(query, params);
+  return auctions[0] || null;
+};

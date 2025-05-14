@@ -94,4 +94,4 @@ export {
   updateShipmentStatus,
   createShipment,
 } from "./shipments/query";
-export { createAuction, getAuctions } from "./auctions/query";
+export { createAuction, getAuctions, findAuctionById } from "./auctions/query";
