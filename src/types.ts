@@ -130,3 +130,11 @@ export enum AuctionStatus {
   FINISHED = 2,
   CANCELLED = 3,
 }
+
+export type SealedBid = {
+  id: number;
+  auction_id: number;
+  user_id: number;
+  amount: number;
+  created_at: number;
+};
