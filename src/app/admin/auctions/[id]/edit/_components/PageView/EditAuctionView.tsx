@@ -61,7 +61,6 @@ const EditAuctionView = ({
                 id="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
                 placeholder="春のオークション"
               />
@@ -77,7 +76,6 @@ const EditAuctionView = ({
                 rows={3}
                 value={formData.description}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <p className="mt-2 text-sm text-gray-500">オークションの詳細な説明を入力してください。</p>
             </div>
@@ -92,7 +90,6 @@ const EditAuctionView = ({
                 name="startAt"
                 value={formData.startAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -107,7 +104,6 @@ const EditAuctionView = ({
                 name="endAt"
                 value={formData.endAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -122,7 +118,6 @@ const EditAuctionView = ({
                 name="paymentDeadlineAt"
                 value={formData.paymentDeadlineAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -131,13 +126,7 @@ const EditAuctionView = ({
               <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                 ステータス <span className="text-red-500">*</span>
               </label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
+              <select id="status" name="status" value={formData.status} onChange={handleInputChange}>
                 <option value={AuctionStatus.DRAFT}>下書き</option>
                 <option value={AuctionStatus.ACTIVE}>開催中</option>
                 <option value={AuctionStatus.FINISHED}>終了</option>
@@ -152,13 +141,7 @@ const EditAuctionView = ({
             <label htmlFor="productId" className="block text-sm font-medium text-gray-700 mb-1">
               商品 <span className="text-red-500">*</span>
             </label>
-            <select
-              id="productId"
-              name="productId"
-              value={formData.productId}
-              onChange={handleProductChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
+            <select id="productId" name="productId" value={formData.productId} onChange={handleProductChange}>
               <option value="0">選択してください</option>
               {products.map((product) => (
                 <option key={product.id} value={product.id}>

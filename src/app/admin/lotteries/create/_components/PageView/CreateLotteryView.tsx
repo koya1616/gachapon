@@ -57,7 +57,6 @@ const CreateLotteryView = ({
                 id="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
                 placeholder="春のパン祭り"
               />
@@ -73,7 +72,6 @@ const CreateLotteryView = ({
                 rows={3}
                 value={formData.description}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <p className="mt-2 text-sm text-gray-500">抽選の詳細な説明を入力してください。</p>
             </div>
@@ -88,7 +86,6 @@ const CreateLotteryView = ({
                 name="startAt"
                 value={formData.startAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -103,7 +100,6 @@ const CreateLotteryView = ({
                 name="endAt"
                 value={formData.endAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -118,7 +114,6 @@ const CreateLotteryView = ({
                 name="resultAt"
                 value={formData.resultAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -133,7 +128,6 @@ const CreateLotteryView = ({
                 name="paymentDeadlineAt"
                 value={formData.paymentDeadlineAt}
                 onChange={handleDateInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -142,13 +136,7 @@ const CreateLotteryView = ({
               <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                 ステータス <span className="text-red-500">*</span>
               </label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
+              <select id="status" name="status" value={formData.status} onChange={handleInputChange}>
                 <option value={LotteryStatus.DRAFT}>下書き</option>
                 <option value={LotteryStatus.ACTIVE}>完成</option>
               </select>
@@ -179,7 +167,6 @@ const CreateLotteryView = ({
                       id={`product-${index}`}
                       value={product.productId}
                       onChange={(e) => handleProductChange(index, "productId", Number.parseInt(e.target.value))}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value={0}>商品を選択してください</option>
                       {products.map((p) => (
@@ -200,7 +187,6 @@ const CreateLotteryView = ({
                       value={product.quantity}
                       onChange={(e) => handleProductChange(index, "quantity", Number.parseInt(e.target.value))}
                       min="1"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
 

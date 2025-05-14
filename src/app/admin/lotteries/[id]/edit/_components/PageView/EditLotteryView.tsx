@@ -52,15 +52,7 @@ const EditLotteryView = ({
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
             抽選名
           </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input id="name" name="name" type="text" value={formData.name} onChange={handleInputChange} required />
         </div>
 
         <div className="mb-6">
@@ -73,7 +65,6 @@ const EditLotteryView = ({
             value={formData.description}
             onChange={handleInputChange}
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -88,7 +79,6 @@ const EditLotteryView = ({
               type="datetime-local"
               value={formData.startAt}
               onChange={handleDateInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -102,7 +92,6 @@ const EditLotteryView = ({
               type="datetime-local"
               value={formData.endAt}
               onChange={handleDateInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -119,7 +108,6 @@ const EditLotteryView = ({
               type="datetime-local"
               value={formData.resultAt}
               onChange={handleDateInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -133,7 +121,6 @@ const EditLotteryView = ({
               type="datetime-local"
               value={formData.paymentDeadlineAt}
               onChange={handleDateInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -143,14 +130,7 @@ const EditLotteryView = ({
           <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
             ステータス
           </label>
-          <select
-            id="status"
-            name="status"
-            value={formData.status}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          >
+          <select id="status" name="status" value={formData.status} onChange={handleInputChange} required>
             <option value={LotteryStatus.DRAFT}>下書き</option>
             <option value={LotteryStatus.ACTIVE}>実施中</option>
             <option value={LotteryStatus.FINISHED}>終了</option>
@@ -181,7 +161,6 @@ const EditLotteryView = ({
                       id={`product-${index}`}
                       value={product.productId}
                       onChange={(e) => handleProductChange(index, "productId", Number.parseInt(e.target.value))}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <option value={0}>商品を選択してください</option>
                       {products.map((p) => (
@@ -203,7 +182,6 @@ const EditLotteryView = ({
                       value={product.quantity}
                       onChange={(e) => handleProductChange(index, "quantity", Number.parseInt(e.target.value))}
                       min="1"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
 

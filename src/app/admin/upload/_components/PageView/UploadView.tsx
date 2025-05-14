@@ -68,7 +68,6 @@ const UploadView = memo(
                   name="name"
                   value={formData.name}
                   onChange={handleProductChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   required
                 />
               </div>
@@ -83,7 +82,6 @@ const UploadView = memo(
                   name="price"
                   value={formData.price}
                   onChange={handleProductChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   min="0"
                   required
                 />
