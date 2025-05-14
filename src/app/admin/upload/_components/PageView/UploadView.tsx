@@ -27,12 +27,7 @@ const UploadView = memo(
           <>
             <form onSubmit={handleFileSubmit}>
               <div className="mb-4">
-                <input
-                  id="fileUpload"
-                  type="file"
-                  onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                />
+                <input id="fileUpload" type="file" onChange={handleFileChange} />
               </div>
 
               {uploading ? <Loading /> : <Button type="submit" label="アップロード" disabled={!file} width="w-full" />}
