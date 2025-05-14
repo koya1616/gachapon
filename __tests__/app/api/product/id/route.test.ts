@@ -1,6 +1,7 @@
 import { GET, PUT } from "@/app/api/product/[id]/route";
 import { ADMIN_CODE } from "@/const/cookies";
 import { findProductById, updateProductById } from "@/lib/db";
+import { mockProducts } from "@/mocks/data";
 import type { Product } from "@/types";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
@@ -47,23 +48,14 @@ describe("GET /api/product/[id]", () => {
   });
 
   it("存在する商品IDを送信して200と商品情報を返すこと", async () => {
-    const mockProduct = {
-      id: 1,
-      name: "テスト商品",
-      price: 1000,
-      image: "test.jpg",
-      stock_quantity: 10,
-      quantity: 0,
-    };
-
-    vi.mocked(findProductById).mockResolvedValue(mockProduct);
+    vi.mocked(findProductById).mockResolvedValue(mockProducts[0]);
 
     const request = createMockGetRequest(1);
     const response = await GET(request);
 
     expect(response.status).toBe(200);
     const data = await response.json();
-    expect(data).toEqual({ message: "OK", data: mockProduct });
+    expect(data).toEqual({ message: "OK", data: mockProducts[0] });
     expect(findProductById).toHaveBeenCalledTimes(1);
     expect(findProductById).toHaveBeenCalledWith(1);
   });
