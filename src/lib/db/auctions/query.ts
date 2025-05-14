@@ -59,3 +59,10 @@ export const updateAuction = async (auction: Omit<Auction, "created_at">): Promi
   const auctions = await executeQuery<Auction>(query, params);
   return auctions[0];
 };
+
+export const findAuctionByProductId = async (productId: number): Promise<Auction | null> => {
+  const query = "SELECT * FROM auctions WHERE product_id = $1";
+  const params = [productId];
+  const auctions = await executeQuery<Auction>(query, params);
+  return auctions[0] || null;
+};
