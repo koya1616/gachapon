@@ -1,5 +1,6 @@
 import Alert from "@/components/Alert";
 import Loading from "@/components/Loading";
+import Table from "@/components/Table";
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
 import type { AuctionsPageLogic } from "../../page";
@@ -33,61 +34,56 @@ const AuctionsPageView = ({ auctions, isLoading, error, getStatusBadge }: Auctio
           <p className="text-gray-500">オークションがありません</p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          {/* TODO: テーブルのコンポーネントを作成する */}
-          <table className="w-full bg-white shadow rounded-lg">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">名前</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  ステータス
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  開始日時
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  終了日時
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  支払期限
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  タイプ
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">詳細</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">編集</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {auctions.map((auction) => (
-                <tr key={auction.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{auction.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{auction.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{getStatusBadge(auction.status)}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(auction.start_at)}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(auction.end_at)}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(auction.payment_deadline_at)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {auction.is_sealed ? "封印入札" : "公開増価"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href={`/admin/auctions/${auction.id}`} className="text-blue-600 hover:text-blue-900">
-                      詳細
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a href={`/admin/auctions/${auction.id}/edit`} className="text-blue-600 hover:text-blue-900">
-                      編集
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          data={auctions}
+          keyExtractor={(auction) => auction.id}
+          columns={[
+            {
+              header: "ID",
+              accessor: "id",
+            },
+            {
+              header: "名前",
+              accessor: "name",
+            },
+            {
+              header: "ステータス",
+              accessor: (auction) => getStatusBadge(auction.status),
+            },
+            {
+              header: "開始日時",
+              accessor: (auction) => formatDate(auction.start_at),
+            },
+            {
+              header: "終了日時",
+              accessor: (auction) => formatDate(auction.end_at),
+            },
+            {
+              header: "支払期限",
+              accessor: (auction) => formatDate(auction.payment_deadline_at),
+            },
+            {
+              header: "タイプ",
+              accessor: (auction) => (auction.is_sealed ? "封印入札" : "公開増価"),
+            },
+            {
+              header: "",
+              accessor: (auction) => (
+                <Link href={`/admin/auctions/${auction.id}`} className="text-blue-600 hover:text-blue-900">
+                  詳細
+                </Link>
+              ),
+            },
+            {
+              header: "",
+              accessor: (auction) => (
+                <Link href={`/admin/auctions/${auction.id}/edit`} className="text-blue-600 hover:text-blue-900">
+                  編集
+                </Link>
+              ),
+            },
+          ]}
+        />
       )}
     </div>
   );
