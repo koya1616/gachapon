@@ -31,6 +31,7 @@ export interface CreateAuctionApiRequestBody {
   allowBidRetraction: boolean;
   needPaymentInfo: boolean;
   productId: number;
+  minimumBid: number;
 }
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();
@@ -53,6 +54,7 @@ export async function POST(request: NextRequest) {
       allow_bid_retraction: body.allowBidRetraction,
       need_payment_info: body.needPaymentInfo,
       product_id: body.productId,
+      minimum_bid: body.minimumBid,
     });
 
     return NextResponse.json({ message: "オークションが作成されました", data: auction }, { status: 201 });

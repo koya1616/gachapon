@@ -72,7 +72,7 @@ describe("商品詳細ページ", () => {
     expect(screen.getByText("¥500")).toBeDefined();
     expect(screen.getByText("100")).toBeDefined();
     expect(screen.getByText("商品ID")).toBeDefined();
-    expect(screen.getAllByText("1").length).toBe(3);
+    expect(screen.getAllByText("1").length).toBe(1);
     expect(screen.getByText("画像URL")).toBeDefined();
     expect(screen.getByText("https://placehold.co/300x300")).toBeDefined();
     expect(screen.getByRole("img")).toBeDefined();

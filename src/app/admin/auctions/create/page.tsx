@@ -18,6 +18,7 @@ export interface CreateAuctionLogic {
     allowBidRetraction: boolean;
     needPaymentInfo: boolean;
     productId: number;
+    minimumBid: number;
   };
   products: Product[];
   loading: boolean;
@@ -54,6 +55,7 @@ const useCreateAuction = (): CreateAuctionLogic => {
     allowBidRetraction: false,
     needPaymentInfo: true,
     productId: 0,
+    minimumBid: 100,
   });
 
   const fetchProducts = useCallback(async () => {
@@ -130,12 +132,17 @@ const useCreateAuction = (): CreateAuctionLogic => {
           throw new Error("終了日時は支払期限より前である必要があります");
         }
 
+        if (formData.minimumBid <= 0) {
+          throw new Error("最低入札額は1以上である必要があります");
+        }
+
         const body: CreateAuctionApiRequestBody = {
           ...formData,
           startAt: new Date(formData.startAt).getTime(),
           endAt: new Date(formData.endAt).getTime(),
           paymentDeadlineAt: new Date(formData.paymentDeadlineAt).getTime(),
           productId: formData.productId,
+          minimumBid: formData.minimumBid,
         };
 
         const response = await fetch("/api/auction", {

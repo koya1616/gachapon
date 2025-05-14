@@ -223,6 +223,7 @@ export const mockAuctionData: Auction[] = [
     need_payment_info: true,
     created_at: new Date("2025-05-01T10:00:00").getTime(),
     product_id: 1,
+    minimum_bid: 1000,
   },
   {
     id: 2,
@@ -237,6 +238,7 @@ export const mockAuctionData: Auction[] = [
     need_payment_info: true,
     created_at: new Date("2025-06-01T14:30:00").getTime(),
     product_id: 2,
+    minimum_bid: 2000,
   },
 ];
 
@@ -253,6 +255,7 @@ export const mockAuction = {
   need_payment_info: true,
   created_at: Date.now() - 604800000,
   product_id: 1,
+  minimum_bid: 3000,
 };
 
 export const mockBids = [

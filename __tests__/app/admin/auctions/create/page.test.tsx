@@ -185,6 +185,30 @@ describe("オークション作成ページ", () => {
     );
   });
 
+  it("最低入札額が1未満の場合、エラーメッセージが表示されること", async () => {
+    render(<CreateAuctionPage />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("loading")).toBeDefined();
+    });
+
+    const nameInput = screen.getByLabelText("オークション名 *");
+    fireEvent.change(nameInput, { target: { value: "テストオークション" } });
+
+    const productSelect = screen.getByLabelText("商品 *");
+    fireEvent.change(productSelect, { target: { value: "1" } });
+
+    const minimumBidInput = screen.getByLabelText("最低入札額 *");
+    fireEvent.change(minimumBidInput, { target: { value: "0" } });
+
+    const saveButton = screen.getByText("保存する");
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("最低入札額は1以上である必要があります")).toBeDefined();
+    });
+  });
+
   it("APIエラーが発生した場合、エラーメッセージが表示されること", async () => {
     vi.mocked(fetch).mockImplementation((url, options) => {
       if (url === "/api/product") {

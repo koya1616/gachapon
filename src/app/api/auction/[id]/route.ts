@@ -48,6 +48,7 @@ export type UpdateAuctionApiRequestBody = {
   allowBidRetraction?: boolean;
   needPaymentInfo?: boolean;
   productId?: number;
+  minimumBid?: number;
 };
 
 export async function PUT(request: NextRequest) {
@@ -79,6 +80,7 @@ export async function PUT(request: NextRequest) {
         data.allowBidRetraction !== undefined ? data.allowBidRetraction : existingAuction.allow_bid_retraction,
       need_payment_info: data.needPaymentInfo !== undefined ? data.needPaymentInfo : existingAuction.need_payment_info,
       product_id: data.productId || existingAuction.product_id,
+      minimum_bid: data.minimumBid || existingAuction.minimum_bid,
     };
 
     await updateAuction(updateData);

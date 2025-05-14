@@ -229,6 +229,17 @@ describe("オークション編集ページ", () => {
       });
     });
 
+    it("最低入札額が1未満の場合、エラーメッセージが表示されること", async () => {
+      await validateApiCalls();
+      const minimumBidInput = screen.getByLabelText("最低入札額 *");
+      fireEvent.change(minimumBidInput, { target: { value: "0" } });
+      const submitButton = screen.getByText("保存する");
+      fireEvent.click(submitButton);
+      await waitFor(() => {
+        expect(screen.getByText("最低入札額は1以上である必要があります")).toBeDefined();
+      });
+    });
+
     it("API更新に失敗した場合、エラーメッセージが表示されること", async () => {
       await validateApiCalls();
 

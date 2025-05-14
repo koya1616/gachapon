@@ -3,8 +3,8 @@ import { executeQuery } from "..";
 
 export const createAuction = async (auction: Omit<Auction, "id" | "created_at">): Promise<Auction> => {
   const query = `
-    INSERT INTO auctions (name, description, start_at, end_at, payment_deadline_at, status, is_sealed, allow_bid_retraction, need_payment_info, product_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    INSERT INTO auctions (name, description, start_at, end_at, payment_deadline_at, status, is_sealed, allow_bid_retraction, need_payment_info, product_id, minimum_bid)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     RETURNING *
   `;
   const params = [
@@ -18,6 +18,7 @@ export const createAuction = async (auction: Omit<Auction, "id" | "created_at">)
     auction.allow_bid_retraction,
     auction.need_payment_info,
     auction.product_id,
+    auction.minimum_bid,
   ];
   const auctions = await executeQuery<Auction>(query, params);
   return auctions[0];
@@ -39,8 +40,8 @@ export const findAuctionById = async (id: number): Promise<Auction | null> => {
 export const updateAuction = async (auction: Omit<Auction, "created_at">): Promise<Auction> => {
   const query = `
     UPDATE auctions
-    SET name = $1, description = $2, start_at = $3, end_at = $4, payment_deadline_at = $5, status = $6, is_sealed = $7, allow_bid_retraction = $8, need_payment_info = $9, product_id = $10
-    WHERE id = $11
+    SET name = $1, description = $2, start_at = $3, end_at = $4, payment_deadline_at = $5, status = $6, is_sealed = $7, allow_bid_retraction = $8, need_payment_info = $9, product_id = $10, minimum_bid = $11
+    WHERE id = $12
     RETURNING *
   `;
   const params = [
@@ -54,6 +55,7 @@ export const updateAuction = async (auction: Omit<Auction, "created_at">): Promi
     auction.allow_bid_retraction,
     auction.need_payment_info,
     auction.product_id,
+    auction.minimum_bid,
     auction.id,
   ];
   const auctions = await executeQuery<Auction>(query, params);

@@ -25,6 +25,7 @@ const mockFormData = {
   allowBidRetraction: false,
   needPaymentInfo: true,
   productId: 1,
+  minimumBid: 100,
 };
 
 const mockProducts = [

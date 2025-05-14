@@ -77,6 +77,7 @@ export class AuctionFactory {
       allow_bid_retraction: allow_bid_retraction !== undefined ? allow_bid_retraction : true,
       need_payment_info: need_payment_info !== undefined ? need_payment_info : false,
       product_id: product_id,
+      minimum_bid: 1000,
     });
 
     const factory = new AuctionFactory(

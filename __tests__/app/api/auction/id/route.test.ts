@@ -206,6 +206,7 @@ describe("PUT /api/auction/[id]", () => {
       allow_bid_retraction: existingAuction.allow_bid_retraction,
       need_payment_info: existingAuction.need_payment_info,
       product_id: existingAuction.product_id,
+      minimum_bid: existingAuction.minimum_bid,
     });
   });
 
@@ -270,6 +271,7 @@ describe("PUT /api/auction/[id]", () => {
       allowBidRetraction: false,
       needPaymentInfo: true,
       productId: 3,
+      minimumBid: existingAuction.minimum_bid,
     };
 
     const updatedAuction = {
@@ -284,6 +286,7 @@ describe("PUT /api/auction/[id]", () => {
       allow_bid_retraction: false,
       need_payment_info: true,
       product_id: 3,
+      minimum_bid: existingAuction.minimum_bid,
       created_at: existingAuction.created_at,
     };
 
@@ -309,6 +312,7 @@ describe("PUT /api/auction/[id]", () => {
       allow_bid_retraction: auctionData.allowBidRetraction,
       need_payment_info: auctionData.needPaymentInfo,
       product_id: auctionData.productId,
+      minimum_bid: existingAuction.minimum_bid,
     });
   });
 });

@@ -45,6 +45,7 @@ describe("Auctionsテーブルに関するテスト", () => {
         allow_bid_retraction: false,
         need_payment_info: true,
         product_id: product.id,
+        minimum_bid: 1000,
       });
 
       expect(result.id).not.toBeNull();
@@ -137,6 +138,7 @@ describe("Auctionsテーブルに関するテスト", () => {
         is_sealed: true,
         allow_bid_retraction: false,
         need_payment_info: true,
+        minimum_bid: 4000,
       };
 
       const result = await updateAuction(updatedAuction);
@@ -152,6 +154,7 @@ describe("Auctionsテーブルに関するテスト", () => {
       expect(result.allow_bid_retraction).toBe(false);
       expect(result.need_payment_info).toBe(true);
       expect(result.product_id).toBe(auction.product_id);
+      expect(result.minimum_bid).toBe(4000);
       expect(Number(result.created_at)).toBeGreaterThan(0);
 
       expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys));

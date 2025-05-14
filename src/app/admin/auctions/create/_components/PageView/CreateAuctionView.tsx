@@ -130,6 +130,20 @@ const CreateAuctionView = ({
                 <option value={AuctionStatus.CANCELLED}>キャンセル</option>
               </select>
             </div>
+
+            <div className="sm:col-span-3">
+              <label htmlFor="minimumBid" className="block text-sm font-medium text-gray-700 mb-1">
+                最低入札額 <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                id="minimumBid"
+                name="minimumBid"
+                value={formData.minimumBid}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
         </div>
 

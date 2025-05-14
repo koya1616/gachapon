@@ -28,6 +28,7 @@ export const Default: Story = {
       allowBidRetraction: true,
       needPaymentInfo: true,
       productId: 0,
+      minimumBid: 100,
     },
     products: mockProducts,
     loading: false,

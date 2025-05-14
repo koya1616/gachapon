@@ -21,6 +21,7 @@ export interface EditAuctionLogic {
     allowBidRetraction: boolean;
     needPaymentInfo: boolean;
     productId: number;
+    minimumBid: number;
   };
   products: Product[];
   loading: boolean;
@@ -54,6 +55,7 @@ const useEditAuction = (): EditAuctionLogic => {
     allowBidRetraction: false,
     needPaymentInfo: false,
     productId: 0,
+    minimumBid: 0,
   });
 
   const fetchAuctionDetail = useCallback(async () => {
@@ -90,6 +92,7 @@ const useEditAuction = (): EditAuctionLogic => {
         allowBidRetraction: auction.allow_bid_retraction,
         needPaymentInfo: auction.need_payment_info,
         productId: auction.product_id,
+        minimumBid: auction.minimum_bid,
       });
 
       const productResponse = await fetch("/api/product");
@@ -171,6 +174,10 @@ const useEditAuction = (): EditAuctionLogic => {
 
         if (endDate >= paymentDeadlineDate) {
           throw new Error("終了日時は支払期限より前である必要があります");
+        }
+
+        if (formData.minimumBid <= 0) {
+          throw new Error("最低入札額は1以上である必要があります");
         }
 
         const body: UpdateAuctionApiRequestBody = {

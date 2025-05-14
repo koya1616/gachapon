@@ -50,6 +50,10 @@ const AuctionDetailView = ({
             <span className="text-gray-800">{auction.need_payment_info ? "必要" : "不要"}</span>
           </div>
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100">
+            <span className="text-gray-600 font-medium mb-1 sm:mb-0">最低入札額</span>
+            <span className="text-gray-800">¥{auction.minimum_bid.toLocaleString()}</span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100">
             <span className="text-gray-600 font-medium mb-1 sm:mb-0">開始日時</span>
             <span className="text-gray-800">{formatDate(auction.start_at)}</span>
           </div>
