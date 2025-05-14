@@ -7,6 +7,7 @@ import LotteryDetailView from "./LotteryDetailView";
 const meta: Meta<typeof LotteryDetailView> = {
   title: "Admin/Lotteries/id",
   component: LotteryDetailView,
+  tags: ["autodocs"],
 };
 
 export default meta;

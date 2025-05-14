@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import Tab from "@/components/Tab";
+import Table from "@/components/Table";
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
 import type { LotteryDetailLogic } from "../../page";
@@ -143,40 +144,28 @@ const LotteryDetailView = ({
       <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">応募状況</h2>
       <div>
         {entries?.length > 0 ? (
-          <div className="overflow-x-auto rounded-lg border border-gray-200">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    応募ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    ユーザーID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    商品ID
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    結果
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {entries.map((entry) => (
-                  <tr key={entry.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{entry.id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{entry.user_id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {entry.product_id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {getEntryResultBadge(entry.result)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table
+            data={entries}
+            keyExtractor={(entry) => entry.id}
+            columns={[
+              {
+                header: "応募ID",
+                accessor: "id",
+              },
+              {
+                header: "ユーザーID",
+                accessor: "user_id",
+              },
+              {
+                header: "商品ID",
+                accessor: "product_id",
+              },
+              {
+                header: "結果",
+                accessor: (entry) => getEntryResultBadge(entry.result),
+              },
+            ]}
+          />
         ) : (
           <div className="text-center py-12 bg-gray-50 rounded-lg">
             <p className="text-gray-500 font-medium">応募はありません。</p>
