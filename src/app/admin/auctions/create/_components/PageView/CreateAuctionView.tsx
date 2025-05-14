@@ -195,7 +195,7 @@ const CreateAuctionView = ({
                   封印入札
                 </label>
                 <p className="text-gray-500">
-                  各入札者が一度だけ秘密裏に入札額を提示し、最も高い価格を提示した人が落札する形式。
+                  （ONにしてください）各入札者が一度だけ秘密裏に入札額を提示し、最も高い価格を提示した人が落札する形式。
                 </p>
               </div>
             </div>
@@ -214,7 +214,7 @@ const CreateAuctionView = ({
                 <label htmlFor="allowBidRetraction" className="font-medium text-gray-700">
                   入札取り消し許可
                 </label>
-                <p className="text-gray-500">ユーザーが入札を取り消せるようにします</p>
+                <p className="text-gray-500">（OFFにしてください）ユーザーが入札を取り消せるようにします</p>
               </div>
             </div>
             <div className="flex items-start">
@@ -232,7 +232,7 @@ const CreateAuctionView = ({
                 <label htmlFor="needPaymentInfo" className="font-medium text-gray-700">
                   支払い情報必須
                 </label>
-                <p className="text-gray-500">入札前に支払い情報の登録を必須にします。最初の頃はOFFにする</p>
+                <p className="text-gray-500">（OFFにしてください）入札前に支払い情報の登録を必須にします。</p>
               </div>
             </div>
           </div>
