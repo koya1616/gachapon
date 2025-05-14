@@ -99,7 +99,8 @@ export const HeaderView = React.memo(
 const useHeader = (lang: Lang): HeaderLogic => {
   const router = useRouter();
   const path = usePathname();
-  const showCart = !path.includes("/login") && !path.includes("/signup") && !path.includes("/account");
+  const showCart =
+    !path.includes("/login") && !path.includes("/signup") && !path.includes("/account") && !path.includes("/top");
   const { cart, isCartOpen, totalPrice, toggleCart, closeCart, updateQuantity, removeFromCart, clear_cart } = useCart();
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
