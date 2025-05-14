@@ -1,6 +1,7 @@
 import AddressForm from "@/app/[lang]/_components/AddressForm";
 import LogoutButton from "@/app/[lang]/account/_components/LogoutButton";
 import OrderStatusBadge from "@/components/OrderStatusBadge";
+import Table from "@/components/Table";
 import { formatDate } from "@/lib/date";
 import { useTranslation as t } from "@/lib/translations";
 import type { Lang, Order } from "@/types";
@@ -23,45 +24,35 @@ const AccountPageView = ({ orders, l }: AccountPageLogic & { l: Lang }) => {
         <h2 className="text-xl font-medium mb-4">{t(l).account.order_history}</h2>
         {orders.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr>
-                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.order_id}
-                  </th>
-                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.order_date}
-                  </th>
-                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    {t(l).account.status}
-                  </th>
-                  <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" />
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {orders.map((order) => (
-                  <tr key={order.paypay_payment_id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
-                      {order.paypay_payment_id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(order.created_at)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <OrderStatusBadge order={order} lang={l} />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Link
-                        href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
-                        className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
-                      >
-                        {t(l).account.detail}
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <Table
+              data={orders}
+              keyExtractor={(order) => order.paypay_payment_id}
+              columns={[
+                {
+                  header: t(l).account.order_id,
+                  accessor: (order) => order.paypay_payment_id,
+                },
+                {
+                  header: t(l).account.order_date,
+                  accessor: (order) => formatDate(order.created_at),
+                },
+                {
+                  header: t(l).account.status,
+                  accessor: (order) => <OrderStatusBadge order={order} lang={l} />,
+                },
+                {
+                  header: "",
+                  accessor: (order) => (
+                    <Link
+                      href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
+                      className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
+                    >
+                      {t(l).account.detail}
+                    </Link>
+                  ),
+                },
+              ]}
+            />
           </div>
         ) : (
           <p className="text-gray-500">{t(l).account.no_orders}</p>
