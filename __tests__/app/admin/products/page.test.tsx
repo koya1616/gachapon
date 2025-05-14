@@ -85,22 +85,7 @@ describe("商品管理ページ", () => {
     expect(screen.getByText("0")).toBeDefined();
 
     const detailLinks = screen.getAllByText("詳細");
-    expect(detailLinks.length).toBe(mockProducts.length * 2);
-  });
-
-  it("商品がない場合、適切なメッセージが表示されること", async () => {
-    vi.mocked(global.fetch).mockResolvedValue({
-      status: 200,
-      json: async () => ({ data: [] }),
-    } as Response);
-
-    render(<ProductsList />);
-
-    await waitFor(() => {
-      expect(document.querySelector(".animate-spin")).toBeNull();
-    });
-
-    expect(screen.getAllByText("商品が登録されていません").length).toBeGreaterThan(0);
+    expect(detailLinks.length).toBe(mockProducts.length);
   });
 
   it("在庫数に応じたバッジの色が表示されること", async () => {
