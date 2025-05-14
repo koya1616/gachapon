@@ -97,40 +97,32 @@ const LotteryDetailView = ({
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
       <h2 className="text-lg font-semibold mb-4 flex items-center text-gray-800">商品一覧</h2>
       {products && products.length > 0 ? (
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  商品ID
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  商品名
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  商品画像
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">価格</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="relative h-16 w-16 rounded-md overflow-hidden">
-                      <img src={product.image} alt={product.name} className="object-cover h-16 w-16 rounded-md" />
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                    ¥{product.price?.toLocaleString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          data={products}
+          keyExtractor={(product) => product.id}
+          columns={[
+            {
+              header: "商品ID",
+              accessor: "id",
+            },
+            {
+              header: "商品名",
+              accessor: "name",
+            },
+            {
+              header: "商品画像",
+              accessor: (product) => (
+                <div className="relative h-16 w-16 rounded-md overflow-hidden">
+                  <img src={product.image} alt={product.name} className="object-cover h-16 w-16 rounded-md" />
+                </div>
+              ),
+            },
+            {
+              header: "価格",
+              accessor: (product) => `¥${product.price?.toLocaleString()}`,
+            },
+          ]}
+        />
       ) : (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <p className="text-gray-500 font-medium">商品はありません。</p>
