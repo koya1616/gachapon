@@ -100,5 +100,5 @@ export {
   updateShipmentStatus,
   createShipment,
 } from "./shipments/query";
-export { createAuction, getAuctions, findAuctionById, updateAuction, findAuctionByProductId } from "./auctions/query";
+export { createAuction, getAuctions, findAuctionById, updateAuction, getAuctionsByProductId } from "./auctions/query";
 export { createSealedBid, getSealedBidsAuctionId } from "./sealed_bids/query";

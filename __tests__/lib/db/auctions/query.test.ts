@@ -1,4 +1,4 @@
-import { createAuction, findAuctionById, findAuctionByProductId, getAuctions, updateAuction } from "@/lib/db";
+import { createAuction, findAuctionById, getAuctions, getAuctionsByProductId, updateAuction } from "@/lib/db";
 import type { Auction } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AuctionFactory } from "../../../factory/auction";
@@ -158,15 +158,20 @@ describe("Auctionsテーブルに関するテスト", () => {
     });
   });
 
-  describe("findAuctionByProductId", () => {
+  describe("getAuctionsByProductId", () => {
     beforeAll(async () => {
       auction = await setUpAuction();
     });
 
     it("オークションレコードが商品IDで取得できること", async () => {
-      const result = await findAuctionByProductId(auction.product_id);
+      const results = await getAuctionsByProductId(auction.product_id);
 
-      expect(result).not.toBeNull();
+      expect(results).not.toBeNull();
+      expect(results.length).toBeGreaterThan(0);
+
+      const result = results.find((a) => a.id === auction.id);
+
+      expect(result).not.toBeUndefined();
       expect(result?.id).toBe(auction.id);
       expect(result?.name).toBe(auction.name);
       expect(result?.description).toBe(auction.description);
