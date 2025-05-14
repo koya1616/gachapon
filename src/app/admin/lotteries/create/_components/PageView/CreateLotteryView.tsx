@@ -20,6 +20,9 @@ const CreateLotteryView = ({
   handleProductChange,
   handleSubmit,
 }: CreateLotteryLogic) => {
+  if (success) {
+    return <Alert text="抽選イベントが正常に作成されました。抽選一覧ページにリダイレクトします..." type="success" />;
+  }
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="md:flex md:items-center md:justify-between mb-6">
@@ -215,10 +218,6 @@ const CreateLotteryView = ({
         </div>
 
         {error && <Alert text={error} type="error" />}
-
-        {success && (
-          <Alert text="抽選イベントが正常に作成されました。抽選一覧ページにリダイレクトします..." type="success" />
-        )}
 
         <div className="pt-5">
           <div className="flex justify-end gap-4">

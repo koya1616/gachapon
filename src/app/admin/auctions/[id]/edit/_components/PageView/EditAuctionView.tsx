@@ -43,8 +43,6 @@ const EditAuctionView = ({
         </div>
       </div>
 
-      {error && <Alert text={error} type="error" />}
-
       <form onSubmit={handleSubmit} className="space-y-1">
         <div className="space-y-6">
           <div>
@@ -171,7 +169,7 @@ const EditAuctionView = ({
           </div>
         </div>
 
-        <div className="pt-8">
+        <div className="pt-8 pb-2">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">オークション設定</h3>
             <p className="mt-1 text-sm text-gray-500">オークションの設定オプションを選択してください。</p>
@@ -237,22 +235,22 @@ const EditAuctionView = ({
           </div>
         </div>
 
-        <div className="pt-5">
-          <div className="flex justify-end gap-4">
-            {loading ? (
-              <Loading />
-            ) : (
-              <>
-                <Link
-                  href={`/admin/auctions/${formData.id}`}
-                  className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  キャンセル
-                </Link>
-                <Button label="保存する" type="submit" color="blue" />
-              </>
-            )}
-          </div>
+        {error && <Alert text={error} type="error" />}
+
+        <div className="flex justify-end gap-4">
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <Link
+                href={`/admin/auctions/${formData.id}`}
+                className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                キャンセル
+              </Link>
+              <Button label="保存する" type="submit" color="blue" />
+            </>
+          )}
         </div>
       </form>
     </div>
