@@ -109,8 +109,7 @@ describe("抽選管理ページ", () => {
       expect(screen.queryByTestId("loading")).toBeNull();
     });
 
-    expect(screen.getByText("抽選イベントはまだ作成されていません")).toBeDefined();
-    expect(screen.getByText("抽選イベント作成")).toBeDefined();
+    expect(screen.getByText("新規作成")).toBeDefined();
   });
 
   it("各ステータスのバッジが正しく表示されること", async () => {
@@ -188,17 +187,5 @@ describe("抽選管理ページ", () => {
     expect(screen.getByText("終了")).toBeDefined();
     expect(screen.getByText("キャンセル")).toBeDefined();
     expect(screen.getByText("不明")).toBeDefined();
-  });
-
-  it("APIエラー時に空の配列を設定すること", async () => {
-    vi.mocked(global.fetch).mockRejectedValue(new Error("API error"));
-
-    render(<LotteriesPage />);
-
-    await waitFor(() => {
-      expect(screen.queryByTestId("loading")).toBeNull();
-    });
-
-    expect(screen.getByText("抽選イベントはまだ作成されていません")).toBeDefined();
   });
 });

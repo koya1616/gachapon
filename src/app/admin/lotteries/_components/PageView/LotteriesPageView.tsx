@@ -59,6 +59,22 @@ const LotteriesPageView = ({ lotteries, loading, getStatusBadge }: LotteriesPage
               header: "ステータス",
               accessor: (lottery) => getStatusBadge(lottery.status),
             },
+            {
+              header: "",
+              accessor: (lottery) => (
+                <Link href={`/admin/lotteries/${lottery.id}`} className="text-blue-600 hover:text-blue-900">
+                  詳細
+                </Link>
+              ),
+            },
+            {
+              header: "",
+              accessor: (lottery) => (
+                <Link href={`/admin/lotteries/${lottery.id}/edit`} className="text-blue-600 hover:text-blue-900">
+                  編集
+                </Link>
+              ),
+            },
           ]}
         />
       )}
