@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description: "gachapon",
 };
 
-export default async function RootLayout({
+const RootLayout = async ({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
-}>) {
+}>) => {
   const { lang } = await params;
   if (!LANGS.includes(lang)) redirect("/ja");
 
@@ -32,4 +32,6 @@ export default async function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
