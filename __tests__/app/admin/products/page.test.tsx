@@ -56,8 +56,6 @@ describe("商品管理ページ", () => {
 
     render(<ProductsList />);
 
-    expect(screen.getByText("商品一覧")).toBeDefined();
-    expect(screen.getByRole("heading", { name: "商品一覧" })).toBeDefined();
     const spinner = document.querySelector(".animate-spin");
     expect(spinner).toBeDefined();
   });

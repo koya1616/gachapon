@@ -9,7 +9,14 @@ interface PaymentLogic {
 const PaymentView = ({ orders }: PaymentLogic) => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">決済履歴</h1>
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center">
+            <div className="h-10 w-1 bg-blue-600 rounded-full mr-3 hidden sm:block" aria-hidden="true" />
+            <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">決済履歴</h2>
+          </div>
+        </div>
+      </div>
 
       <div className="hidden md:block bg-white shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">

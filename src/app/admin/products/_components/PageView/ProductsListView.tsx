@@ -4,26 +4,25 @@ import Link from "next/link";
 import type { ProductsListLogic } from "../../page";
 
 const ProductsListView = ({ products, loading }: ProductsListLogic) => {
-  if (loading) {
-    return (
-      <div className="max-w-6xl mx-auto p-4 sm:p-6">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">商品一覧</h1>
-        <Loading />
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">商品一覧</h1>
-
-      <div className="flex justify-end mb-4 sm:mb-6">
-        <Link
-          href="/admin/upload"
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center"
-        >
-          商品を追加
-        </Link>
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center">
+            <div className="h-10 w-1 bg-blue-600 rounded-full mr-3 hidden sm:block" aria-hidden="true" />
+            <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">商品一覧</h2>
+          </div>
+          <div className="mt-4 sm:mt-0">
+            <Link
+              href="/admin/upload"
+              className="w-full sm:w-auto flex items-center justify-center px-5 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium text-sm transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              商品を追加
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className="hidden md:block overflow-x-auto">
