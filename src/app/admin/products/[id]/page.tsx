@@ -1,14 +1,15 @@
 "use client";
 
 import type { ProductResponse } from "@/app/api/product/[id]/route";
-import type { LotteryEvent, Product } from "@/types";
+import type { Auction, LotteryEvent, Product } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductDetailView from "./_components/PageView";
 
-export interface ProductDetailLogicResult {
+export interface ProductDetailLogic {
   product: Product | null;
   lotteryEvents: LotteryEvent[];
+  auctions: Auction[];
   loading: boolean;
   error: string | null;
   isEditing: boolean;
@@ -27,10 +28,11 @@ export interface ProductDetailLogicResult {
   setIsEditing: (isEditing: boolean) => void;
 }
 
-const useProductDetail = (): ProductDetailLogicResult => {
+const useProductDetail = (): ProductDetailLogic => {
   const params = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [lotteryEvents, setLotteryEvents] = useState<LotteryEvent[]>([]);
+  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -61,6 +63,7 @@ const useProductDetail = (): ProductDetailLogicResult => {
             stock_quantity: String(data.product.stock_quantity),
           });
           setLotteryEvents(data.lotteryEvents);
+          setAuctions(data.auctions);
         })
         .catch(() => {
           setError("商品詳細の取得に失敗しました。");
@@ -120,6 +123,7 @@ const useProductDetail = (): ProductDetailLogicResult => {
 
   return {
     product,
+    auctions,
     lotteryEvents,
     loading,
     error,

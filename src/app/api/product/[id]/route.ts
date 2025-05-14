@@ -1,11 +1,11 @@
 import { ADMIN_CODE } from "@/const/cookies";
-import { findProductById, getLotteryEventsByProductId, updateProductById } from "@/lib/db";
-import type { LotteryEvent, Product } from "@/types";
+import { findProductById, getAuctionsByProductId, getLotteryEventsByProductId, updateProductById } from "@/lib/db";
+import type { Auction, LotteryEvent, Product } from "@/types";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export type ProductResponse = { product: Product; lotteryEvents: LotteryEvent[] };
+export type ProductResponse = { product: Product; lotteryEvents: LotteryEvent[]; auctions: Auction[] };
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   const product = await findProductById(Number(id));
@@ -14,7 +14,8 @@ export async function GET(request: NextRequest) {
   }
 
   const lotteryEvents = await getLotteryEventsByProductId(Number(id));
-  const data: ProductResponse = { product, lotteryEvents };
+  const auctions = await getAuctionsByProductId(Number(id));
+  const data: ProductResponse = { product, lotteryEvents, auctions };
   return NextResponse.json({ message: "OK", data }, { status: 200 });
 }
 

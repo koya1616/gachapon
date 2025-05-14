@@ -109,6 +109,7 @@ export enum LotteryEntryResult {
   LOSE = 2,
 }
 
+// TODO: 最低金額カラムを追加
 export type Auction = {
   id: number;
   name: string;

@@ -1,7 +1,7 @@
 import { GET, PUT } from "@/app/api/product/[id]/route";
 import { ADMIN_CODE } from "@/const/cookies";
-import { findProductById, getLotteryEventsByProductId, updateProductById } from "@/lib/db";
-import { mockLotteryEvents, mockProducts } from "@/mocks/data";
+import { findProductById, getAuctionsByProductId, getLotteryEventsByProductId, updateProductById } from "@/lib/db";
+import { mockAuction, mockLotteryEvents, mockProducts } from "@/mocks/data";
 import type { Product } from "@/types";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
@@ -16,6 +16,7 @@ vi.mock("@/lib/db", () => ({
   findProductById: vi.fn(),
   updateProductById: vi.fn(),
   getLotteryEventsByProductId: vi.fn(),
+  getAuctionsByProductId: vi.fn(),
 }));
 
 const mockCookieStore = (adminToken: string) => {
@@ -51,17 +52,23 @@ describe("GET /api/product/[id]", () => {
   it("存在する商品IDを送信して200と商品情報を返すこと", async () => {
     vi.mocked(findProductById).mockResolvedValue(mockProducts[0]);
     vi.mocked(getLotteryEventsByProductId).mockResolvedValue(mockLotteryEvents);
+    vi.mocked(getAuctionsByProductId).mockResolvedValue([mockAuction]);
 
     const request = createMockGetRequest(1);
     const response = await GET(request);
 
     expect(response.status).toBe(200);
     const data = await response.json();
-    expect(data).toEqual({ message: "OK", data: { product: mockProducts[0], lotteryEvents: mockLotteryEvents } });
+    expect(data).toEqual({
+      message: "OK",
+      data: { product: mockProducts[0], lotteryEvents: mockLotteryEvents, auctions: [mockAuction] },
+    });
     expect(findProductById).toHaveBeenCalledTimes(1);
     expect(findProductById).toHaveBeenCalledWith(1);
     expect(getLotteryEventsByProductId).toHaveBeenCalledTimes(1);
     expect(getLotteryEventsByProductId).toHaveBeenCalledWith(1);
+    expect(getAuctionsByProductId).toHaveBeenCalledTimes(1);
+    expect(getAuctionsByProductId).toHaveBeenCalledWith(1);
   });
 
   it("存在しない商品IDを送信して404を返すこと", async () => {

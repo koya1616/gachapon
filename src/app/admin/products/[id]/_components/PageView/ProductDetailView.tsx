@@ -2,11 +2,12 @@ import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
-import type { ProductDetailLogicResult } from "../../page";
+import type { ProductDetailLogic } from "../../page";
 
 const ProductDetailView = ({
   product,
   lotteryEvents,
+  auctions,
   loading,
   error,
   isEditing,
@@ -15,7 +16,7 @@ const ProductDetailView = ({
   handleInputChange,
   handleSubmit,
   setIsEditing,
-}: ProductDetailLogicResult) => {
+}: ProductDetailLogic) => {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto p-6">
@@ -203,6 +204,53 @@ const ProductDetailView = ({
                     <div className="mt-4">
                       <Link href={`/admin/lotteries/${lotteryEvent.id}`} className="text-blue-500 hover:text-blue-700">
                         抽選イベントの詳細を見る →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {auctions.length > 0 &&
+            auctions.map((auction) => (
+              <div key={auction.id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                <div className="p-6">
+                  <h2 className="text-xl font-bold mb-4">オークション情報</h2>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <h3 className="text-gray-600 text-sm">オークション名</h3>
+                        <p className="font-medium">{auction.name}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">オークションID</h3>
+                        <p className="font-medium">{auction.id}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                      <div>
+                        <h3 className="text-gray-600 text-sm">開始日時</h3>
+                        <p className="font-medium">{formatDate(auction.start_at)}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">終了日時</h3>
+                        <p className="font-medium">{formatDate(auction.end_at)}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">支払期限</h3>
+                        <p className="font-medium">{formatDate(auction.payment_deadline_at)}</p>
+                      </div>
+                    </div>
+
+                    {auction.description && (
+                      <div>
+                        <h3 className="text-gray-600 text-sm">説明</h3>
+                        <p className="whitespace-pre-wrap">{auction.description}</p>
+                      </div>
+                    )}
+                    <div className="mt-4">
+                      <Link href={`/admin/auctions/${auction.id}`} className="text-blue-500 hover:text-blue-700">
+                        オークションの詳細を見る →
                       </Link>
                     </div>
                   </div>
