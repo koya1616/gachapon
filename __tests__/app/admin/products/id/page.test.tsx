@@ -1,4 +1,5 @@
 import ProductDetail from "@/app/admin/products/[id]/page";
+import { mockLotteryEvents } from "@/mocks/data";
 import type { Product } from "@/types";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -60,7 +61,7 @@ describe("商品詳細ページ", () => {
 
   it("商品詳細が正しく表示されること", async () => {
     vi.mocked(global.fetch).mockResolvedValue({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     render(<ProductDetail />);
@@ -73,7 +74,7 @@ describe("商品詳細ページ", () => {
     expect(screen.getByText("¥1,000")).toBeDefined();
     expect(screen.getByText("20")).toBeDefined();
     expect(screen.getByText("商品ID")).toBeDefined();
-    expect(screen.getByText("1")).toBeDefined();
+    expect(screen.getAllByText("1").length).toBe(2);
     expect(screen.getByText("画像URL")).toBeDefined();
     expect(screen.getByText("/images/test-product.jpg")).toBeDefined();
     expect(screen.getByRole("img")).toBeDefined();
@@ -85,7 +86,7 @@ describe("商品詳細ページ", () => {
   it("編集ボタンをクリックすると編集フォームが表示されること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValue({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     render(<ProductDetail />);
@@ -112,7 +113,7 @@ describe("商品詳細ページ", () => {
   it("編集フォームでキャンセルボタンをクリックすると詳細表示に戻ること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValue({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     render(<ProductDetail />);
@@ -134,7 +135,7 @@ describe("商品詳細ページ", () => {
   it("編集フォームで値を変更して送信すると更新APIが呼ばれること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValueOnce({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     const updatedProduct = {
@@ -195,7 +196,7 @@ describe("商品詳細ページ", () => {
   it("API更新時にエラーが発生した場合、エラーメッセージが表示されること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValueOnce({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     vi.mocked(global.fetch).mockRejectedValueOnce(new Error("Update failed"));
@@ -218,7 +219,7 @@ describe("商品詳細ページ", () => {
   it("更新中はボタンが無効化され、テキストが変わること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValueOnce({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     vi.mocked(global.fetch).mockImplementationOnce(
@@ -228,7 +229,7 @@ describe("商品詳細ページ", () => {
             () =>
               resolve({
                 status: 200,
-                json: async () => ({ data: mockProduct }),
+                json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
               } as Response),
             100,
           ),
@@ -251,7 +252,7 @@ describe("商品詳細ページ", () => {
   it("認証エラー(401)の場合、ログインページにリダイレクトされること", async () => {
     const user = userEvent.setup();
     vi.mocked(global.fetch).mockResolvedValueOnce({
-      json: async () => ({ data: mockProduct }),
+      json: async () => ({ data: { product: mockProduct, lotteryEvents: mockLotteryEvents } }),
     } as Response);
 
     vi.mocked(global.fetch).mockResolvedValueOnce({

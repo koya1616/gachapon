@@ -1,4 +1,4 @@
-import { mockProducts } from "@/mocks/data";
+import { mockLotteryEvents, mockProducts } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
 import ProductDetailView from "./ProductDetailView";
 
@@ -17,6 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     product: mockProducts[0],
+    lotteryEvents: mockLotteryEvents,
     loading: false,
     error: null,
     isEditing: false,
@@ -42,6 +43,7 @@ export const Default: Story = {
 export const Loading: Story = {
   args: {
     product: null,
+    lotteryEvents: [],
     loading: true,
     error: null,
     isEditing: false,
@@ -64,6 +66,7 @@ export const Loading: Story = {
 export const NotSuccess: Story = {
   args: {
     product: null,
+    lotteryEvents: [],
     loading: false,
     error: "商品の取得中にエラーが発生しました。",
     isEditing: false,
@@ -86,6 +89,7 @@ export const NotSuccess: Story = {
 export const Editing: Story = {
   args: {
     product: mockProducts[0],
+    lotteryEvents: [],
     loading: false,
     error: null,
     isEditing: true,
@@ -111,6 +115,7 @@ export const Editing: Story = {
 export const Updating: Story = {
   args: {
     product: mockProducts[0],
+    lotteryEvents: [],
     loading: false,
     error: null,
     isEditing: true,
@@ -133,6 +138,7 @@ export const Updating: Story = {
 export const UpdateSuccess: Story = {
   args: {
     product: mockProducts[0],
+    lotteryEvents: [],
     loading: false,
     error: null,
     isEditing: false,
@@ -155,6 +161,7 @@ export const UpdateSuccess: Story = {
 export const UpdateError: Story = {
   args: {
     product: mockProducts[0],
+    lotteryEvents: [],
     loading: false,
     error: null,
     isEditing: true,
@@ -177,6 +184,7 @@ export const UpdateError: Story = {
 export const OutOfStock: Story = {
   args: {
     product: mockProducts[3],
+    lotteryEvents: [],
     loading: false,
     error: null,
     isEditing: false,

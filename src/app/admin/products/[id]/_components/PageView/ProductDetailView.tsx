@@ -1,10 +1,12 @@
 import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
+import { formatDate } from "@/lib/date";
 import Link from "next/link";
 import type { ProductDetailLogicResult } from "../../page";
 
 const ProductDetailView = ({
   product,
+  lotteryEvents,
   loading,
   error,
   isEditing,
@@ -122,37 +124,91 @@ const ProductDetailView = ({
           </form>
         </div>
       ) : (
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="md:flex">
-            <div className="md:w-1/3">
-              <img src={product.image} alt={product.name} className="w-full h-auto object-cover" />
-            </div>
-            <div className="p-6 md:w-2/3">
-              <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
+        <div className="space-y-6">
+          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/3">
+                <img src={product.image} alt={product.name} className="w-full h-auto object-cover" />
+              </div>
+              <div className="p-6 md:w-2/3">
+                <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
 
-              <div className="mb-6">
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <h3 className="text-gray-600 text-sm">商品ID</h3>
-                    <p className="font-medium">{product.id}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-gray-600 text-sm">価格</h3>
-                    <p className="font-medium text-xl">¥{product.price.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-gray-600 text-sm">在庫数</h3>
-                    <p className="font-medium">{product.stock_quantity}</p>
+                <div className="mb-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <h3 className="text-gray-600 text-sm">商品ID</h3>
+                      <p className="font-medium">{product.id}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-gray-600 text-sm">価格</h3>
+                      <p className="font-medium text-xl">¥{product.price.toLocaleString()}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-gray-600 text-sm">在庫数</h3>
+                      <p className="font-medium">{product.stock_quantity}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <h3 className="text-gray-600 text-sm mb-1">画像URL</h3>
-                <p className="text-sm break-all">{product.image}</p>
+                <div>
+                  <h3 className="text-gray-600 text-sm mb-1">画像URL</h3>
+                  <p className="text-sm break-all">{product.image}</p>
+                </div>
               </div>
             </div>
           </div>
+          {lotteryEvents.length > 0 &&
+            lotteryEvents.map((lotteryEvent) => (
+              <div key={lotteryEvent.id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                <div className="p-6">
+                  <h2 className="text-xl font-bold mb-4">抽選イベント情報</h2>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <h3 className="text-gray-600 text-sm">イベント名</h3>
+                        <p className="font-medium">{lotteryEvent.name}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">イベントID</h3>
+                        <p className="font-medium">{lotteryEvent.id}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                      <div>
+                        <h3 className="text-gray-600 text-sm">開始日時</h3>
+                        <p className="font-medium">{formatDate(lotteryEvent.start_at)}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">終了日時</h3>
+                        <p className="font-medium">{formatDate(lotteryEvent.end_at)}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">結果発表日時</h3>
+                        <p className="font-medium">{formatDate(lotteryEvent.result_at)}</p>
+                      </div>
+                      <div>
+                        <h3 className="text-gray-600 text-sm">支払期限</h3>
+                        <p className="font-medium">{formatDate(lotteryEvent.payment_deadline_at)}</p>
+                      </div>
+                    </div>
+
+                    {lotteryEvent.description && (
+                      <div>
+                        <h3 className="text-gray-600 text-sm">説明</h3>
+                        <p className="whitespace-pre-wrap">{lotteryEvent.description}</p>
+                      </div>
+                    )}
+
+                    <div className="mt-4">
+                      <Link href={`/admin/lotteries/${lotteryEvent.id}`} className="text-blue-500 hover:text-blue-700">
+                        抽選イベントの詳細を見る →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       )}
     </div>

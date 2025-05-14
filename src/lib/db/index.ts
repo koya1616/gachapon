@@ -79,7 +79,7 @@ export {
   createLotteryEvent,
   findLotteryEventById,
   updateLotteryEvent,
-  findLotteryEventByProductId,
+  getLotteryEventsByProductId,
 } from "./lotteryEvents/query";
 export { createPaymentProductsWithTransaction } from "./paymentProducts/transaction";
 export {

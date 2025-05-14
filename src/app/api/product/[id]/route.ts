@@ -1,17 +1,21 @@
 import { ADMIN_CODE } from "@/const/cookies";
-import { findProductById, updateProductById } from "@/lib/db";
-import type { Product } from "@/types";
+import { findProductById, getLotteryEventsByProductId, updateProductById } from "@/lib/db";
+import type { LotteryEvent, Product } from "@/types";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+export type ProductResponse = { product: Product; lotteryEvents: LotteryEvent[] };
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
   const product = await findProductById(Number(id));
   if (!product) {
     return NextResponse.json({ message: "Not found", data: null }, { status: 404 });
   }
-  return NextResponse.json({ message: "OK", data: product }, { status: 200 });
+
+  const lotteryEvents = await getLotteryEventsByProductId(Number(id));
+  const data: ProductResponse = { product, lotteryEvents };
+  return NextResponse.json({ message: "OK", data }, { status: 200 });
 }
 
 export async function PUT(request: NextRequest) {

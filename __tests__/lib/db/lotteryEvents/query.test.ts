@@ -1,8 +1,8 @@
 import {
   createLotteryEvent,
   findLotteryEventById,
-  findLotteryEventByProductId,
   getLotteryEvents,
+  getLotteryEventsByProductId,
   updateLotteryEvent,
 } from "@/lib/db";
 import type { LotteryEvent } from "@/types";
@@ -144,12 +144,12 @@ describe("LotteryEventsテーブルに関するテスト", () => {
     });
 
     it("商品IDによって抽選イベントを取得できること", async () => {
-      const result = await findLotteryEventByProductId(product.id);
+      const result = await getLotteryEventsByProductId(product.id);
       expect(result).not.toBeNull();
-      expect(result?.id).toBe(lotteryEvent.id);
-      expect(result?.name).toBe(lotteryEvent.name);
-      expect(result?.description).toBe(lotteryEvent.description);
-      expect(Object.keys(result as LotteryEvent)).toEqual(expect.arrayContaining(typeKeys));
+      expect(result?.[0]?.id).toBe(lotteryEvent.id);
+      expect(result?.[0]?.name).toBe(lotteryEvent.name);
+      expect(result?.[0]?.description).toBe(lotteryEvent.description);
+      expect(Object.keys(result?.[0] as LotteryEvent)).toEqual(expect.arrayContaining(typeKeys));
     });
   });
 });

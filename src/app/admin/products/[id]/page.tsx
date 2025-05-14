@@ -1,12 +1,14 @@
 "use client";
 
-import type { Product } from "@/types";
+import type { ProductResponse } from "@/app/api/product/[id]/route";
+import type { LotteryEvent, Product } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductDetailView from "./_components/PageView";
 
 export interface ProductDetailLogicResult {
   product: Product | null;
+  lotteryEvents: LotteryEvent[];
   loading: boolean;
   error: string | null;
   isEditing: boolean;
@@ -28,6 +30,7 @@ export interface ProductDetailLogicResult {
 const useProductDetail = (): ProductDetailLogicResult => {
   const params = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [lotteryEvents, setLotteryEvents] = useState<LotteryEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -50,13 +53,14 @@ const useProductDetail = (): ProductDetailLogicResult => {
     const fetchProductDetail = async () => {
       await fetch(`/api/product/${params.id}`)
         .then(async (res) => {
-          const { data: product }: { data: Product } = await res.json();
-          setProduct(product);
+          const { data }: { data: ProductResponse } = await res.json();
+          setProduct(data.product);
           setEditForm({
-            name: product.name,
-            price: String(product.price),
-            stock_quantity: String(product.stock_quantity),
+            name: data.product.name,
+            price: String(data.product.price),
+            stock_quantity: String(data.product.stock_quantity),
           });
+          setLotteryEvents(data.lotteryEvents);
         })
         .catch(() => {
           setError("商品詳細の取得に失敗しました。");
@@ -116,6 +120,7 @@ const useProductDetail = (): ProductDetailLogicResult => {
 
   return {
     product,
+    lotteryEvents,
     loading,
     error,
     isEditing,
