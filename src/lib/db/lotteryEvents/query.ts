@@ -91,3 +91,14 @@ export const updateLotteryEvent = async (
   const result = await executeQuery<LotteryEvent>(query, values);
   return result.length > 0 ? result[0] : null;
 };
+
+export const findLotteryEventByProductId = async (productId: number): Promise<LotteryEvent | null> => {
+  const query = `
+    SELECT lottery_events.* FROM lottery_events
+    JOIN lottery_products ON lottery_events.id = lottery_products.lottery_event_id
+    WHERE lottery_products.product_id = $1
+  `;
+  const params = [productId];
+  const result = await executeQuery<LotteryEvent>(query, params);
+  return result.length > 0 ? result[0] : null;
+};
