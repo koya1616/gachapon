@@ -4,7 +4,6 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
 import { ProductFactory } from "../../../factory/product";
 import { UserFactory } from "../../../factory/user";
-import { Product } from "./../../../../src/types";
 
 let lotteryEvent: LotteryEventFactory;
 let user: UserFactory;
@@ -53,7 +52,6 @@ describe("LotteryEntriesテーブルに関するテスト", () => {
     });
 
     it("抽選エントリーレコードが作成できること", async () => {
-      console.log(lotteryEvent);
       const result = await createLotteryEntry(lotteryEvent.id, user.id, lotteryEvent.lotteryProducts?.[0].id as number);
       expect(result).not.toBeNull();
       expect(result.id).not.toBeNull();
