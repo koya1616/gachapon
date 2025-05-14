@@ -1,6 +1,6 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
 import type { Address, Auction, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
-import { type LotteryEvent, LotteryStatus } from "@/types";
+import { AuctionStatus, type LotteryEvent, LotteryStatus } from "@/types";
 
 export const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
 
@@ -237,5 +237,44 @@ export const mockAuctionData: Auction[] = [
     need_payment_info: true,
     created_at: new Date("2025-06-01T14:30:00").getTime(),
     product_id: 2,
+  },
+];
+
+export const mockAuction = {
+  id: 1,
+  name: "レアアイテムオークション",
+  description: "希少なコレクターズアイテムの特別オークションです。\n期間限定で開催します。",
+  start_at: Date.now() - 86400000,
+  end_at: Date.now() + 172800000,
+  payment_deadline_at: Date.now() + 432000000,
+  status: AuctionStatus.ACTIVE,
+  is_sealed: true,
+  allow_bid_retraction: false,
+  need_payment_info: true,
+  created_at: Date.now() - 604800000,
+  product_id: 1,
+};
+
+export const mockBids = [
+  {
+    id: 1,
+    auction_id: 1,
+    user_id: 101,
+    amount: 55000,
+    created_at: Date.now() - 43200000,
+  },
+  {
+    id: 2,
+    auction_id: 1,
+    user_id: 102,
+    amount: 60000,
+    created_at: Date.now() - 21600000,
+  },
+  {
+    id: 3,
+    auction_id: 1,
+    user_id: 103,
+    amount: 52000,
+    created_at: Date.now() - 64800000,
   },
 ];
