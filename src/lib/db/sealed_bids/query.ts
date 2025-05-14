@@ -1,9 +1,8 @@
 import type { SealedBid } from "@/types";
 import { executeQuery } from "..";
 
-export const findAuctionById = async (id: number): Promise<SealedBid | null> => {
+export const getSealedBidsAuctionId = async (auctionId: number): Promise<SealedBid[]> => {
   const query = "SELECT * FROM sealed_bids WHERE auction_id = $1";
-  const params = [id];
-  const sealedBids = await executeQuery<SealedBid>(query, params);
-  return sealedBids[0] || null;
+  const params = [auctionId];
+  return await executeQuery<SealedBid>(query, params);
 };
