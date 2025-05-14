@@ -23,37 +23,35 @@ const AccountPageView = ({ orders, l }: AccountPageLogic & { l: Lang }) => {
       <div className="bg-white shadow rounded-lg p-6 mb-8">
         <h2 className="text-xl font-medium mb-4">{t(l).account.order_history}</h2>
         {orders.length > 0 ? (
-          <div className="overflow-x-auto">
-            <Table
-              data={orders}
-              keyExtractor={(order) => order.paypay_payment_id}
-              columns={[
-                {
-                  header: t(l).account.order_id,
-                  accessor: (order) => order.paypay_payment_id,
-                },
-                {
-                  header: t(l).account.order_date,
-                  accessor: (order) => formatDate(order.created_at),
-                },
-                {
-                  header: t(l).account.status,
-                  accessor: (order) => <OrderStatusBadge order={order} lang={l} />,
-                },
-                {
-                  header: "",
-                  accessor: (order) => (
-                    <Link
-                      href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
-                      className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
-                    >
-                      {t(l).account.detail}
-                    </Link>
-                  ),
-                },
-              ]}
-            />
-          </div>
+          <Table
+            data={orders}
+            keyExtractor={(order) => order.paypay_payment_id}
+            columns={[
+              {
+                header: t(l).account.order_id,
+                accessor: (order) => order.paypay_payment_id,
+              },
+              {
+                header: t(l).account.order_date,
+                accessor: (order) => formatDate(order.created_at),
+              },
+              {
+                header: t(l).account.status,
+                accessor: (order) => <OrderStatusBadge order={order} lang={l} />,
+              },
+              {
+                header: "",
+                accessor: (order) => (
+                  <Link
+                    href={`/${l}/payment/paypay/${order.merchant_payment_id}`}
+                    className="text-indigo-600 hover:text-indigo-900 mr-2 cursor-pointer"
+                  >
+                    {t(l).account.detail}
+                  </Link>
+                ),
+              },
+            ]}
+          />
         ) : (
           <p className="text-gray-500">{t(l).account.no_orders}</p>
         )}
