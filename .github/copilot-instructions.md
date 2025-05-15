@@ -157,10 +157,3 @@ describe("ComponentNameコンポーネント", () => {
 8. **Internationalization**: Support all required languages
 9. **State Management**: Use React Context for shared state across components
 10. **User Interface**: Design components with a focus on user experience and usability, simple, rich.
-
-## Git Workflow
-
-- Feature branches should be named `feature/descriptive-name`
-- Commit messages should be clear and descriptive
-- Pull requests should be reviewed before merging
-- Run tests and lint checks before submitting PRs
