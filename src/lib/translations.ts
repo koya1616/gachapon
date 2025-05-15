@@ -14,6 +14,7 @@ const translations = {
       add_to_cart: "Add to Cart",
       out_of_stock: "Out of Stock",
       to_payment: "Proceed to Payment",
+      no_products: "Product not found",
     },
     login: {
       facebook: "Sign in with Facebook",
@@ -108,6 +109,7 @@ const translations = {
       add_to_cart: "カートに追加",
       out_of_stock: "在庫切れ",
       to_payment: "購入画面へ",
+      no_products: "存在しない商品です",
     },
     login: {
       facebook: "Facebookでログイン",
@@ -202,6 +204,7 @@ const translations = {
       add_to_cart: "加入购物车",
       out_of_stock: "缺货",
       to_payment: "前往支付",
+      no_products: "未找到商品",
     },
     login: {
       facebook: "Facebook登录",
