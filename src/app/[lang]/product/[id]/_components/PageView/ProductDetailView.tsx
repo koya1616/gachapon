@@ -1,8 +1,6 @@
-import type { Lang, Product } from "@/types";
-import React from "react";
-import "client-only";
 import Alert from "@/components/Alert";
 import { useTranslation as t } from "@/lib/translations";
+import type { Lang, Product } from "@/types";
 
 export const ProductDetailView = ({
   product,
