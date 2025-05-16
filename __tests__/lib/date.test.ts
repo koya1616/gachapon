@@ -1,4 +1,4 @@
-import { formatDate, formatDateForInput } from "@/lib/date";
+import { formatDate, formatDateForDisplay, formatDateForInput } from "@/lib/date";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("formatDate", () => {
@@ -42,5 +42,37 @@ describe("formatDateForInput", () => {
   it("無効な日付を渡すと、NaN-NaN-NaNTNaN:NaNを返すこと", () => {
     const formattedDate = formatDateForInput(new Date("invalid"));
     expect(formattedDate).toBe("NaN-NaN-NaNTNaN:NaN");
+  });
+});
+
+describe("formatDateForDisplay", () => {
+  beforeEach(() => {
+    const fixedDate = new Date("2023-01-01T00:00:00Z");
+    vi.setSystemTime(fixedDate);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+  });
+
+  it("JST (Asia/Tokyo)のタイムゾーンで正しくフォーマットされること", () => {
+    vi.stubEnv("TZ", "Asia/Tokyo");
+
+    const formattedDate = formatDateForDisplay(1672531199000);
+    expect(formattedDate).toBe("2023-01-01 08:59");
+  });
+
+  it("UTC (GMT)のタイムゾーンで正しくフォーマットされること", () => {
+    vi.stubEnv("TZ", "UTC");
+
+    const formattedDate = formatDateForDisplay(1672531199000);
+    expect(formattedDate).toBe("2022-12-31 23:59");
+  });
+
+  it("無効なタイムスタンプを渡すと、Invalid Dateを返すこと", () => {
+    const invalidTimestamp = "invalid";
+    const formattedDate = formatDateForDisplay(invalidTimestamp);
+    expect(formattedDate).toBe("NaN-NaN-NaN NaN:NaN");
   });
 });
