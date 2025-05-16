@@ -7,6 +7,7 @@ import * as jwt from "@/lib/jwt";
 import { mockLotteryEntries, mockLotteryEvents, mockProducts } from "@/mocks/data";
 import type { Lang, LotteryEntry, LotteryEvent, Product } from "@/types";
 import { cleanup, render, screen } from "@testing-library/react";
+import { revalidatePath } from "next/cache";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -18,6 +19,10 @@ vi.mock("next/headers", () => ({
 
 vi.mock("next/navigation", () => ({
   redirect: vi.fn(),
+}));
+
+vi.mock("next/cache", () => ({
+  revalidatePath: vi.fn(),
 }));
 
 vi.mock("@/lib/jwt", () => ({
@@ -136,5 +141,7 @@ describe("商品詳細ページ", () => {
 
     expect(db.createLotteryEntry).toHaveBeenCalledWith(1, 1, 1);
     expect(redirect).not.toHaveBeenCalled();
+    expect(revalidatePath).toHaveBeenCalled();
+    expect(revalidatePath).toHaveBeenCalledWith("/ja/product/1");
   });
 });

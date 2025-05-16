@@ -6,6 +6,7 @@ import {
   getLotteryEventsByProductId,
 } from "@/lib/db";
 import { verifyToken } from "@/lib/jwt";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ProductDetailClient from "./_view/ProductDetailClient";
@@ -32,6 +33,7 @@ const ProductDetailPage = async ({
       return redirect(`/${l}/login`);
     }
     await createLotteryEntry(lotteryEventId, userToken.id, lotteryProductId);
+    revalidatePath(`/${l}/product/${productId}`);
   };
 
   return (
