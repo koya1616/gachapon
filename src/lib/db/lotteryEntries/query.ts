@@ -21,3 +21,15 @@ export const getLotteryEntriesByLotteryEventId = async (lotteryEventId: number):
   const params = [lotteryEventId];
   return executeQuery<LotteryEntry>(query, params);
 };
+
+export const getLotteryEntriesByUserIdAndProductId = async (
+  userId: number,
+  productId: number,
+): Promise<LotteryEntry[]> => {
+  const query = `
+    SELECT * FROM lottery_entries
+    WHERE user_id = $1 AND lottery_product_id = $2
+  `;
+  const params = [userId, productId];
+  return executeQuery<LotteryEntry>(query, params);
+};

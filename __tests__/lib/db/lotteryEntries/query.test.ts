@@ -1,4 +1,4 @@
-import { createLotteryEntry, getLotteryEntriesByLotteryEventId } from "@/lib/db";
+import { createLotteryEntry, getLotteryEntriesByLotteryEventId, getLotteryEntriesByUserIdAndProductId } from "@/lib/db";
 import type { LotteryEntry } from "@/types";
 import { beforeAll, describe, expect, it } from "vitest";
 import { LotteryEventFactory } from "../../../factory/lotteryEvent";
@@ -76,6 +76,24 @@ describe("LotteryEntriesテーブルに関するテスト", () => {
       expect(filteredEntries).toHaveLength(1);
       expect(filteredEntries[0].lottery_event_id).toBe(lotteryEvent.id);
       expect(Object.keys(filteredEntries[0])).toEqual(expect.arrayContaining(expectedKeys));
+    });
+  });
+
+  describe("getLotteryEntriesByUserIdAndProductId", () => {
+    beforeAll(async () => {
+      lotteryEvent = await setUpLotteryEvent(true);
+    });
+
+    it("抽選エントリーレコードが取得できること", async () => {
+      expect(lotteryEvent.lotteryEntries).not.toBeNull();
+      const result = await getLotteryEntriesByUserIdAndProductId(
+        Number(lotteryEvent.lotteryEntries?.[0].user_id),
+        Number(lotteryEvent.lotteryProducts?.[0].id),
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0].user_id).toBe(Number(lotteryEvent.lotteryEntries?.[0].user_id));
+      expect(result[0].lottery_product_id).toBe(Number(lotteryEvent.lotteryProducts?.[0].id));
+      expect(Object.keys(result[0])).toEqual(expect.arrayContaining(expectedKeys));
     });
   });
 });

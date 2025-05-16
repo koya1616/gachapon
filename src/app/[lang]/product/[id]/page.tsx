@@ -4,7 +4,6 @@ import { verifyToken } from "@/lib/jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import ProductDetailClient from "./_view/ProductDetailClient";
-import { revalidatePath } from "next/cache";
 
 const ProductDetailPage = async ({
   params,

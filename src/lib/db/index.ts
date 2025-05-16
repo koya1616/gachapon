@@ -68,7 +68,11 @@ export {
   getLotteryProductsByLotteryEventId,
   deleteLotteryProductsByLotteryEventIdAndProductId,
 } from "./lotteryProducts/query";
-export { createLotteryEntry, getLotteryEntriesByLotteryEventId } from "./lotteryEntries/query";
+export {
+  createLotteryEntry,
+  getLotteryEntriesByLotteryEventId,
+  getLotteryEntriesByUserIdAndProductId,
+} from "./lotteryEntries/query";
 export {
   createLotteryProductsWithTransaction,
   updateLotteryProductsWithTransaction,
