@@ -1,6 +1,6 @@
 "use client";
 
-import type { Lang, LotteryEvent, Product } from "@/types";
+import type { Lang, LotteryEntry, LotteryEvent, Product } from "@/types";
 import { useState } from "react";
 import ProductDetailView from "./ProductDetailView";
 
@@ -8,6 +8,7 @@ export interface ProductDetailLogic {
   product: Product | null;
   lang: Lang;
   lotteryEvents: LotteryEvent[];
+  lotteryEntries: LotteryEntry[];
   isLogin: boolean;
   loadingEventId: number | null;
   successEventId: number | null;
@@ -19,15 +20,10 @@ const useProductDetailLogic = ({
   product,
   lang,
   lotteryEvents,
+  lotteryEntries,
   isLogin,
   createLotteryEntry,
-}: {
-  product: Product | null;
-  lang: Lang;
-  lotteryEvents: LotteryEvent[];
-  isLogin: boolean;
-  createLotteryEntry: (lotteryEventId: number, lotteryProductId: number) => Promise<void>;
-}): ProductDetailLogic => {
+}: ProductDetailClientProps): ProductDetailLogic => {
   const [loadingEventId, setLoadingEventId] = useState<number | null>(null);
   const [successEventId, setSuccessEventId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +45,7 @@ const useProductDetailLogic = ({
     product,
     lang,
     lotteryEvents,
+    lotteryEntries,
     isLogin,
     loadingEventId,
     successEventId,
@@ -61,6 +58,7 @@ interface ProductDetailClientProps {
   product: Product | null;
   lang: Lang;
   lotteryEvents: LotteryEvent[];
+  lotteryEntries: LotteryEntry[];
   isLogin: boolean;
   createLotteryEntry: (lotteryEventId: number, lotteryProductId: number) => Promise<void>;
 }

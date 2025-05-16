@@ -19,6 +19,7 @@ export const Default: Story = {
     product: mockProducts[0],
     lang: "ja",
     lotteryEvents: mockLotteryEvents,
+    lotteryEntries: [],
     isLogin: true,
     loadingEventId: null,
     successEventId: null,
@@ -68,5 +69,21 @@ export const NoLotteryEvents: Story = {
   args: {
     ...Default.args,
     lotteryEvents: [],
+  },
+};
+
+export const LotteryEventFinished: Story = {
+  args: {
+    ...Default.args,
+    lotteryEntries: [
+      {
+        id: 1,
+        lottery_event_id: mockLotteryEvents[0].id,
+        user_id: 1,
+        lottery_product_id: mockProducts[0].id,
+        result: 0,
+        created_at: Date.now(),
+      },
+    ],
   },
 };

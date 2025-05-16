@@ -7,6 +7,7 @@ export const ProductDetailView = ({
   product,
   lang,
   lotteryEvents,
+  lotteryEntries,
   isLogin,
   loadingEventId,
   successEventId,
@@ -14,6 +15,10 @@ export const ProductDetailView = ({
   handleLotteryEntry,
 }: ProductDetailLogic) => {
   if (!product) return <Alert text={t(lang).product.no_products} type="error" />;
+
+  const hasEnteredLottery = (eventId: number) => {
+    return lotteryEntries?.some((entry) => entry.lottery_event_id === eventId);
+  };
 
   return (
     <main className="container mx-auto px-4 py-12 max-w-6xl">
@@ -40,6 +45,8 @@ export const ProductDetailView = ({
 
               <div className="space-y-4">
                 {lotteryEvents.map((event) => {
+                  const alreadyEntered = hasEnteredLottery(event.id);
+
                   return (
                     <div
                       key={event.id}
@@ -68,6 +75,10 @@ export const ProductDetailView = ({
                           {successEventId === event.id ? (
                             <div className="flex items-center justify-center py-2 px-4 bg-green-50 text-green-700 rounded-lg">
                               抽選に参加しました
+                            </div>
+                          ) : alreadyEntered ? (
+                            <div className="flex items-center justify-center py-2 px-4 bg-blue-50 text-blue-700 rounded-lg">
+                              抽選参加済み
                             </div>
                           ) : (
                             <button

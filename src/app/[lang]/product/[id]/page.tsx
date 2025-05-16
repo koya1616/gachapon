@@ -1,5 +1,10 @@
 import { USER_TOKEN } from "@/const/cookies";
-import { createLotteryEntry, findProductById, getLotteryEventsByProductId } from "@/lib/db";
+import {
+  createLotteryEntry,
+  findProductById,
+  getLotteryEntriesByUserIdAndProductId,
+  getLotteryEventsByProductId,
+} from "@/lib/db";
 import { verifyToken } from "@/lib/jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -19,6 +24,7 @@ const ProductDetailPage = async ({
   const productId = Number(id);
   const product = await findProductById(productId);
   const lotteryEvents = await getLotteryEventsByProductId(productId);
+  const lotteryEntries = userToken ? await getLotteryEntriesByUserIdAndProductId(userToken.id, productId) : [];
 
   const handleLotteryEntry = async (lotteryEventId: number, lotteryProductId: number) => {
     "use server";
@@ -33,6 +39,7 @@ const ProductDetailPage = async ({
       product={product}
       lang={l}
       lotteryEvents={lotteryEvents}
+      lotteryEntries={lotteryEntries}
       isLogin={!!userToken}
       createLotteryEntry={handleLotteryEntry}
     />
