@@ -31,7 +31,7 @@ const ProductDetailPage = async ({
     if (!userToken) {
       return redirect(`/${l}/login`);
     }
-    await createLotteryEntry(lotteryEventId, 111, lotteryProductId);
+    await createLotteryEntry(lotteryEventId, userToken.id, lotteryProductId);
   };
 
   return (
