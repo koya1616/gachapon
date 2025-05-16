@@ -2,7 +2,7 @@
 
 import type { Lang, LotteryEntry, LotteryEvent, Product } from "@/types";
 import { useState } from "react";
-import ProductDetailView from "./ProductDetailView";
+import View from "./View";
 
 export interface ProductDetailLogic {
   product: Product | null;
@@ -13,26 +13,26 @@ export interface ProductDetailLogic {
   loadingEventId: number | null;
   successEventId: number | null;
   error: string | null;
-  handleLotteryEntry: (eventId: number, productId: number) => Promise<void>;
+  handleLotteryEntry: (eventId: number) => Promise<void>;
 }
 
-const useProductDetailLogic = ({
+const useLogic = ({
   product,
   lang,
   lotteryEvents,
   lotteryEntries,
   isLogin,
   createLotteryEntry,
-}: ProductDetailClientProps): ProductDetailLogic => {
+}: LogicProps): ProductDetailLogic => {
   const [loadingEventId, setLoadingEventId] = useState<number | null>(null);
   const [successEventId, setSuccessEventId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLotteryEntry = async (eventId: number, productId: number) => {
+  const handleLotteryEntry = async (eventId: number) => {
     try {
       setLoadingEventId(eventId);
       setError(null);
-      await createLotteryEntry(eventId, productId);
+      await createLotteryEntry(eventId);
       setSuccessEventId(eventId);
     } catch (err) {
       setError(typeof err === "string" ? err : "エントリーに失敗しました");
@@ -54,17 +54,17 @@ const useProductDetailLogic = ({
   };
 };
 
-interface ProductDetailClientProps {
+interface LogicProps {
   product: Product | null;
   lang: Lang;
   lotteryEvents: LotteryEvent[];
   lotteryEntries: LotteryEntry[];
   isLogin: boolean;
-  createLotteryEntry: (lotteryEventId: number, lotteryProductId: number) => Promise<void>;
+  createLotteryEntry: (lotteryEventId: number) => Promise<void>;
 }
 
-const ProductDetailClient = (props: ProductDetailClientProps) => {
-  return <ProductDetailView {...useProductDetailLogic(props)} />;
+const Logic = (props: LogicProps) => {
+  return <View {...useLogic(props)} />;
 };
 
-export default ProductDetailClient;
+export default Logic;

@@ -1,7 +1,9 @@
 import Alert from "@/components/Alert";
+import { Button } from "@/components/Button";
+import Loading from "@/components/Loading";
 import { formatDateForDisplay } from "@/lib/date";
 import { useTranslation as t } from "@/lib/translations";
-import type { ProductDetailLogic } from "./ProductDetailClient";
+import type { ProductDetailLogic } from "./Logic";
 
 export const ProductDetailView = ({
   product,
@@ -80,23 +82,19 @@ export const ProductDetailView = ({
                             <div className="flex items-center justify-center py-2 px-4 bg-blue-50 text-blue-700 rounded-lg">
                               抽選参加済み
                             </div>
+                          ) : loadingEventId === event.id ? (
+                            <Loading />
+                          ) : !isLogin ? (
+                            <div className="flex items-center justify-center py-2 px-4 bg-gray-100 text-gray-400 rounded-lg cursor-not-allowed">
+                              抽選に参加するにはログインしてください
+                            </div>
                           ) : (
-                            <button
+                            <Button
                               type="button"
-                              onClick={() => handleLotteryEntry(event.id, product.id)}
-                              disabled={!isLogin || loadingEventId === event.id}
-                              className={`w-full py-2 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center ${
-                                !isLogin
-                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                                  : "bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg"
-                              }`}
-                            >
-                              {loadingEventId === event.id
-                                ? "処理中..."
-                                : !isLogin
-                                  ? "抽選に参加するにはログインしてください"
-                                  : "抽選に参加する"}
-                            </button>
+                              label="抽選に参加する"
+                              onClick={() => handleLotteryEntry(event.id)}
+                              width="w-full"
+                            />
                           )}
                         </div>
                       </div>

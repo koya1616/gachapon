@@ -1,15 +1,15 @@
 import { mockLotteryEvents, mockProducts } from "@/mocks/data";
 import type { Meta, StoryObj } from "@storybook/react";
-import ProductDetailView from "./ProductDetailView";
+import View from "./View";
 
 const meta = {
   title: "Pages/Product/id",
-  component: ProductDetailView,
+  component: View,
   parameters: {
     layout: "fullscreen",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof ProductDetailView>;
+} satisfies Meta<typeof View>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -24,8 +24,8 @@ export const Default: Story = {
     loadingEventId: null,
     successEventId: null,
     error: null,
-    handleLotteryEntry: async (eventId, productId) => {
-      console.log(`Entry to lottery event ${eventId} for product ${productId}`);
+    handleLotteryEntry: async (eventId) => {
+      console.log(`Entry to lottery event ${eventId}`);
     },
   },
 };

@@ -9,7 +9,7 @@ import { verifyToken } from "@/lib/jwt";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import ProductDetailClient from "./_view/ProductDetailClient";
+import Logic from "./_components/Logic";
 
 const ProductDetailPage = async ({
   params,
@@ -27,17 +27,17 @@ const ProductDetailPage = async ({
   const lotteryEvents = await getLotteryEventsByProductId(productId);
   const lotteryEntries = userToken ? await getLotteryEntriesByUserIdAndProductId(userToken.id, productId) : [];
 
-  const handleLotteryEntry = async (lotteryEventId: number, lotteryProductId: number) => {
+  const handleLotteryEntry = async (lotteryEventId: number) => {
     "use server";
     if (!userToken) {
       return redirect(`/${l}/login`);
     }
-    await createLotteryEntry(lotteryEventId, userToken.id, lotteryProductId);
+    await createLotteryEntry(lotteryEventId, userToken.id, productId);
     revalidatePath(`/${l}/product/${productId}`);
   };
 
   return (
-    <ProductDetailClient
+    <Logic
       product={product}
       lang={l}
       lotteryEvents={lotteryEvents}

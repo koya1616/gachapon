@@ -35,7 +35,7 @@ vi.mock("@/lib/db", () => ({
   createLotteryEntry: vi.fn(),
 }));
 
-vi.mock("@/app/[lang]/product/[id]/_view/ProductDetailClient", () => ({
+vi.mock("@/app/[lang]/product/[id]/_components/Logic", () => ({
   default: ({
     product,
     lang,
@@ -49,7 +49,7 @@ vi.mock("@/app/[lang]/product/[id]/_view/ProductDetailClient", () => ({
     lotteryEvents: LotteryEvent[];
     lotteryEntries: LotteryEntry[];
     isLogin: boolean;
-    createLotteryEntry: (lotteryEventId: number, lotteryProductId: number) => Promise<void>;
+    createLotteryEntry: (lotteryEventId: number) => Promise<void>;
   }) => (
     <div data-testid="product-detail-client">
       <div data-testid="product-name">{product?.name || "No product"}</div>
@@ -57,7 +57,7 @@ vi.mock("@/app/[lang]/product/[id]/_view/ProductDetailClient", () => ({
       <div data-testid="lottery-events-count">{lotteryEvents.length}</div>
       <div data-testid="lottery-entries-count">{lotteryEntries.length}</div>
       <div data-testid="is-login">{isLogin ? "ログイン済み" : "未ログイン"}</div>
-      <button type="button" data-testid="lottery-entry-button" onClick={() => createLotteryEntry(1, product?.id || 0)}>
+      <button type="button" data-testid="lottery-entry-button" onClick={() => createLotteryEntry(1)}>
         抽選に参加する
       </button>
     </div>
