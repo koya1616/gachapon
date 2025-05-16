@@ -9,6 +9,7 @@ import {
   updateLotteryEvent,
   updateLotteryProductsWithTransaction,
 } from "@/lib/db";
+import { mockLotteryEntries } from "@/mocks/data";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
@@ -79,17 +80,6 @@ describe("GET /api/lottery/[id]", () => {
         lottery_event_id: 1,
         product_id: 1,
         quantity_available: 10,
-        created_at: Date.now(),
-      },
-    ];
-
-    const mockLotteryEntries = [
-      {
-        id: 1,
-        lottery_event_id: 1,
-        user_id: 1,
-        lottery_product_id: 1,
-        result: 0,
         created_at: Date.now(),
       },
     ];

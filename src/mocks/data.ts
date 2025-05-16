@@ -1,5 +1,5 @@
 import type { PaypayGetCodePaymentDetailsResponse, PaypayGetCodePaymentDetailsStatus } from "@/lib/paypay";
-import type { Address, Auction, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
+import type { Address, Auction, LotteryEntry, LotteryProduct, Order, PaymentProduct, Product, Shipment } from "@/types";
 import { AuctionStatus, type LotteryEvent, LotteryStatus } from "@/types";
 
 export const mockFile = new File(["dummy content"], "test-image.png", { type: "image/png" });
@@ -279,5 +279,16 @@ export const mockBids = [
     user_id: 103,
     amount: 52000,
     created_at: Date.now() - 64800000,
+  },
+];
+
+export const mockLotteryEntries: LotteryEntry[] = [
+  {
+    id: 1,
+    user_id: 111,
+    lottery_event_id: 1,
+    lottery_product_id: 123,
+    result: 0,
+    created_at: Date.now(),
   },
 ];
