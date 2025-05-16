@@ -1,4 +1,3 @@
-// filepath: /Users/aoyamakoya/study/gachapon/__tests__/app/lang/product/id/page.test.tsx
 import ProductDetailPage from "@/app/[lang]/product/[id]/page";
 import { USER_TOKEN } from "@/const/cookies";
 import { CartProvider } from "@/context/CartContext";
