@@ -74,4 +74,27 @@ describe("Logicコンポーネント", () => {
       expect(screen.getByTestId("success-event-id").textContent).toBe("1");
     });
   });
+
+  it("エラーが発生した場合、エラーメッセージが表示されること", async () => {
+    mockCreateLotteryEntry.mockRejectedValue("抽選に参加できませんでした");
+
+    render(
+      <Logic
+        product={mockProducts[0]}
+        lang="ja"
+        lotteryEvents={mockLotteryEvents}
+        lotteryEntries={mockLotteryEntries}
+        isLogin={true}
+        createLotteryEntry={mockCreateLotteryEntry}
+      />,
+    );
+
+    await user.click(screen.getByTestId("lottery-entry-button"));
+
+    expect(mockCreateLotteryEntry).toHaveBeenCalledWith(1);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("error-message").textContent).toBe("抽選に参加できませんでした");
+    });
+  });
 });
