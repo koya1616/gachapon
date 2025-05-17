@@ -2,7 +2,6 @@ import { Button } from "@/components/Button";
 import { GoogleIcon } from "@/components/Icons";
 import { useTranslation as t } from "@/lib/translations";
 import Link from "next/link";
-import React from "react";
 import type { LoginPageLogic } from "../../page";
 
 const LoginPageView = ({ l }: LoginPageLogic) => {

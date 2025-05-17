@@ -2,7 +2,6 @@ import {
   createPaymentProductsWithTransaction,
   executeTransaction,
   findPaymentProductByPaypayPaymentIdAndProductId,
-  getPaymentProductsByPaypayPaymentId,
 } from "@/lib/db";
 import type { PaymentProduct } from "@/types";
 import { beforeEach, describe, expect, it } from "vitest";

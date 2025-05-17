@@ -1,6 +1,6 @@
 import { GET } from "@/app/api/auth/google/callback/route";
 import { USER_TOKEN } from "@/const/cookies";
-import { createUser, findUserByEmail } from "@/lib/db";
+import { findUserByEmail } from "@/lib/db";
 import { generateToken } from "@/lib/jwt";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";

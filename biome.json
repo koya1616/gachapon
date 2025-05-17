@@ -23,7 +23,10 @@
     "enabled": true,
     "ignore": [".next", ".open-next", ".wrangler", "storybook-static"],
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error"
+      }
     }
   },
   "javascript": {

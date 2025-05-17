@@ -3,7 +3,6 @@ import { verifyToken } from "@/lib/jwt";
 import type { Lang } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import React from "react";
 import LoginPageView from "./_components/PageView";
 
 export interface LoginPageLogic {

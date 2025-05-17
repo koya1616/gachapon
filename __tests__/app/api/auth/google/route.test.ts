@@ -5,7 +5,7 @@ import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 process.env.GOOGLE_CLIENT_ID = "test_client_id";
 process.env.GOOGLE_AUTH_REDIRECT_URI = "http://localhost:3000/api/auth/google/callback";

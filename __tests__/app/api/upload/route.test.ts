@@ -1,6 +1,5 @@
 import { POST } from "@/app/api/upload/route";
 import { ADMIN_CODE } from "@/const/cookies";
-import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";

@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Loadingコンポーネント", () => {

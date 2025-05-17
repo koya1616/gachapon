@@ -1,5 +1,4 @@
 import { mockProducts } from "@/mocks/data";
-import type { Lang } from "@/types";
 import type { Meta, StoryObj } from "@storybook/react";
 import Products from "./Products";
 

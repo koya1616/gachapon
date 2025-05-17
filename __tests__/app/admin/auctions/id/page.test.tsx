@@ -1,6 +1,5 @@
 import AuctionDetailPage from "@/app/admin/auctions/[id]/page";
 import { mockAuction, mockBids, mockProducts } from "@/mocks/data";
-import { type Auction, AuctionStatus, type Product, type SealedBid } from "@/types";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

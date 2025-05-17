@@ -1,4 +1,4 @@
-import { createLotteryEventWithTransaction, executeTransaction, getLotteryEvents } from "@/lib/db";
+import { createLotteryEventWithTransaction, executeTransaction } from "@/lib/db";
 import type { LotteryEvent } from "@/types";
 import { describe, expect, it } from "vitest";
 

@@ -2,7 +2,6 @@ import { GET } from "@/app/api/auction/route";
 import { ADMIN_CODE } from "@/const/cookies";
 import { getAuctions } from "@/lib/db/auctions/query";
 import { mockAuctionData } from "@/mocks/data";
-import type { Auction } from "@/types";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { beforeAll, describe, expect, it, vi } from "vitest";

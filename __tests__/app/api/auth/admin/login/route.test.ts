@@ -3,7 +3,7 @@ import { ADMIN_CODE } from "@/const/cookies";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 
 process.env.ADMIN_CODE = "test_admin_code";
 

@@ -5,7 +5,7 @@ import type { ShipmentStatus } from "@/lib/db/shipments/query";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(),
