@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import Loading from "@/components/Loading";
 import { formatDateForDisplay } from "@/lib/date";
 import { useTranslation as t } from "@/lib/translations";
-import type { ProductDetailLogic } from "./Logic";
+import type { Lang, LotteryEntry, LotteryEvent, Product } from "@/types";
 
 export const View = ({
   product,
@@ -15,7 +15,17 @@ export const View = ({
   successEventId,
   error,
   handleLotteryEntry,
-}: ProductDetailLogic) => {
+}: {
+  product: Product | null;
+  lang: Lang;
+  lotteryEvents: LotteryEvent[];
+  lotteryEntries: LotteryEntry[];
+  isLogin: boolean;
+  loadingEventId: number | null;
+  successEventId: number | null;
+  error: string | null;
+  handleLotteryEntry: (eventId: number) => Promise<void>;
+}) => {
   if (!product) return <Alert text={t(lang).product.no_products} type="error" />;
 
   const hasEnteredLottery = (eventId: number) => {
