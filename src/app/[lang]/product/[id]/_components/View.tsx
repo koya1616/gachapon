@@ -5,7 +5,7 @@ import { formatDateForDisplay } from "@/lib/date";
 import { useTranslation as t } from "@/lib/translations";
 import type { ProductDetailLogic } from "./Logic";
 
-export const ProductDetailView = ({
+export const View = ({
   product,
   lang,
   lotteryEvents,
@@ -110,4 +110,4 @@ export const ProductDetailView = ({
   );
 };
 
-export default ProductDetailView;
+export default View;
