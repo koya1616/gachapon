@@ -67,7 +67,8 @@ CREATE TABLE public.auctions (
     allow_bid_retraction boolean DEFAULT true NOT NULL,
     need_payment_info boolean DEFAULT false NOT NULL,
     created_at bigint DEFAULT floor((EXTRACT(epoch FROM now()) * (1000)::numeric)) NOT NULL,
-    product_id integer NOT NULL
+    product_id integer NOT NULL,
+    minimum_bid integer NOT NULL
 );
 
 
