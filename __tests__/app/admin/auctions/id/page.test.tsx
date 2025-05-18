@@ -94,7 +94,7 @@ describe("オークション詳細ページ", () => {
   });
 
   it("オークションデータ取得に失敗した場合、エラーメッセージが表示されること", async () => {
-    vi.mocked(fetch).mockImplementation((url) => {
+    vi.mocked(fetch).mockImplementation((_url) => {
       return Promise.resolve({
         ok: false,
         status: 500,
@@ -112,7 +112,7 @@ describe("オークション詳細ページ", () => {
   });
 
   it("認証エラーが発生した場合、ログインページにリダイレクトされること", async () => {
-    vi.mocked(fetch).mockImplementation((url) => {
+    vi.mocked(fetch).mockImplementation((_url) => {
       return Promise.resolve({
         ok: false,
         status: 401,
@@ -128,7 +128,7 @@ describe("オークション詳細ページ", () => {
   });
 
   it("オークションが存在しない場合、エラーメッセージが表示されること", async () => {
-    vi.mocked(fetch).mockImplementation((url) => {
+    vi.mocked(fetch).mockImplementation((_url) => {
       return Promise.resolve({
         ok: true,
         status: 200,
@@ -153,7 +153,7 @@ describe("オークション詳細ページ", () => {
   });
 
   it("入札データが存在しない場合、適切なメッセージが表示されること", async () => {
-    vi.mocked(fetch).mockImplementation((url) => {
+    vi.mocked(fetch).mockImplementation((_url) => {
       return Promise.resolve({
         ok: true,
         status: 200,

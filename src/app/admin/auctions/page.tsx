@@ -29,7 +29,7 @@ const useAuctionsPage = (): AuctionsPageLogic => {
       const { data: auctions }: { data: Auction[] } = await response.json();
       setAuctions(auctions);
     } catch (error) {
-      setError("オークションの取得に失敗しました。");
+      setError(typeof error === "string" ? error : "オークションの取得に失敗しました。");
     } finally {
       setIsLoading(false);
     }

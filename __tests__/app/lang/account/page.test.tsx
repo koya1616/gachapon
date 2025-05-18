@@ -60,7 +60,7 @@ vi.mock("@/components/OrderStatusBadge", () => ({
 }));
 
 vi.mock("@/lib/date", () => ({
-  formatDate: vi.fn((date) => "2025-05-07"),
+  formatDate: vi.fn((_date) => "2025-05-07"),
 }));
 
 describe("AccountPage", () => {

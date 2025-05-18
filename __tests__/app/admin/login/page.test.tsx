@@ -21,7 +21,7 @@ Object.defineProperty(window, "location", {
 describe("管理者ログインページ", () => {
   const mockUseActionStateSuccess = () => {
     vi.mocked(React.useActionState).mockImplementation(() => {
-      const dispatch = (formData: unknown) => {
+      const dispatch = (_formData: unknown) => {
         window.location.href = "/admin/top";
         return Promise.resolve({ success: true });
       };
@@ -31,7 +31,7 @@ describe("管理者ログインページ", () => {
 
   const mockUseActionStateFailure = () => {
     vi.mocked(React.useActionState).mockImplementation(() => {
-      const dispatch = (formData: unknown) => {
+      const dispatch = (_formData: unknown) => {
         return Promise.resolve({ success: false });
       };
       return [{ success: false }, dispatch as (formData: unknown) => Promise<{ success: boolean }>, false];
@@ -40,7 +40,7 @@ describe("管理者ログインページ", () => {
 
   const mockUseActionStatePending = () => {
     vi.mocked(React.useActionState).mockImplementation(() => {
-      const dispatch = (formData: unknown) => {
+      const dispatch = (_formData: unknown) => {
         return Promise.resolve({ success: true });
       };
       return [{ success: true }, dispatch as (formData: unknown) => Promise<{ success: boolean }>, true];

@@ -14,7 +14,7 @@ export const generateToken = (payload: Omit<TokenPayload, "exp">): string => {
 export const verifyToken = (token: string): TokenPayload | null => {
   try {
     return jwt.verify(token, Buffer.from(JWT_SECRET_KEY, "utf-8")) as TokenPayload;
-  } catch (error) {
+  } catch (_e) {
     return null;
   }
 };

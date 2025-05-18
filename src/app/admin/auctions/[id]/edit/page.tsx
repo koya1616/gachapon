@@ -78,7 +78,6 @@ const useEditAuction = (): EditAuctionLogic => {
 
       const { data } = await response.json();
       const auction: Auction = data.auction;
-      const product = data.product;
 
       setFormData({
         id: auction.id,

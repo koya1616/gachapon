@@ -29,7 +29,7 @@ vi.mock("@/lib/db", () => ({
 }));
 
 vi.mock("@/components/OrderStatusBadge", () => ({
-  default: ({ order, lang }: { order: Order; lang: string }) => {
+  default: ({ order }: { order: Order }) => {
     let status: string;
     if (order.payment_failed_at) {
       status = "決済失敗";

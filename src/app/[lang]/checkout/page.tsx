@@ -52,7 +52,7 @@ const useCheckoutPage = () => {
 
         clear_cart();
         router.push(data.url);
-      } catch (error) {
+      } catch (_e) {
         alert("Failed to process PayPay payment. Please try again.");
         setIsLoading(false);
       }

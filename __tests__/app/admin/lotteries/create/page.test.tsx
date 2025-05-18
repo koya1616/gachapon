@@ -202,7 +202,7 @@ describe("抽選イベント作成ページ", () => {
   });
 
   it("抽選イベント作成が成功した場合、抽選一覧ページにリダイレクトされること", async () => {
-    vi.mocked(fetch).mockImplementation((url, options) => {
+    vi.mocked(fetch).mockImplementation((url) => {
       if (url === "/api/product") {
         return Promise.resolve({
           json: () => Promise.resolve({ data: mockProducts }),
@@ -255,7 +255,7 @@ describe("抽選イベント作成ページ", () => {
   });
 
   it("APIエラーが発生した場合、エラーメッセージが表示されること", async () => {
-    vi.mocked(fetch).mockImplementation((url, options) => {
+    vi.mocked(fetch).mockImplementation((url) => {
       if (url === "/api/product") {
         return Promise.resolve({
           json: () => Promise.resolve({ data: mockProducts }),
@@ -299,7 +299,7 @@ describe("抽選イベント作成ページ", () => {
   });
 
   it("認証エラーが発生した場合、ログインページにリダイレクトされること", async () => {
-    vi.mocked(fetch).mockImplementation((url, options) => {
+    vi.mocked(fetch).mockImplementation((url) => {
       if (url === "/api/product") {
         return Promise.resolve({
           json: () => Promise.resolve({ data: mockProducts }),
@@ -343,7 +343,7 @@ describe("抽選イベント作成ページ", () => {
   });
 
   it("フォーム送信中はボタンが無効化されること", async () => {
-    vi.mocked(fetch).mockImplementation((url, options) => {
+    vi.mocked(fetch).mockImplementation((url) => {
       if (url === "/api/product") {
         return Promise.resolve({
           json: () => Promise.resolve({ data: mockProducts }),

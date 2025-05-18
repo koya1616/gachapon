@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ message: "OK", data: { key: file.name } }, { status: 200 });
   } catch (error) {
+    console.error("ERROR_CODE_0014:", error);
     return NextResponse.json({ message: "Internal server error", data: null }, { status: 500 });
   }
 }

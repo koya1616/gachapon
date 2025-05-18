@@ -2,7 +2,6 @@ import { GET } from "@/app/api/deploy/route";
 import { ADMIN_CODE } from "@/const/cookies";
 import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
-import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 process.env.VERCEL_API_TOKEN = "test-vercel-token";
@@ -33,8 +32,6 @@ const mockDeploymentData = {
 };
 
 describe("GET /api/deploy", () => {
-  const mockRequest = new NextRequest("http://localhost:3000/api/deploy");
-
   beforeEach(() => {
     vi.resetAllMocks();
   });

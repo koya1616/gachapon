@@ -1,7 +1,7 @@
 import { executeQuery } from "@/lib/db";
 import type { TestProject } from "vitest/node";
 
-export default async function setup(project: TestProject) {
+export default async function setup(_project: TestProject) {
   await executeQuery("TRUNCATE TABLE addresses RESTART IDENTITY CASCADE");
   await executeQuery("TRUNCATE TABLE auctions RESTART IDENTITY CASCADE");
   await executeQuery("TRUNCATE TABLE authentication_codes RESTART IDENTITY CASCADE");

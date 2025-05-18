@@ -1,11 +1,7 @@
 import { getProducts } from "@/lib/db";
 import Image from "next/image";
 
-const TopPage = async ({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}) => {
+const TopPage = async () => {
   const allProducts = await getProducts();
   const products = [...allProducts].sort(() => 0.5 - Math.random()).slice(0, 4);
 

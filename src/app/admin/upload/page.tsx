@@ -128,7 +128,7 @@ const useUpload = (): UploadLogic => {
         alert("商品が作成されました。反映されるまでに数分かかります。");
         router.push(`/admin/products/${product.id}`);
       } catch (error) {
-        setFormError("商品作成に失敗しました");
+        setFormError(typeof error === "string" ? error : "商品作成に失敗しました");
       } finally {
         setIsSubmitting(false);
       }

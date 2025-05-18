@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import React from "react";
 import LoginView from "./_components/PageView";
 
-const loginAction = async (prevState: { success: boolean }, formData: FormData) => {
+const loginAction = async (_prevState: { success: boolean }, formData: FormData) => {
   const code = formData.get("code") as string;
 
   const response = await fetch("/api/auth/admin/login", {

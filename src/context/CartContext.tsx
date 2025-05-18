@@ -29,7 +29,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       try {
         const parsedCart = JSON.parse(savedCart);
         setCart(parsedCart);
-      } catch (error) {
+      } catch (_e) {
         setCart([]);
         sessionStorage.removeItem(CART);
       }

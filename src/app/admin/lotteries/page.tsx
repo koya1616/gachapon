@@ -26,7 +26,7 @@ const useLotteriesPage = (): LotteriesPageLogic => {
 
       const { data: lotteryEvents }: { data: LotteryEvent[] } = await response.json();
       setLotteries(lotteryEvents);
-    } catch (error) {
+    } catch (_e) {
       setLotteries([]);
     } finally {
       setLoading(false);

@@ -185,7 +185,7 @@ const useAddressForm = (lang: Lang): AddressFormLogic => {
           window.location.href = "/ja/login";
           return;
         }
-      } catch (error) {
+      } catch (_e) {
         alert(t(l).form.fail.address);
       } finally {
         setIsLoading(false);
