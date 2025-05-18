@@ -3,7 +3,6 @@ import {
   executeTransaction,
   findPaymentProductByPaypayPaymentIdAndProductId,
 } from "@/lib/db";
-import type { PaymentProduct } from "@/types";
 import { beforeEach, describe, expect, it } from "vitest";
 import { ProductFactory } from "../../../factory/product";
 import { UserFactory } from "../../../factory/user";
@@ -22,9 +21,6 @@ const setUpUser = async () => {
 const setUpProduct = async () => {
   return await ProductFactory.create();
 };
-
-type PaymentProductKeys = keyof PaymentProduct;
-const typeKeys: PaymentProductKeys[] = ["id", "paypay_payment_id", "quantity", "price", "product_id", "name", "image"];
 
 describe("PaymentProductsテーブルのトランザクションに関するテスト", () => {
   describe("createPaymentProductsWithTransaction", () => {
