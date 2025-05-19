@@ -13,7 +13,7 @@ vi.mock("next/headers", () => ({
 vi.mock("@aws-sdk/client-s3", () => ({
   S3Client: vi.fn().mockImplementation(() => ({
     region: "auto",
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    endpoint: process.env.STORAGE_URL || "",
     credentials: {
       accessKeyId: process.env.R2_ACCESS_KEY_ID || "",
       secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || "",
@@ -38,7 +38,7 @@ const mockCookieStore = (adminToken: string) => {
 describe("POST /api/upload", () => {
   beforeAll(() => {
     process.env.ADMIN_CODE = "test_admin_code";
-    process.env.R2_ACCOUNT_ID = "test_r2_account_id";
+    process.env.STORAGE_URL = "https://test.r2.cloudflarestorage.com";
     process.env.R2_ACCESS_KEY_ID = "test_r2_access_key_id";
     process.env.R2_SECRET_ACCESS_KEY = "test_r2_secret_access_key";
     process.env.R2_BUCKET_NAME = "test_bucket";
