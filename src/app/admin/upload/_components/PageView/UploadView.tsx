@@ -43,7 +43,7 @@ const UploadView = memo(
               <p className="font-medium">アップロード成功!</p>
               <p className="text-sm mt-1 break-all">ファイル: {uploadResult.key}</p>
               <Link
-                href={`https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/${uploadResult.key}`}
+                href={`${process.env.NEXT_PUBLIC_PUBLIC_STORAGE_URL}/${uploadResult.key}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-blue-600 hover:underline mt-1 block"

@@ -45,7 +45,7 @@ const useUpload = (): UploadLogic => {
     setUploadResult(result);
     setFormData((prev) => ({
       ...prev,
-      image: `https://pub-099ffcea7b594ca6b20f500e6339a2c8.r2.dev/${result.key}`,
+      image: `${process.env.NEXT_PUBLIC_PUBLIC_STORAGE_URL}/${result.key}`,
     }));
   }, []);
 
