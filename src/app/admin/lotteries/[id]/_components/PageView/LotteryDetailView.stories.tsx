@@ -1,7 +1,7 @@
 import Badge from "@/components/Badge";
 import { mockLotteryEvents, mockProducts } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import LotteryDetailView from "./LotteryDetailView";
 
 const meta: Meta<typeof LotteryDetailView> = {

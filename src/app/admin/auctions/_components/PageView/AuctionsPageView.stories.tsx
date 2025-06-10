@@ -1,7 +1,7 @@
 import Badge from "@/components/Badge";
 import { mockAuctionData } from "@/mocks/data";
 import { AuctionStatus } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import AuctionsPageView from "./AuctionsPageView";
 
 const meta = {

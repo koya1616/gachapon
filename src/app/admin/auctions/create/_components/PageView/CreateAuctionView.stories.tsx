@@ -1,6 +1,6 @@
 import { mockProducts } from "@/mocks/data";
 import { AuctionStatus } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import CreateAuctionView from "./CreateAuctionView";
 
 const meta = {

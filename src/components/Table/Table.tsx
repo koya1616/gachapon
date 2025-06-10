@@ -5,7 +5,7 @@ type TableColumn<T> = {
   accessor: keyof T | ((item: T) => React.ReactNode);
 };
 
-type TableProps<T> = {
+export type TableProps<T> = {
   columns: TableColumn<T>[];
   data: T[];
   keyExtractor: (item: T) => string | number;

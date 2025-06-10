@@ -1,5 +1,5 @@
 import { AuctionStatus } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import EditAuctionView from "./EditAuctionView";
 
 const meta: Meta<typeof EditAuctionView> = {

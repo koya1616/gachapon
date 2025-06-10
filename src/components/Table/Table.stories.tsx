@@ -1,7 +1,7 @@
 import { mockProducts } from "@/mocks/data";
 import type { Product } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
-import Table from "./Table";
+import type { Meta, StoryObj } from "@storybook/nextjs";
+import Table, { type TableProps } from "./Table";
 
 const columns = [
   {
@@ -34,14 +34,14 @@ const columns = [
   },
 ];
 
-const meta = {
+const meta: Meta<TableProps<Product>> = {
   title: "Components/Table",
-  component: Table<Product>,
+  component: Table,
   tags: ["autodocs"],
-} satisfies Meta<typeof Table>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<TableProps<Product>>;
 
 export const Default: Story = {
   args: {

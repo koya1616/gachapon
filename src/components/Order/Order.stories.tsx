@@ -1,5 +1,5 @@
 import { createPaymentDetails, createShipment, mockPaymentProducts } from "@/mocks/data";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Order from "./Order";
 
 const meta: Meta<typeof Order> = {

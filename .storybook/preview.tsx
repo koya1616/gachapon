@@ -1,6 +1,6 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs";
 import "../src/app/globals.css";
-import { withActions } from "@storybook/addon-actions/decorator";
+import { withActions } from "storybook/actions/decorator";
 import { CartContext } from "../src/context/CartContext";
 import { mockCartContext } from "../src/mocks/data";
 

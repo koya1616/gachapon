@@ -1,5 +1,5 @@
 import type { ShipmentStatus } from "@/lib/db/shipments/query";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { ShipmentStatusActionsView } from "./ShipmentStatusActions";
 
 const statusConfigs: Record<

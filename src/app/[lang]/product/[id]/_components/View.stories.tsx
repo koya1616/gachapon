@@ -1,5 +1,5 @@
 import { mockLotteryEvents, mockProducts } from "@/mocks/data";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import View from "./View";
 
 const meta = {

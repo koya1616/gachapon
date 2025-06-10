@@ -1,5 +1,5 @@
 import { mockFile } from "@/mocks/data";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import UploadView from "./UploadView";
 
 const meta: Meta<typeof UploadView> = {

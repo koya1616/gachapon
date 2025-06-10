@@ -2,7 +2,7 @@ import Badge from "@/components/Badge";
 import { formatDateForInput } from "@/lib/date";
 import { mockProducts } from "@/mocks/data";
 import { LotteryStatus } from "@/types";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import EditLotteryView from "./EditLotteryView";
 
 const meta = {

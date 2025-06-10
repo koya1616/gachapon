@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { LanguageDropdownView } from "./LanguageDropdown";
 
 const meta = {

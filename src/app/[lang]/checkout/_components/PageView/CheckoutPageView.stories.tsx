@@ -1,5 +1,5 @@
 import { mockProducts } from "@/mocks/data";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import CheckoutPageView from "./CheckoutPageView";
 
 const meta = {
