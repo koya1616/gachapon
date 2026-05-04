@@ -19,7 +19,7 @@
     "@aws-sdk/client-s3": "^3.806.0",
     "@aws-sdk/lib-storage": "^3.806.0",
     "@paypayopa/paypayopa-sdk-node": "^2.1.0",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^9.0.3",
     "next": "15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
@@ -34,7 +34,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
-    "@types/jsonwebtoken": "^9.0.9",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.15.17",
     "@types/pg": "^8.15.1",
     "@types/react": "^19.1.3",
